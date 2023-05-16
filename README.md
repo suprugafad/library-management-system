@@ -1,3 +1,9 @@
+# Library Management System
+Final project of SOLVD laba
+
+**Before running app rename `env.example` to `.env` and if needed update variables**
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
