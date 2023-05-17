@@ -25,5 +25,7 @@ Develop a simple library management system that allows users to manage books, bo
     Generate reports, such as a list of all books in the library, borrowed books, overdue books, and borrower records.
 
 ### Models
-To update models upload file models.draw.io to https://app.diagrams.net/
 
+<img width="547" alt="Screenshot 2023-05-17 at 10 39 22" src="https://github.com/suprugafad/library-management-system/assets/81330484/c11785b3-00de-4efe-b8cd-75cc4e4d36bf">
+
+To update models upload file models.draw.io to https://app.diagrams.net/
