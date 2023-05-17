@@ -4,7 +4,8 @@ services:
 #    image: cyngames/library-management-system
     container_name: library-management-system
     restart: always
-    build: .
+    build:
+        context: .
     command: npm run start:dev
     ports:
       - ${APP_PORT}:${APP_PORT}
@@ -29,8 +30,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
 
   prisma-migrate:
-#    image: cyngames/library-management-system
-    command: npx prisma migrate deploy
+    image: cyngames/library-management-system
+    command: npx prisma migrate dev
     restart: no
     volumes:
       - ./prisma:/app/prisma
