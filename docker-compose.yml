@@ -1,0 +1,66 @@
+version: "3"
+services:
+  app:
+#    image: cyngames/library-management-system
+    container_name: library-management-system
+    restart: always
+    build: .
+    command: npm run start:dev
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - ./src:/usr/src/app/src
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: library-db
+    restart: always
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    volumes:
+      - libraryapp:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+
+  prisma-migrate:
+#    image: cyngames/library-management-system
+    command: npx prisma migrate deploy
+    restart: no
+    volumes:
+      - ./prisma:/app/prisma
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  pgadmin:
+    image: dpage/pgadmin4:7.0
+    ports:
+      - "8080:80"
+    volumes:
+      - ./data/pgadmin:/root/.pgadmin
+    env_file:
+      - .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+
+# This is for when we have tests or at the very least define a user, password and database for the test environment
+#  test:
+#    build: .
+#    command: npm run test
+#    volumes:
+#      - ./src:/usr/src/app/src
+#    environment:
+#      DATABASE_URL: postgres://user:password@db:db-port/library-db
+#    depends_on:
+#      - db
+
+volumes:
+  libraryapp:
