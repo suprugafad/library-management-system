@@ -11,5 +11,5 @@ RUN npm install
 
 COPY . .
 
-CMD [ "npm", "run", "start:migrate:prod" ]
+CMD [ "npm", "run", "start:migrate:dev" ]
 

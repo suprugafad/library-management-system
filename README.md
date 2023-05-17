@@ -74,30 +74,28 @@ $ npm install
 
 ## Running the app
 
-Rename `env.example` to `.env` and update variables as needed
+Rename `.env.example` to `.env` and update variables as needed
 
+- run
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+docker compose up
 ```
 
-## Test
-
+- run in detached mode
 ```bash
-# unit tests
-$ npm run test
+docker compose up -d
+```
 
-# e2e tests
-$ npm run test:e2e
+- run and rebuild
+```bash
+docker compose up --build
+```
 
-# test coverage
-$ npm run test:cov
+## MIGRATION
+
+To generate and run migration
+```bash
+  npm run migration:generate
 ```
 
 ## Support
