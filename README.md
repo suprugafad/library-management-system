@@ -27,7 +27,8 @@ Develop a simple library management system that allows users to manage books, bo
 
 ### Models
 
-<img width="540" alt="Screenshot 2023-05-17 at 11 24 12" src="https://github.com/suprugafad/library-management-system/assets/81330484/9668c0dd-899a-4a8f-bc77-35c0f70280f6">
+<img width="540" alt="Screenshot 2023-05-17 at 11 36 17" src="https://github.com/suprugafad/library-management-system/assets/81330484/64cfb904-4bbe-46f0-802d-e9a6c29cc800">
+
 
 
 
