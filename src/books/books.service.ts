@@ -11,8 +11,8 @@ export class BooksService {
     return this.booksRepository.create(createBookDto);
   }
 
-  getAll(booksQueryParams: BooksQueryParamsDto) {
-    return this.booksRepository.getAll(booksQueryParams);
+  getAll({ skip, take, ...where }: BooksQueryParamsDto) {
+    return this.booksRepository.getAll({ skip, take, where });
   }
 
   getOne(id: number) {

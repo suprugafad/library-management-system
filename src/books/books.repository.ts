@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { Prisma, Book } from '@prisma/client';
+import { transformBookYear } from './util/transformBookYear';
+import { BookResponseDto } from './dto/book-response.dto';
 
 @Injectable()
 export class BooksRepository {
@@ -8,7 +10,7 @@ export class BooksRepository {
 
   async getById(
     bookWhereUniqueInput: Prisma.BookWhereUniqueInput,
-  ): Promise<Book> {
+  ): Promise<BookResponseDto> {
     const book = await this.prisma.book.findUnique({
       where: bookWhereUniqueInput,
     });
@@ -17,7 +19,7 @@ export class BooksRepository {
       throw new NotFoundException();
     }
 
-    return book;
+    return transformBookYear(book);
   }
 
   async getAll(params: {
@@ -26,22 +28,26 @@ export class BooksRepository {
     cursor?: Prisma.BookWhereUniqueInput;
     where?: Prisma.BookWhereInput;
     orderBy?: Prisma.BookOrderByWithRelationInput;
-  }): Promise<Book[]> {
+  }): Promise<BookResponseDto[]> {
     const { skip, take, cursor, where, orderBy } = params;
 
-    return await this.prisma.book.findMany({
+    const books = await this.prisma.book.findMany({
       skip,
       take,
       cursor,
       where,
       orderBy,
     });
+
+    return books.map(transformBookYear);
   }
 
-  create(data: Prisma.BookCreateInput): Promise<Book> {
-    return this.prisma.book.create({
+  async create(data: Prisma.BookCreateInput): Promise<BookResponseDto> {
+    const book = await this.prisma.book.create({
       data,
     });
+
+    return transformBookYear(book);
   }
 
   update(params: {
