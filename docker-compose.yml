@@ -9,6 +9,7 @@ services:
     volumes:
       - ./src:/usr/src/app/src
       - ./prisma:/usr/src/app/prisma
+      - ./node_modules:/usr/src/app/node_modules
     depends_on:
       - db
 
