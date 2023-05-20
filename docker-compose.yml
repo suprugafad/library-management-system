@@ -31,21 +31,11 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./data/pgadmin:/root/.pgadmin
+      - pgstore:/root/.pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
 
-# This is for when we have tests or at the very least define a user, password and database for the test environment
-#  test:
-#    build: .
-#    command: npm run test
-#    volumes:
-#      - ./src:/usr/src/app/src
-#    environment:
-#      DATABASE_URL: postgres://user:password@db:db-port/library-db
-#    depends_on:
-#      - db
-
 volumes:
   libraryapp:
+  pgstore:
