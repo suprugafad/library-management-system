@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -26,7 +27,10 @@ export class BooksController {
   }
 
   @Get()
-  findAll(@Param() booksQueryParams: BooksQueryParamsDto) {
+  findAll(
+    @Query(new ValidationPipe({ transform: true }))
+    booksQueryParams: BooksQueryParamsDto,
+  ) {
     return this.booksService.getAll(booksQueryParams);
   }
 
@@ -38,7 +42,7 @@ export class BooksController {
   @Patch(':id')
   update(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body() updateBookDto: UpdateBookDto,
+    @Body(new ValidationPipe({ transform: true })) updateBookDto: UpdateBookDto,
   ) {
     return this.booksService.update(id, updateBookDto);
   }

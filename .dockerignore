@@ -1,0 +1,8 @@
+node_modules
+LIBRARY-MANAGEMENT-SYSTEM.postman_collection.json
+models.drawio
+docker-compose.yml
+Dockerfile
+.env.example
+.gitignore
+# .env

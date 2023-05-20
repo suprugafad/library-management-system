@@ -1,10 +1,5 @@
-import { Transform } from 'class-transformer';
-import {
-  IsString,
-  Length,
-  IsNumberString,
-  IsDateString,
-} from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, Length, IsNumberString } from 'class-validator';
 
 export class CreateBookDto {
   @Length(9, 13)
@@ -19,7 +14,6 @@ export class CreateBookDto {
   @IsString()
   author: string;
 
-  @Transform(({ value }) => new Date(value).toISOString())
-  @IsDateString()
-  publicationYear: string;
+  @Type(() => Date)
+  publicationYear: Date;
 }
