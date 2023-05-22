@@ -1,4 +1,4 @@
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsNumber,
   IsNumberString,
@@ -40,10 +40,11 @@ export class BooksQueryParamsDto {
   @Length(1, 255)
   @IsString()
   @IsOptional()
-  title: string;
+  title?: string;
 
-  @Length(1, 4)
-  @IsNumberString()
+  @Type(() => Date)
   @IsOptional()
-  publicationYear: string;
+  publicationYear?: Date;
+
+  // TODO: add orderBy parameter
 }
