@@ -7,8 +7,3 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-
-# RUN npx prisma generate
-
-# CMD ["npx", "prisma", "generate", "&&"  "npm", "run", "start:migrate:dev" ]
-
