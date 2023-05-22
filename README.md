@@ -34,7 +34,7 @@ Develop a simple library management system that allows users to manage books, bo
 
 
 To update models upload file models.draw.io to https://app.diagrams.net/.
-Don't forget to commit updated file with models and new screnshot.
+Don't forget to commit updated file with models and new screenshot.
 
 
 
@@ -90,13 +90,18 @@ docker compose up -d
 ```bash
 docker compose up --build
 ```
-
-## MIGRATION
-
-To generate and run migration
+## MIGRATIONS & PRISMA
+To generate Prisma types after update `prisma.schema` file run
 ```bash
-  npm run migration:generate
+npx prisma generate
 ```
+
+To generate and run migration 
+```bash
+  npm run migrate
+```
+
+#### If you added new script to package.json don't forget to add description how to use it to here
 
 ## Support
 
