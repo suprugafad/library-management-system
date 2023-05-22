@@ -6,7 +6,6 @@ export class CreateExemplarDto implements Omit<Exemplar, 'id'> {
   @Min(0)
   bookId: number;
 
-  // TODO Check if this validate works as intended
   @IsEnum(Status)
   status: Status;
 }

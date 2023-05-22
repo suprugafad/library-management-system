@@ -6,40 +6,22 @@ import { Prisma, Exemplar } from '@prisma/client';
 export class ExemplarsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getById(
+  getById(
     exemplarWhereUniqueInput: Prisma.ExemplarWhereUniqueInput,
   ): Promise<Exemplar> {
-    const exemplar = await this.prisma.exemplar.findUniqueOrThrow({
+    return this.prisma.exemplar.findUniqueOrThrow({
       where: exemplarWhereUniqueInput,
     });
-
-    // ? findUniqueOrThrow can save this line, unless wanting to throw especial Error
-    // if (!exemplar) {
-    //   throw new NotFoundException();
-    // }
-
-    return exemplar;
   }
 
-  async getAll(params: {
+  getAll(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.ExemplarWhereUniqueInput;
     where?: Prisma.ExemplarWhereInput;
     orderBy?: Prisma.ExemplarOrderByWithRelationInput;
   }): Promise<Exemplar[]> {
-    // ? Why not just use params? Our validate already "validated" what's in params, so there can't be unexpected property
-    return await this.prisma.exemplar.findMany(params);
-
-    // const { skip, take, cursor, where, orderBy } = params;
-
-    // return await this.prisma.exemplar.findMany({
-    //   skip,
-    //   take,
-    //   cursor,
-    //   where,
-    //   orderBy,
-    // });
+    return this.prisma.exemplar.findMany(params);
   }
 
   create(data: Prisma.ExemplarCreateInput): Promise<Exemplar> {
@@ -54,13 +36,6 @@ export class ExemplarsRepository {
   }): Promise<Exemplar> {
     // ? Same here, why not just use params
     return this.prisma.exemplar.update(params);
-
-    // const { where, data } = params;
-
-    // return this.prisma.exemplar.update({
-    //   data,
-    //   where,
-    // });
   }
 
   remove(where: Prisma.ExemplarWhereUniqueInput) {
