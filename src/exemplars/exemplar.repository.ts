@@ -34,7 +34,6 @@ export class ExemplarsRepository {
     where: Prisma.ExemplarWhereUniqueInput;
     data: Prisma.ExemplarUpdateInput;
   }): Promise<Exemplar> {
-    // ? Same here, why not just use params
     return this.prisma.exemplar.update(params);
   }
 
