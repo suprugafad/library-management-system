@@ -4,6 +4,8 @@ services:
     container_name: library-management-system
     restart: always
     build: .
+    command: sh -c "npx prisma migrate
+      && npm run start:dev"
     ports:
       - ${APP_PORT}:${APP_PORT}
     volumes:
