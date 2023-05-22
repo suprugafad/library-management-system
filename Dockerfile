@@ -8,5 +8,7 @@ RUN npm install
 
 COPY . .
 
-CMD [ "npm", "run", "start:migrate:dev" ]
+# RUN npx prisma generate
+
+# CMD ["npx", "prisma", "generate", "&&"  "npm", "run", "start:migrate:dev" ]
 
