@@ -28,7 +28,8 @@ export class BooksQueryParamsDto extends PaginationQueryParamsDto {
   @Max(new Date().getFullYear())
   @Min(0)
   @Transform(({ value }) => parseInt(value))
-  publicationYear: number;
+  @IsOptional()
+  publicationYear?: number;
 
   // TODO: add orderBy parameter
 }
