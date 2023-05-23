@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
-import { ExemplarsModel } from './exemplars.modes';
+import { ExemplarsModel } from './exemplars.model';
 import { GenericRepository } from 'src/database/generic-repository';
 import { ExemplarsQueryParamsDto } from './dto/exemplars-query-params.dto';
 import { CreateExemplarDto } from './dto/create-exemplar.dto';

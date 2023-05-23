@@ -20,9 +20,7 @@ export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
-  create(
-    @Body(new ValidationPipe({ transform: true })) createBookDto: CreateBookDto,
-  ) {
+  create(@Body(new ValidationPipe()) createBookDto: CreateBookDto) {
     return this.booksService.create(createBookDto);
   }
 
@@ -42,7 +40,7 @@ export class BooksController {
   @Patch(':id')
   update(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body(new ValidationPipe({ transform: true })) updateBookDto: UpdateBookDto,
+    @Body(new ValidationPipe()) updateBookDto: UpdateBookDto,
   ) {
     return this.booksService.update(id, updateBookDto);
   }
