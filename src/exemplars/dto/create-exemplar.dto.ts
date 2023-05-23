@@ -1,12 +1,12 @@
 import { IsEnum, IsNumber, Min } from 'class-validator';
-import { ExemplarsModel } from '../exemplars.model';
+import { ExemplarModel } from '../exemplar.model';
 import { ExemplarStatus } from '../enum/exemplar-status.enum';
 
-export class CreateExemplarDto implements Omit<ExemplarsModel, 'id'> {
+export class CreateExemplarDto implements Omit<ExemplarModel, 'id'> {
   @IsNumber()
   @Min(1)
   bookId: number;
 
   @IsEnum(ExemplarStatus)
-  status: ExemplarsModel['status'];
+  status: ExemplarModel['status'];
 }

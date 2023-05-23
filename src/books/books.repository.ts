@@ -1,28 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { GenericRepository } from 'src/database/generic-repository';
-import { BooksModel } from './books.model';
+import { BookModel } from './book.model';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { CreateBookDto } from './dto/create-book.dto';
 import { BooksQueryParamsDto } from './dto/books-query-params.dto';
 
 @Injectable()
-export class BooksRepository implements GenericRepository<BooksModel> {
+export class BooksRepository implements GenericRepository<BookModel> {
   constructor(private readonly prisma: PrismaService) {}
 
-  getById(id: number): Promise<BooksModel> {
+  getById(id: number): Promise<BookModel> {
     return this.prisma.book.findUniqueOrThrow({ where: { id } });
   }
 
-  getAll({ skip, take, ...where }: BooksQueryParamsDto): Promise<BooksModel[]> {
+  getAll({ skip, take, ...where }: BooksQueryParamsDto): Promise<BookModel[]> {
     return this.prisma.book.findMany({ skip, take, where });
   }
 
-  async create(data: CreateBookDto): Promise<BooksModel> {
+  async create(data: CreateBookDto): Promise<BookModel> {
     return this.prisma.book.create({ data });
   }
 
-  update(id: number, data: UpdateBookDto): Promise<BooksModel> {
+  update(id: number, data: UpdateBookDto): Promise<BookModel> {
     return this.prisma.book.update({ data, where: { id } });
   }
 

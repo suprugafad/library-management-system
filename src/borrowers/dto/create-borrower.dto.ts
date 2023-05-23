@@ -1,7 +1,7 @@
 import { IsEmail, IsString, Length } from 'class-validator';
-import { BorrowersModel } from '../borrowers.model';
+import { BorrowerModel } from '../borrower.model';
 
-export class CreateBorrowerDto implements Omit<BorrowersModel, 'id'> {
+export class CreateBorrowerDto implements Omit<BorrowerModel, 'id'> {
   @Length(1, 255)
   @IsString()
   firstName: string;

@@ -6,9 +6,9 @@ import {
   Min,
   Max,
 } from 'class-validator';
-import { BooksModel } from '../books.model';
+import { BookModel } from '../book.model';
 
-export class CreateBookDto implements Omit<BooksModel, 'id'> {
+export class CreateBookDto implements Omit<BookModel, 'id'> {
   @Length(9, 13)
   @IsNumberString()
   isbn: string;

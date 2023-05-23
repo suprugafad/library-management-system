@@ -1,4 +1,4 @@
-export class BorrowersModel {
+export class BorrowerModel {
   id: number;
   firstName: string;
   lastName: string;
