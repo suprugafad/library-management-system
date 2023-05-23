@@ -1,32 +1,7 @@
-import { Transform } from 'class-transformer';
-import {
-  IsEmail,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Length,
-  Min,
-} from 'class-validator';
+import { IsEmail, IsOptional, IsString, Length } from 'class-validator';
+import { PaginationQueryParamsDto } from 'src/common/pagination-query-params.dto';
 
-export class BorrowersQueryParamsDto {
-  @Min(0)
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  skip? = 0;
-
-  @Min(0)
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  take? = 20;
-
-  @Min(0)
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  id?: number;
-
+export class BorrowersQueryParamsDto extends PaginationQueryParamsDto {
   @Length(1, 255)
   @IsString()
   @IsOptional()

@@ -7,7 +7,6 @@ import { PrismaModule } from 'src/database/prisma.module';
 @Module({
   imports: [PrismaModule],
   controllers: [BorrowersController],
-  providers: [BorrowersService, BorrowersRepository]
+  providers: [BorrowersService, BorrowersRepository],
 })
-
 export class BorrowersModule {}

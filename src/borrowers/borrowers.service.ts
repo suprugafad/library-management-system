@@ -8,23 +8,23 @@ import { BorrowersQueryParamsDto } from './dto/borrowers-query-params.dto';
 export class BorrowersService {
   constructor(private readonly borrowersRepository: BorrowersRepository) {}
 
-  async create(createBorrowerDto: CreateBorrowerDto) {
+  create(createBorrowerDto: CreateBorrowerDto) {
     return this.borrowersRepository.create(createBorrowerDto);
   }
 
-  async getAll({ skip, take, ...where }: BorrowersQueryParamsDto) {
-    return this.borrowersRepository.getAll({ skip, take, where });
+  getAll(borrowersQueryParamsDto: BorrowersQueryParamsDto) {
+    return this.borrowersRepository.getAll(borrowersQueryParamsDto);
   }
 
-  async getOne(id: number) {
-    return this.borrowersRepository.getById({ id });
+  getOne(id: number) {
+    return this.borrowersRepository.getById(id);
   }
 
-  async update(id: number, updateBorrowerDto: UpdateBorrowerDto) {
-    return this.borrowersRepository.update({ where: { id }, data: updateBorrowerDto });
+  update(id: number, updateBorrowerDto: UpdateBorrowerDto) {
+    return this.borrowersRepository.update(id, updateBorrowerDto);
   }
 
-  async remove(id: number) {
-    return this.borrowersRepository.remove({ id });
+  remove(id: number) {
+    return this.borrowersRepository.remove(id);
   }
 }

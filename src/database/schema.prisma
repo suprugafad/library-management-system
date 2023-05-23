@@ -9,11 +9,11 @@ datasource db {
 }
 
 model Book {
-  id Int           @id @default(autoincrement())
+  id Int          @id @default(autoincrement())
   isbn String     @db.VarChar(13) @unique
   title           String     @db.VarChar(255)
   author          String     @db.VarChar(255)
-  publicationYear DateTime @db.Date()
+  publicationYear Int @db.SmallInt
   Exemplar        Exemplar[]
 }
 

@@ -7,8 +7,9 @@ import {
   Param,
   Delete,
   ParseIntPipe,
-  ValidationPipe,
   Query,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { ExemplarsService } from './exemplars.service';
 import { CreateExemplarDto } from './dto/create-exemplar.dto';
@@ -20,16 +21,13 @@ export class ExemplarsController {
   constructor(private readonly exemplarsService: ExemplarsService) {}
 
   @Post()
-  create(
-    @Body(new ValidationPipe({ transform: true }))
-    createExemplarDto: CreateExemplarDto,
-  ) {
+  create(@Body() createExemplarDto: CreateExemplarDto) {
     return this.exemplarsService.create(createExemplarDto);
   }
 
   @Get()
   findAll(
-    @Query(new ValidationPipe({ transform: true }))
+    @Query()
     exemplarsQueryParams: ExemplarsQueryParamsDto,
   ) {
     return this.exemplarsService.getAll(exemplarsQueryParams);
@@ -43,13 +41,14 @@ export class ExemplarsController {
   @Patch(':id')
   update(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body(new ValidationPipe({ transform: true }))
+    @Body()
     updateExemplarDto: UpdateExemplarDto,
   ) {
     return this.exemplarsService.update(id, updateExemplarDto);
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.exemplarsService.remove(id);
   }
