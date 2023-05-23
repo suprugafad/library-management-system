@@ -1,32 +1,15 @@
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import {
-  IsNumber,
   IsNumberString,
   IsOptional,
   IsString,
   Length,
+  Max,
   Min,
 } from 'class-validator';
+import { PaginationQueryParamsDto } from 'src/common/pagination-query-params.dto';
 
-export class BooksQueryParamsDto {
-  @Min(0)
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  skip? = 0;
-
-  @Min(0)
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  take? = 20;
-
-  @Min(0)
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  id?: number;
-
+export class BooksQueryParamsDto extends PaginationQueryParamsDto {
   @Length(10, 13)
   @IsNumberString()
   @IsOptional()
@@ -42,9 +25,10 @@ export class BooksQueryParamsDto {
   @IsOptional()
   title?: string;
 
-  @Type(() => Date)
-  @IsOptional()
-  publicationYear?: Date;
+  @Max(new Date().getFullYear())
+  @Min(0)
+  @Transform(({ value }) => parseInt(value))
+  publicationYear: number;
 
   // TODO: add orderBy parameter
 }

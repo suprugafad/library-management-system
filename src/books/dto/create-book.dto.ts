@@ -1,7 +1,14 @@
-import { Type } from 'class-transformer';
-import { IsString, Length, IsNumberString } from 'class-validator';
+import {
+  IsString,
+  Length,
+  IsNumberString,
+  IsNumber,
+  Min,
+  Max,
+} from 'class-validator';
+import { BooksModel } from '../books.model';
 
-export class CreateBookDto {
+export class CreateBookDto implements Omit<BooksModel, 'id'> {
   @Length(9, 13)
   @IsNumberString()
   isbn: string;
@@ -14,6 +21,8 @@ export class CreateBookDto {
   @IsString()
   author: string;
 
-  @Type(() => Date)
-  publicationYear: Date;
+  @Max(new Date().getFullYear())
+  @Min(0)
+  @IsNumber()
+  publicationYear: number;
 }

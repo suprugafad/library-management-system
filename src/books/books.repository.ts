@@ -1,70 +1,32 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
-import { Prisma, Book } from '@prisma/client';
-import { transformBookYear } from './util/transformBookYear';
-import { BookResponseDto } from './dto/book-response.dto';
+import { GenericRepository } from 'src/database/generic-repository';
+import { BooksModel } from './books.model';
+import { UpdateBookDto } from './dto/update-book.dto';
+import { CreateBookDto } from './dto/create-book.dto';
+import { BooksQueryParamsDto } from './dto/books-query-params.dto';
 
 @Injectable()
-export class BooksRepository {
+export class BooksRepository implements GenericRepository<BooksModel> {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getById(
-    bookWhereUniqueInput: Prisma.BookWhereUniqueInput,
-  ): Promise<BookResponseDto> {
-    const book = await this.prisma.book.findUnique({
-      where: bookWhereUniqueInput,
-    });
-
-    if (!book) {
-      throw new NotFoundException();
-    }
-
-    return transformBookYear(book);
+  getById(id: number): Promise<BooksModel> {
+    return this.prisma.book.findUniqueOrThrow({ where: { id } });
   }
 
-  async getAll(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.BookWhereUniqueInput;
-    where?: Prisma.BookWhereInput;
-    orderBy?: Prisma.BookOrderByWithRelationInput;
-  }): Promise<BookResponseDto[]> {
-    const { skip, take, cursor, where, orderBy } = params;
-
-    const books = await this.prisma.book.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    });
-
-    return books.map(transformBookYear);
+  getAll({ skip, take, ...where }: BooksQueryParamsDto): Promise<BooksModel[]> {
+    return this.prisma.book.findMany({ skip, take, where });
   }
 
-  async create(data: Prisma.BookCreateInput): Promise<BookResponseDto> {
-    const book = await this.prisma.book.create({
-      data,
-    });
-
-    return transformBookYear(book);
+  async create(data: CreateBookDto): Promise<BooksModel> {
+    return this.prisma.book.create({ data });
   }
 
-  update(params: {
-    where: Prisma.BookWhereUniqueInput;
-    data: Prisma.BookUpdateInput;
-  }): Promise<Book> {
-    const { where, data } = params;
-
-    return this.prisma.book.update({
-      data,
-      where,
-    });
+  update(id: number, data: UpdateBookDto): Promise<BooksModel> {
+    return this.prisma.book.update({ data, where: { id } });
   }
 
-  remove(where: Prisma.BookWhereUniqueInput) {
-    return this.prisma.book.delete({
-      where,
-    });
+  async remove(id: number) {
+    await this.prisma.book.delete({ where: { id } });
   }
 }
