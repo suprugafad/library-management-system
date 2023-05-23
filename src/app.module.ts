@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { configModuleOptions } from './config/config-module-options.config';
 import { BooksModule } from './books/books.module';
+import { BorrowersModule } from "./borrowers/borrowers.module";
 import { ExemplarsModule } from './exemplars/exemplars.module';
 
 @Module({
@@ -11,8 +12,8 @@ import { ExemplarsModule } from './exemplars/exemplars.module';
     ConfigModule.forRoot(configModuleOptions),
     BooksModule,
     ExemplarsModule,
-  ],
-  controllers: [AppController],
+    BorrowersModule
+  ],  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

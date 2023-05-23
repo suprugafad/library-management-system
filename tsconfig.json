@@ -17,5 +17,13 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "watchOptions": {
+    "watchFile": "priorityPollingInterval",
+    "ignored": [
+      "node_modules",
+      "dist",
+      "src/**/*.spec.ts"
+    ]
+  },
 }

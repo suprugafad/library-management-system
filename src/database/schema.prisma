@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  binaryTargets = env("PRISMA_BINARY_TARGETS") 
+  binaryTargets = env("PRISMA_BINARY_TARGETS")
 }
 
 datasource db {
@@ -13,7 +13,7 @@ model Book {
   isbn String     @db.VarChar(13) @unique
   title           String     @db.VarChar(255)
   author          String     @db.VarChar(255)
-  publicationYear DateTime @db.Date() 
+  publicationYear DateTime @db.Date()
   Exemplar        Exemplar[]
 }
 
@@ -38,7 +38,7 @@ model Transaction {
   borrowerId    Int
   exemplarId    Int
   borrowedAt    DateTime  @default(now())
-  returnedAt    DateTime? 
+  returnedAt    DateTime?
   dueToDate     DateTime
   Borrower      Borrower  @relation(fields: [borrowerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   Exemplar      Exemplar  @relation(fields: [exemplarId], references: [id], onDelete: NoAction, onUpdate: NoAction)
