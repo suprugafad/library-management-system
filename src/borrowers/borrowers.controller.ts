@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   ParseIntPipe,
-  ValidationPipe,
   Query,
 } from '@nestjs/common';
 import { BorrowersService } from './borrowers.service';
@@ -20,18 +19,12 @@ export class BorrowersController {
   constructor(private readonly borrowersService: BorrowersService) {}
 
   @Post()
-  create(
-    @Body(new ValidationPipe())
-    createBorrowerDto: CreateBorrowerDto,
-  ) {
+  create(@Body() createBorrowerDto: CreateBorrowerDto) {
     return this.borrowersService.create(createBorrowerDto);
   }
 
   @Get()
-  findAll(
-    @Query(new ValidationPipe({ transform: true }))
-    borrowersQueryParams: BorrowersQueryParamsDto,
-  ) {
+  findAll(@Query() borrowersQueryParams: BorrowersQueryParamsDto) {
     return this.borrowersService.getAll(borrowersQueryParams);
   }
 
@@ -43,8 +36,7 @@ export class BorrowersController {
   @Patch(':id')
   update(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body(new ValidationPipe())
-    updateBorrowerDto: UpdateBorrowerDto,
+    @Body() updateBorrowerDto: UpdateBorrowerDto,
   ) {
     return this.borrowersService.update(id, updateBorrowerDto);
   }

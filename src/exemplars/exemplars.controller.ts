@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   ParseIntPipe,
-  ValidationPipe,
   Query,
 } from '@nestjs/common';
 import { ExemplarsService } from './exemplars.service';
@@ -20,16 +19,13 @@ export class ExemplarsController {
   constructor(private readonly exemplarsService: ExemplarsService) {}
 
   @Post()
-  create(
-    @Body(new ValidationPipe())
-    createExemplarDto: CreateExemplarDto,
-  ) {
+  create(@Body() createExemplarDto: CreateExemplarDto) {
     return this.exemplarsService.create(createExemplarDto);
   }
 
   @Get()
   findAll(
-    @Query(new ValidationPipe({ transform: true }))
+    @Query()
     exemplarsQueryParams: ExemplarsQueryParamsDto,
   ) {
     return this.exemplarsService.getAll(exemplarsQueryParams);
@@ -43,7 +39,7 @@ export class ExemplarsController {
   @Patch(':id')
   update(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body(new ValidationPipe())
+    @Body()
     updateExemplarDto: UpdateExemplarDto,
   ) {
     return this.exemplarsService.update(id, updateExemplarDto);

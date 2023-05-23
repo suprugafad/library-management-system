@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   ParseIntPipe,
-  ValidationPipe,
   Query,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
@@ -20,15 +19,12 @@ export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
-  create(@Body(new ValidationPipe()) createBookDto: CreateBookDto) {
+  create(@Body() createBookDto: CreateBookDto) {
     return this.booksService.create(createBookDto);
   }
 
   @Get()
-  findAll(
-    @Query(new ValidationPipe({ transform: true }))
-    booksQueryParams: BooksQueryParamsDto,
-  ) {
+  findAll(@Query() booksQueryParams: BooksQueryParamsDto) {
     return this.booksService.getAll(booksQueryParams);
   }
 
@@ -40,7 +36,7 @@ export class BooksController {
   @Patch(':id')
   update(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body(new ValidationPipe()) updateBookDto: UpdateBookDto,
+    @Body() updateBookDto: UpdateBookDto,
   ) {
     return this.booksService.update(id, updateBookDto);
   }
