@@ -6,7 +6,10 @@ import { TransactionsQueryParamsDto } from './dto/transactions-query-params.dto'
 
 @Injectable()
 export class TransactionsService {
-  constructor(private readonly transactionsRepository: TransactionsRepository) {}
+  constructor(
+    private readonly transactionsRepository: TransactionsRepository,
+  ) {}
+
   create(createTransactionDto: CreateTransactionDto) {
     return this.transactionsRepository.create(createTransactionDto);
   }
@@ -16,14 +19,14 @@ export class TransactionsService {
   }
 
   getOne(id: number) {
-    return this.transactionsRepository.getById({ id });
+    return this.transactionsRepository.getById(id);
   }
 
   update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    return this.transactionsRepository.update({ where: { id }, data: updateTransactionDto });
+    return this.transactionsRepository.update(id, updateTransactionDto);
   }
 
   remove(id: number) {
-    return this.transactionsRepository.remove({ id });
+    return this.transactionsRepository.remove(id);
   }
 }

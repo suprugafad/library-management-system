@@ -1,19 +1,18 @@
-import { Transform } from 'class-transformer';
-import {
-  IsNumber,
-  IsDate,
-} from 'class-validator';
-export class CreateTransactionDto {
-  @IsNumber()
+import { IsInt, Min } from 'class-validator';
+import { TransactionModel } from '../transaction.model';
+
+export class CreateTransactionDto implements Omit<TransactionModel, 'id'> {
+  @Min(1)
+  @IsInt()
   borrowerId: number;
-  @IsNumber()
+
+  @Min(1)
+  @IsInt()
   exemplarId: number;
-  @IsDate()
-  borrowedAt: DateTime;
-  @IsDate()
-  returnedAt: DateTime;
 
-  @IsDate()
-  dueToDate: DateTime;
+  borrowedAt: Date;
 
+  returnedAt: Date;
+
+  dueToDate: Date;
 }

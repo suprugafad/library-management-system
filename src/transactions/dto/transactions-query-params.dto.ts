@@ -1,42 +1,18 @@
-import { Transform } from 'class-transformer';
-import {
-  IsNumber,
-  Min,
-  IsDate,
-} from 'class-validator';
+import { Min, IsInt } from 'class-validator';
+import { PaginationQueryParamsDto } from 'src/common/pagination-query-params.dto';
 
-export class TransactionsQueryParamsDto {
- @Min(0)
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  skip? = 0;
-
-  @Min(0)
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  take? = 20;
-  
-  @IsNumber()
-  @IsNotEmpty()
+export class TransactionsQueryParamsDto extends PaginationQueryParamsDto {
+  @Min(1)
+  @IsInt()
   borrowerId?: number;
 
-  @IsNumber()
-  @IsNotEmpty()
+  @Min(1)
+  @IsInt()
   exemplarId?: number;
 
-  @IsString()
-  @IsNotEmpty()
-  borrowedAt?: DateTime;
+  // TODO: implement borrowedAt
 
- 
-  @IsDate()
-  @IsNotEmpty()
-  returnedAt: DateTime;
+  // TODO: implement returnedAt
 
- 
-  @IsDate()
-  @IsNotEmpty()
-  dueToDate: DateTime;
+  // TODO: implement dueToAt
 }
