@@ -11,19 +11,19 @@ export class BooksService {
     return this.booksRepository.create(createBookDto);
   }
 
-  getAll({ skip, take, ...where }: BooksQueryParamsDto) {
-    return this.booksRepository.getAll({ skip, take, where });
+  getAll(booksQueryParamsDto: BooksQueryParamsDto) {
+    return this.booksRepository.getAll(booksQueryParamsDto);
   }
 
   getOne(id: number) {
-    return this.booksRepository.getById({ id });
+    return this.booksRepository.getById(id);
   }
 
   update(id: number, updateBookDto: UpdateBookDto) {
-    return this.booksRepository.update({ where: { id }, data: updateBookDto });
+    return this.booksRepository.update(id, updateBookDto);
   }
 
   remove(id: number) {
-    return this.booksRepository.remove({ id });
+    return this.booksRepository.remove(id);
   }
 }

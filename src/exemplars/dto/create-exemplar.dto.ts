@@ -1,11 +1,12 @@
-import { Length, IsNumberString, IsEnum, IsNumber, Min } from 'class-validator';
-import { Exemplar, Status } from '@prisma/client';
+import { IsEnum, IsNumber, Min } from 'class-validator';
+import { ExemplarModel } from '../exemplar.model';
+import { ExemplarStatus } from '../enum/exemplar-status.enum';
 
-export class CreateExemplarDto implements Omit<Exemplar, 'id'> {
+export class CreateExemplarDto implements Omit<ExemplarModel, 'id'> {
   @IsNumber()
-  @Min(0)
+  @Min(1)
   bookId: number;
 
-  @IsEnum(Status)
-  status: Status;
+  @IsEnum(ExemplarStatus)
+  status: ExemplarModel['status'];
 }

@@ -1,32 +1,13 @@
 import { Exemplar } from '@prisma/client';
 import { Transform } from 'class-transformer';
-import { IsNumber, IsNumberString, IsOptional, Min } from 'class-validator';
-
-export class QueryParamsDto {
-  @IsOptional()
-  @IsNumber()
-  @Min(0)
-  @Transform(({ value }) => parseInt(value))
-  id?: number;
-
-  @IsOptional()
-  @IsNumber()
-  @Min(0)
-  @Transform(({ value }) => parseInt(value))
-  skip? = 0;
-
-  @IsOptional()
-  @IsNumber()
-  @Min(0)
-  @Transform(({ value }) => parseInt(value))
-  take? = 20;
-}
+import { IsNumber, IsOptional, Min } from 'class-validator';
+import { PaginationQueryParamsDto } from 'src/common/pagination-query-params.dto';
 
 export class ExemplarsQueryParamsDto
-  extends QueryParamsDto
-  implements Partial<Exemplar>
+  extends PaginationQueryParamsDto
+  implements Partial<Pick<Exemplar, 'bookId'>>
 {
-  @Min(0)
+  @Min(1)
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
   @IsOptional()
