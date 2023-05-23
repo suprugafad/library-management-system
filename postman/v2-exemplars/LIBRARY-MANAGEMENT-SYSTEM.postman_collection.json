@@ -1,0 +1,573 @@
+{
+	"info": {
+		"_postman_id": "e7ccc298-3925-4912-b9dc-708586adc787",
+		"name": "LIBRARY-MANAGEMENT-SYSTEM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23503477"
+	},
+	"item": [
+		{
+			"name": "exemplar",
+			"item": [
+				{
+					"name": "get all exemplars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exemplars",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "some title",
+									"disabled": true
+								},
+								{
+									"key": "author",
+									"value": "Keaton Reinger",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get exemplars query",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exemplars?bookId={{bookId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "some title",
+									"disabled": true
+								},
+								{
+									"key": "author",
+									"value": "Keaton Reinger",
+									"disabled": true
+								},
+								{
+									"key": "bookId",
+									"value": "{{bookId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get exemplars query manual",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exemplars?skip=1&bookId=1&take=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars"
+							],
+							"query": [
+								{
+									"key": "skip",
+									"value": "1"
+								},
+								{
+									"key": "bookId",
+									"value": "1"
+								},
+								{
+									"key": "take",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"exemplarId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// pm.collectionVariables.set (\"randomISBN\", _.random (1000000000,));",
+									"pm.collectionVariables.set (\"randomStatus\", [\"Available\", \"Borrowed\"][_.random (0,1)]);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bookId\": {{bookId}},\n    \"status\": \"{{randomStatus}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/exemplars",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exemplars/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.collectionVariables.set(\"deletedExemplarId\", id);\r",
+									"  pm.collectionVariables.set(\"exemplarId\", --id);\r",
+									"}\r",
+									"\r",
+									"const expectedId = pm.request.url.getPath().split(\"/\").pop();\r",
+									"\r",
+									"pm.test(\"should have expected id\", () => {\r",
+									"    pm.expect(id).to.equal(+expectedId);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exemplars/6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test get deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"should not find any item\", function() {\r",
+									"    pm.response.to.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exemplars/{{deletedExemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars",
+								"{{deletedExemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should be ok\", () => {\r",
+									"    pm.response.to.be.ok\r",
+									"})\r",
+									"\r",
+									"pm.test(\"should have expected id\", () => {\r",
+									"    const reqId = pm.collectionVariables.get(\"exemplarId\");\r",
+									"    const resId = JSON.parse(responseBody).id;\r",
+									"    pm.expect(+resId).to.equal(+reqId);\r",
+									"})\r",
+									"\r",
+									"// pm.test(\"should have changed\", () => {\r",
+									"//     const reqBody = JSON.parse(pm.request.body.raw);\r",
+									"//     const resBody = JSON.parse(responseBody);\r",
+									"//     reqBody.id = pm.variables.get(\"exemplarId\");\r",
+									"//     // console.log({reqBody, resBody})\r",
+									"//     pm.expect(reqBody).not.to.equal(resBody);\r",
+									"// })"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/exemplars/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "book",
+			"item": [
+				{
+					"name": "get all exemplars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books?publicationYear=1712",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "publicationYear",
+									"value": "1712"
+								},
+								{
+									"key": "title",
+									"value": "some title",
+									"disabled": true
+								},
+								{
+									"key": "author",
+									"value": "Keaton Reinger",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"bookId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// pm.collectionVariables.set (\"randomISBN\", _.random (1000000000,));",
+									"pm.collectionVariables.set (\"randomYear\", _.random (1600,2023));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isbn\": \"927{{$timestamp}}\",\n    \"title\": \"{{$randomPhrase}}\",\n    \"author\": \"{{$randomFirstName}} {{$randomLastName}}\",\n    \"publicationYear\": \"{{randomYear}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books/{{bookId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books",
+								"{{bookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books/{{bookId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books",
+								"{{bookId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"publicationYear\": \"2023\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/books/{{bookId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"books",
+						"{{bookId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:4000",
+			"type": "string"
+		},
+		{
+			"key": "bookId",
+			"value": ""
+		},
+		{
+			"key": "randomISBN",
+			"value": ""
+		},
+		{
+			"key": "randomYear",
+			"value": ""
+		},
+		{
+			"key": "randomStatus",
+			"value": ""
+		},
+		{
+			"key": "exemplarId",
+			"value": ""
+		},
+		{
+			"key": "deletedExemplarId",
+			"value": ""
+		}
+	]
+}

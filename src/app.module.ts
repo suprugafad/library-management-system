@@ -5,10 +5,15 @@ import { ConfigModule } from '@nestjs/config';
 import { configModuleOptions } from './config/config-module-options.config';
 import { BooksModule } from './books/books.module';
 import { BorrowersModule } from "./borrowers/borrowers.module";
+import { ExemplarsModule } from './exemplars/exemplars.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(configModuleOptions), BooksModule, BorrowersModule],
-  controllers: [AppController],
+  imports: [
+    ConfigModule.forRoot(configModuleOptions),
+    BooksModule,
+    ExemplarsModule,
+    BorrowersModule
+  ],  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
