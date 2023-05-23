@@ -21,7 +21,7 @@ export class BorrowersController {
 
   @Post()
   create(
-    @Body(new ValidationPipe({ transform: true }))
+    @Body(new ValidationPipe())
     createBorrowerDto: CreateBorrowerDto,
   ) {
     return this.borrowersService.create(createBorrowerDto);
@@ -43,7 +43,7 @@ export class BorrowersController {
   @Patch(':id')
   update(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body(new ValidationPipe({ transform: true }))
+    @Body(new ValidationPipe())
     updateBorrowerDto: UpdateBorrowerDto,
   ) {
     return this.borrowersService.update(id, updateBorrowerDto);

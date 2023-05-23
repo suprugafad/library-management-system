@@ -12,22 +12,19 @@ export class BorrowersService {
     return this.borrowersRepository.create(createBorrowerDto);
   }
 
-  getAll({ skip, take, ...where }: BorrowersQueryParamsDto) {
-    return this.borrowersRepository.getAll({ skip, take, where });
+  getAll(borrowersQueryParamsDto: BorrowersQueryParamsDto) {
+    return this.borrowersRepository.getAll(borrowersQueryParamsDto);
   }
 
   getOne(id: number) {
-    return this.borrowersRepository.getById({ id });
+    return this.borrowersRepository.getById(id);
   }
 
   update(id: number, updateBorrowerDto: UpdateBorrowerDto) {
-    return this.borrowersRepository.update({
-      where: { id },
-      data: updateBorrowerDto,
-    });
+    return this.borrowersRepository.update(id, updateBorrowerDto);
   }
 
   remove(id: number) {
-    return this.borrowersRepository.remove({ id });
+    return this.borrowersRepository.remove(id);
   }
 }
