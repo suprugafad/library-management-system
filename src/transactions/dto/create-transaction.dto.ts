@@ -1,7 +1,9 @@
 import { IsInt, Min } from 'class-validator';
 import { TransactionModel } from '../transaction.model';
 
-export class CreateTransactionDto implements Omit<TransactionModel, 'id'> {
+export class CreateTransactionDto
+  implements Pick<TransactionModel, 'borrowerId' | 'exemplarId'>
+{
   @Min(1)
   @IsInt()
   borrowerId: number;
@@ -9,10 +11,4 @@ export class CreateTransactionDto implements Omit<TransactionModel, 'id'> {
   @Min(1)
   @IsInt()
   exemplarId: number;
-
-  borrowedAt: Date;
-
-  returnedAt: Date;
-
-  dueToDate: Date;
 }

@@ -1,4 +1,10 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateTransactionDto } from './create-transaction.dto';
+import { PickType } from '@nestjs/mapped-types';
+import { TransactionModel } from '../transaction.model';
+import { Transform } from 'class-transformer';
 
-export class UpdateTransactionDto extends PartialType(CreateTransactionDto) {}
+export class UpdateTransactionDto extends PickType(TransactionModel, [
+  'returnedAt',
+] as const) {
+  @Transform(({ value }) => new Date(value))
+  returnedAt: Date;
+}

@@ -3,7 +3,6 @@ import { PrismaService } from 'src/database/prisma.service';
 import { TransactionModel } from './transaction.model';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionsQueryParamsDto } from './dto/transactions-query-params.dto';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
 
 @Injectable()
 export class TransactionsRepository {
@@ -21,7 +20,9 @@ export class TransactionsRepository {
     return await this.prisma.transaction.findMany({ skip, take, where });
   }
 
-  create(data: CreateTransactionDto): Promise<TransactionModel> {
+  create(
+    data: Omit<TransactionModel, 'id' | 'returnedAt'>,
+  ): Promise<TransactionModel> {
     return this.prisma.transaction.create({ data });
   }
 

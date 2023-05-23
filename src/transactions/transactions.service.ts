@@ -11,7 +11,14 @@ export class TransactionsService {
   ) {}
 
   create(createTransactionDto: CreateTransactionDto) {
-    return this.transactionsRepository.create(createTransactionDto);
+    const borrowedAt = new Date();
+    const dueToDate = new Date(borrowedAt.setDate(borrowedAt.getDate() + 30));
+
+    return this.transactionsRepository.create({
+      ...createTransactionDto,
+      borrowedAt,
+      dueToDate,
+    });
   }
 
   getAll(transactionsQueryParams: TransactionsQueryParamsDto) {
