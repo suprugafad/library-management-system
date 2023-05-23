@@ -11,6 +11,8 @@ services:
       - ./node_modules:/usr/src/app/node_modules
     depends_on:
       - db
+    env_file:
+      - .env
 
   db:
     image: postgres:15-alpine
@@ -24,6 +26,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+    env_file:
+      - .env
 
   pgadmin:
     image: dpage/pgadmin4:7.0

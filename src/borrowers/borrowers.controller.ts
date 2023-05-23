@@ -1,43 +1,54 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+  ValidationPipe,
+  Query,
+} from '@nestjs/common';
 import { BorrowersService } from './borrowers.service';
-import { CreateBorrowerDto, UpdateBorrowerDto, BorrowBookDto } from './dto';
+import { UpdateBorrowerDto } from './dto/update-borrower.dto';
+import { CreateBorrowerDto } from './dto/create-borrower.dto';
+import { BorrowersQueryParamsDto } from './dto/borrowers-query-params.dto';
 
 @Controller('borrowers')
 export class BorrowersController {
   constructor(private readonly borrowersService: BorrowersService) {}
 
   @Post()
-  create(@Body() createBorrowerDto: CreateBorrowerDto) {
+  create(
+    @Body(new ValidationPipe({ transform: true })) createBorrowerDto: CreateBorrowerDto,
+  ) {
     return this.borrowersService.create(createBorrowerDto);
   }
 
   @Get()
-  findAll() {
-    return this.borrowersService.findAll();
+  findAll(
+    @Query(new ValidationPipe({ transform: true }))
+      borrowersQueryParams: BorrowersQueryParamsDto,
+  ) {
+    return this.borrowersService.getAll(borrowersQueryParams);
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.borrowersService.findOne(+id);
+  findOne(@Param('id', new ParseIntPipe()) id: number) {
+    return this.borrowersService.getOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateBorrowerDto: UpdateBorrowerDto) {
-    return this.borrowersService.update(+id, updateBorrowerDto);
+  update(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body(new ValidationPipe({ transform: true })) updateBorrowerDto: UpdateBorrowerDto,
+  ) {
+    return this.borrowersService.update(id, updateBorrowerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.borrowersService.remove(+id);
-  }
-
-  @Post(':id/borrow')
-  borrowBook(@Param('id', ParseIntPipe) borrowerId: number, @Body() borrowBookDto: BorrowBookDto) {
-    return this.borrowersService.borrowBook(borrowerId, borrowBookDto);
-  }
-
-  @Post(':id/return')
-  returnBook(@Param('id', ParseIntPipe) borrowerId: number, @Body('exemplarId', ParseIntPipe) exemplarId: number) {
-    return this.borrowersService.returnBook(borrowerId, exemplarId);
+  remove(@Param('id', new ParseIntPipe()) id: number) {
+    return this.borrowersService.remove(id);
   }
 }

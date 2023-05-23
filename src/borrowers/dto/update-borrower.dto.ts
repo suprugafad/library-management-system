@@ -1,5 +1,5 @@
-export class UpdateBorrowerDto {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-}
+import { PartialType } from '@nestjs/mapped-types';
+
+import { CreateBorrowerDto } from "./create-borrower.dto";
+
+export class UpdateBorrowerDto extends PartialType(CreateBorrowerDto) {}
