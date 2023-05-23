@@ -5,7 +5,7 @@ export abstract class GenericRepository<T> {
 
   abstract getById(id: number): Promise<T>;
 
-  abstract create(createDto: T): Promise<T>;
+  abstract create(data: T): Promise<T>;
 
   abstract update(id: number, updateDto: Partial<T>): Promise<T>;
 

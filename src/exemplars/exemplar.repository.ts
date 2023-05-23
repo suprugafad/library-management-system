@@ -1,45 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
-import { Prisma, Exemplar } from '@prisma/client';
+import { ExemplarsModel } from './exemplars.modes';
+import { GenericRepository } from 'src/database/generic-repository';
+import { ExemplarsQueryParamsDto } from './dto/exemplars-query-params.dto';
+import { CreateExemplarDto } from './dto/create-exemplar.dto';
+import { UpdateExemplarDto } from './dto/update-exemplar.dto';
 
 @Injectable()
-export class ExemplarsRepository {
+export class ExemplarsRepository implements GenericRepository<ExemplarsModel> {
   constructor(private readonly prisma: PrismaService) {}
 
-  getById(
-    exemplarWhereUniqueInput: Prisma.ExemplarWhereUniqueInput,
-  ): Promise<Exemplar> {
-    return this.prisma.exemplar.findUniqueOrThrow({
-      where: exemplarWhereUniqueInput,
-    });
+  getById(id: number): Promise<ExemplarsModel> {
+    return this.prisma.exemplar.findUniqueOrThrow({ where: { id } });
   }
 
-  getAll(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.ExemplarWhereUniqueInput;
-    where?: Prisma.ExemplarWhereInput;
-    orderBy?: Prisma.ExemplarOrderByWithRelationInput;
-  }): Promise<Exemplar[]> {
-    return this.prisma.exemplar.findMany(params);
+  getAll({
+    skip,
+    take,
+    ...where
+  }: ExemplarsQueryParamsDto): Promise<ExemplarsModel[]> {
+    return this.prisma.exemplar.findMany({ skip, take, where });
   }
 
-  create(data: Prisma.ExemplarCreateInput): Promise<Exemplar> {
-    return this.prisma.exemplar.create({
-      data,
-    });
+  create(data: CreateExemplarDto): Promise<ExemplarsModel> {
+    return this.prisma.exemplar.create({ data });
   }
 
-  update(params: {
-    where: Prisma.ExemplarWhereUniqueInput;
-    data: Prisma.ExemplarUpdateInput;
-  }): Promise<Exemplar> {
-    return this.prisma.exemplar.update(params);
+  update(id: number, data: UpdateExemplarDto): Promise<ExemplarsModel> {
+    return this.prisma.exemplar.update({ data, where: { id } });
   }
 
-  remove(where: Prisma.ExemplarWhereUniqueInput) {
-    return this.prisma.exemplar.delete({
-      where,
-    });
+  async remove(id: number) {
+    await this.prisma.exemplar.delete({ where: { id } });
   }
 }

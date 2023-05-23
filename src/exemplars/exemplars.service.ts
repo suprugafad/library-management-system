@@ -7,29 +7,24 @@ import { ExemplarsQueryParamsDto } from './dto/exemplars-query-params.dto';
 @Injectable()
 export class ExemplarsService {
   constructor(private readonly exemplarsRepository: ExemplarsRepository) {}
-  create({ bookId, ...restExemplar }: CreateExemplarDto) {
-    return this.exemplarsRepository.create({
-      ...restExemplar,
-      Book: { connect: { id: bookId } },
-    });
+
+  create(createExemplarDto: CreateExemplarDto) {
+    return this.exemplarsRepository.create(createExemplarDto);
   }
 
-  getAll({ skip, take, ...where }: ExemplarsQueryParamsDto) {
-    return this.exemplarsRepository.getAll({ skip, take, where });
+  getAll(exemplarQueryParamDto: ExemplarsQueryParamsDto) {
+    return this.exemplarsRepository.getAll(exemplarQueryParamDto);
   }
 
   getOne(id: number) {
-    return this.exemplarsRepository.getById({ id });
+    return this.exemplarsRepository.getById(id);
   }
 
   update(id: number, updateExemplarDto: UpdateExemplarDto) {
-    return this.exemplarsRepository.update({
-      where: { id },
-      data: updateExemplarDto,
-    });
+    return this.exemplarsRepository.update(id, updateExemplarDto);
   }
 
   remove(id: number) {
-    return this.exemplarsRepository.remove({ id });
+    return this.exemplarsRepository.remove(id);
   }
 }

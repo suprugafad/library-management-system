@@ -21,7 +21,7 @@ export class ExemplarsController {
 
   @Post()
   create(
-    @Body(new ValidationPipe({ transform: true }))
+    @Body(new ValidationPipe())
     createExemplarDto: CreateExemplarDto,
   ) {
     return this.exemplarsService.create(createExemplarDto);
@@ -43,7 +43,7 @@ export class ExemplarsController {
   @Patch(':id')
   update(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body(new ValidationPipe({ transform: true }))
+    @Body(new ValidationPipe())
     updateExemplarDto: UpdateExemplarDto,
   ) {
     return this.exemplarsService.update(id, updateExemplarDto);
