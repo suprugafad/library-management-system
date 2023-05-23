@@ -21,7 +21,8 @@ export class BorrowersController {
 
   @Post()
   create(
-    @Body(new ValidationPipe({ transform: true })) createBorrowerDto: CreateBorrowerDto,
+    @Body(new ValidationPipe({ transform: true }))
+    createBorrowerDto: CreateBorrowerDto,
   ) {
     return this.borrowersService.create(createBorrowerDto);
   }
@@ -29,7 +30,7 @@ export class BorrowersController {
   @Get()
   findAll(
     @Query(new ValidationPipe({ transform: true }))
-      borrowersQueryParams: BorrowersQueryParamsDto,
+    borrowersQueryParams: BorrowersQueryParamsDto,
   ) {
     return this.borrowersService.getAll(borrowersQueryParams);
   }
@@ -42,7 +43,8 @@ export class BorrowersController {
   @Patch(':id')
   update(
     @Param('id', new ParseIntPipe()) id: number,
-    @Body(new ValidationPipe({ transform: true })) updateBorrowerDto: UpdateBorrowerDto,
+    @Body(new ValidationPipe({ transform: true }))
+    updateBorrowerDto: UpdateBorrowerDto,
   ) {
     return this.borrowersService.update(id, updateBorrowerDto);
   }

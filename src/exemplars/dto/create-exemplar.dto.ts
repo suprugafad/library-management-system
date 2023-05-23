@@ -1,4 +1,4 @@
-import { Length, IsNumberString, IsEnum, IsNumber, Min } from 'class-validator';
+import { IsEnum, IsNumber, Min } from 'class-validator';
 import { Exemplar, Status } from '@prisma/client';
 
 export class CreateExemplarDto implements Omit<Exemplar, 'id'> {

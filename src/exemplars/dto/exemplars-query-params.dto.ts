@@ -1,6 +1,6 @@
 import { Exemplar } from '@prisma/client';
 import { Transform } from 'class-transformer';
-import { IsNumber, IsNumberString, IsOptional, Min } from 'class-validator';
+import { IsNumber, IsOptional, Min } from 'class-validator';
 
 export class QueryParamsDto {
   @IsOptional()

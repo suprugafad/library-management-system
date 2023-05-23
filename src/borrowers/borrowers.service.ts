@@ -21,7 +21,10 @@ export class BorrowersService {
   }
 
   async update(id: number, updateBorrowerDto: UpdateBorrowerDto) {
-    return this.borrowersRepository.update({ where: { id }, data: updateBorrowerDto });
+    return this.borrowersRepository.update({
+      where: { id },
+      data: updateBorrowerDto,
+    });
   }
 
   async remove(id: number) {
