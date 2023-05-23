@@ -8,6 +8,8 @@ import {
   Delete,
   ParseIntPipe,
   Query,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { BorrowersService } from './borrowers.service';
 import { UpdateBorrowerDto } from './dto/update-borrower.dto';
@@ -42,6 +44,7 @@ export class BorrowersController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.borrowersService.remove(id);
   }

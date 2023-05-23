@@ -8,6 +8,8 @@ import {
   Delete,
   ParseIntPipe,
   Query,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { ExemplarsService } from './exemplars.service';
 import { CreateExemplarDto } from './dto/create-exemplar.dto';
@@ -46,6 +48,7 @@ export class ExemplarsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.exemplarsService.remove(id);
   }
