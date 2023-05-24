@@ -21,7 +21,7 @@ export class TransactionsRepository
     take,
     ...where
   }: TransactionsQueryParamsDto): Promise<GenericPagination<TransactionModel>> {
-    const total = await this.prisma.transaction.count();
+    const total = await this.prisma.transaction.count({ where });
     const data = await this.prisma.transaction.findMany({ skip, take, where });
 
     return { total, data };

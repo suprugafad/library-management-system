@@ -20,7 +20,7 @@ export class BorrowersRepository implements GenericRepository<BorrowerModel> {
     take,
     ...where
   }: BorrowersQueryParamsDto): Promise<GenericPagination<BorrowerModel>> {
-    const total = await this.prisma.borrower.count();
+    const total = await this.prisma.borrower.count({ where });
     const data = await this.prisma.borrower.findMany({ skip, take, where });
 
     return { total, data };

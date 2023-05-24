@@ -20,7 +20,7 @@ export class BooksRepository implements GenericRepository<BookModel> {
     take,
     ...where
   }: BooksQueryParamsDto): Promise<GenericPagination<BookModel>> {
-    const total = await this.prisma.book.count();
+    const total = await this.prisma.book.count({ where });
     const data = await this.prisma.book.findMany({ skip, take, where });
 
     return { total, data };

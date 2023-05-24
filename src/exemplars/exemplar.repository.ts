@@ -20,7 +20,7 @@ export class ExemplarsRepository implements GenericRepository<ExemplarModel> {
     take,
     ...where
   }: ExemplarsQueryParamsDto): Promise<GenericPagination<ExemplarModel>> {
-    const total = await this.prisma.exemplar.count();
+    const total = await this.prisma.exemplar.count({ where });
     const data = await this.prisma.exemplar.findMany({ skip, take, where });
 
     return { total, data };
