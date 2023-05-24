@@ -3,12 +3,16 @@ import { PrismaService } from 'src/database/prisma.service';
 import { TransactionModel } from './transaction.model';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionsQueryParamsDto } from './dto/transactions-query-params.dto';
+import { GenericRepository } from 'src/database/generic-repository';
+import { GenericPagination } from 'src/common/generic-pagination.model';
 
 @Injectable()
-export class TransactionsRepository {
+export class TransactionsRepository
+  implements GenericRepository<TransactionModel>
+{
   constructor(private readonly prisma: PrismaService) {}
 
-  async getById(id: number): Promise<TransactionModel> {
+  getById(id: number): Promise<TransactionModel> {
     return this.prisma.transaction.findUnique({ where: { id } });
   }
 
@@ -16,8 +20,11 @@ export class TransactionsRepository {
     skip,
     take,
     ...where
-  }: TransactionsQueryParamsDto): Promise<TransactionModel[]> {
-    return await this.prisma.transaction.findMany({ skip, take, where });
+  }: TransactionsQueryParamsDto): Promise<GenericPagination<TransactionModel>> {
+    const total = await this.prisma.transaction.count({ where });
+    const data = await this.prisma.transaction.findMany({ skip, take, where });
+
+    return { total, data };
   }
 
   create(
@@ -30,7 +37,7 @@ export class TransactionsRepository {
     return this.prisma.transaction.update({ data, where: { id } });
   }
 
-  remove(id: number) {
-    return this.prisma.transaction.delete({ where: { id } });
+  async remove(id: number) {
+    await this.prisma.transaction.delete({ where: { id } });
   }
 }

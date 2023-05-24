@@ -5,6 +5,7 @@ import { BorrowerModel } from './borrower.model';
 import { BorrowersQueryParamsDto } from './dto/borrowers-query-params.dto';
 import { CreateBorrowerDto } from './dto/create-borrower.dto';
 import { UpdateBorrowerDto } from './dto/update-borrower.dto';
+import { GenericPagination } from 'src/common/generic-pagination.model';
 
 @Injectable()
 export class BorrowersRepository implements GenericRepository<BorrowerModel> {
@@ -14,12 +15,15 @@ export class BorrowersRepository implements GenericRepository<BorrowerModel> {
     return this.prisma.borrower.findUniqueOrThrow({ where: { id } });
   }
 
-  getAll({
+  async getAll({
     skip,
     take,
     ...where
-  }: BorrowersQueryParamsDto): Promise<BorrowerModel[]> {
-    return this.prisma.borrower.findMany({ skip, take, where });
+  }: BorrowersQueryParamsDto): Promise<GenericPagination<BorrowerModel>> {
+    const total = await this.prisma.borrower.count({ where });
+    const data = await this.prisma.borrower.findMany({ skip, take, where });
+
+    return { total, data };
   }
 
   create(data: CreateBorrowerDto): Promise<BorrowerModel> {
