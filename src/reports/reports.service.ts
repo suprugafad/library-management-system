@@ -1,65 +1,66 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBookReportDto } from './dto/create-book-report.dto';
-import { Exemplar } from '@prisma/client';
 import { CreateBorrowerReportDto } from './dto/create-borrower-report.dto';
 import { CreateBorrowedExemplarReportDto } from './dto/create-borrowed-exemplar-report.dto';
 import { BooksService } from 'src/books/books.service';
 import { ExemplarsService } from 'src/exemplars/exemplars.service';
 import { TransactionsService } from 'src/transactions/transactions.service';
 import { BorrowersService } from 'src/borrowers/borrowers.service';
+import { ExemplarModel } from 'src/exemplars/exemplar.model';
+import { BookModel } from 'src/books/book.model';
+import { ExemplarStatus } from 'src/exemplars/enum/exemplar-status.enum';
+import { BooksReportService } from './books-report.service';
 
 @Injectable()
 export class ReportsService {
   constructor(
+    private readonly booksReportService: BooksReportService,
     private readonly booksService: BooksService,
     private readonly exemplarService: ExemplarsService,
     private readonly transactionsService: TransactionsService,
     private readonly borrowersService: BorrowersService,
   ) {}
 
-  async generateBookReport(): Promise<CreateBookReportDto[]> {
-    return this.generateExemplarsReport(() => true);
+  async generateBookReport() {
+    return this.booksReportService.generateBooksReport();
+    // return this.generateExemplarsReport(() => true);
   }
 
   async generateBorrowedExemplarsReport(): Promise<CreateBookReportDto[]> {
     return this.generateExemplarsReport(
-      (exemplar) => exemplar.status === 'Borrowed',
+      (exemplar) => exemplar.status === ExemplarStatus.Borrowed,
     );
   }
 
   async generateAvailableExemplarsReport(): Promise<CreateBookReportDto[]> {
     return this.generateExemplarsReport(
-      (exemplar) => exemplar.status === 'Available',
+      (exemplar) => exemplar.status === ExemplarStatus.Available,
     );
   }
 
-  private async generateExemplarsReport(
-    exemplarFilter: (exemplar: Exemplar) => boolean,
-  ): Promise<CreateBookReportDto[]> {
-    const books = await this.booksService.getAll({
+  private getAllBooks() {
+    return this.booksService.getAll({
       skip: 0,
-      take: undefined,
+      take: null,
     });
+  }
 
-    return Promise.all(
-      books.map(async (book) => {
-        const exemplars = await this.exemplarService.getAll({
-          skip: 0,
-          take: undefined,
-          bookId: book.id,
-        });
-        const filteredExemplars = exemplars.filter(exemplarFilter);
+  private async generateExemplarsReport(
+    exemplarFilter: (exemplar: ExemplarModel) => boolean,
+  ): Promise<CreateBookReportDto[]> {
+    const books = await this.getAllBooks();
 
-        return {
-          id: book.id,
-          isbn: book.isbn,
-          title: book.title,
-          author: book.author,
-          publicationYear: book.publicationYear,
-          exemplars: filteredExemplars,
-        };
-      }),
-    );
+    const populateBookWithExemplars = async (book: BookModel) => {
+      const allExemplars = await this.exemplarService.findMany({
+        bookId: book.id,
+      });
+
+      const exemplars = allExemplars.filter(exemplarFilter);
+
+      return { ...book, exemplars };
+    };
+
+    return Promise.all(books.map(populateBookWithExemplars));
   }
 
   async generateBorrowerReport(): Promise<CreateBorrowerReportDto[]> {
@@ -101,21 +102,14 @@ export class ReportsService {
     });
 
     return Promise.all(
-      overdueTransactions.map(async (transaction) => {
-        const exemplar = await this.exemplarService.getOne(
-          transaction.exemplarId,
-        );
-        const borrower = await this.borrowersService.getOne(
-          transaction.borrowerId,
-        );
+      overdueTransactions.map(
+        async ({ exemplarId, borrowerId, borrowedAt, dueToDate }) => {
+          const exemplar = await this.exemplarService.getOne(exemplarId);
+          const borrower = await this.borrowersService.getOne(borrowerId);
 
-        return {
-          exemplar: exemplar,
-          borrower: borrower,
-          borrowedAt: transaction.borrowedAt,
-          dueToDate: transaction.dueToDate,
-        };
-      }),
+          return { exemplar, borrower, borrowedAt, dueToDate };
+        },
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import { GenericRepository } from 'src/database/generic-repository';
 import { ExemplarsQueryParamsDto } from './dto/exemplars-query-params.dto';
 import { CreateExemplarDto } from './dto/create-exemplar.dto';
 import { UpdateExemplarDto } from './dto/update-exemplar.dto';
+import { ExemplarFindManyParams } from './interface/exemplar-find-many-params.interface';
 
 @Injectable()
 export class ExemplarsRepository implements GenericRepository<ExemplarModel> {
@@ -32,5 +33,9 @@ export class ExemplarsRepository implements GenericRepository<ExemplarModel> {
 
   async remove(id: number) {
     await this.prisma.exemplar.delete({ where: { id } });
+  }
+
+  findMany(where: ExemplarFindManyParams) {
+    return this.prisma.exemplar.findMany({ where });
   }
 }

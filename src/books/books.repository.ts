@@ -5,6 +5,7 @@ import { BookModel } from './book.model';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { CreateBookDto } from './dto/create-book.dto';
 import { BooksQueryParamsDto } from './dto/books-query-params.dto';
+import { BooksFindManyParams } from './interface/books-find-many-params.interface';
 
 @Injectable()
 export class BooksRepository implements GenericRepository<BookModel> {
@@ -28,5 +29,9 @@ export class BooksRepository implements GenericRepository<BookModel> {
 
   async remove(id: number) {
     await this.prisma.book.delete({ where: { id } });
+  }
+
+  findMany({ select }: BooksFindManyParams) {
+    return this.prisma.book.findMany({ select });
   }
 }

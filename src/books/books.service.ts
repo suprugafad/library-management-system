@@ -3,6 +3,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { BooksRepository } from './books.repository';
 import { BooksQueryParamsDto } from './dto/books-query-params.dto';
+import { BooksFindManyParams } from './interface/books-find-many-params.interface';
 
 @Injectable()
 export class BooksService {
@@ -25,5 +26,9 @@ export class BooksService {
 
   remove(id: number) {
     return this.booksRepository.remove(id);
+  }
+
+  findMany(params: BooksFindManyParams) {
+    return this.booksRepository.findMany(params);
   }
 }
