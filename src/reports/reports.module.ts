@@ -2,20 +2,20 @@ import { Module } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { ReportsController } from './reports.controller';
 import { PrismaModule } from 'src/database/prisma.module';
-import { BooksRepository } from '../books/books.repository';
-import { ExemplarsRepository } from '../exemplars/exemplar.repository';
-import { TransactionsRepository } from '../transactions/transactions.repository';
-import { BorrowersRepository } from '../borrowers/borrowers.repository';
+import { BooksService } from 'src/books/books.service';
+import { ExemplarsService } from 'src/exemplars/exemplars.service';
+import { TransactionsService } from 'src/transactions/transactions.service';
+import { BorrowersService } from 'src/borrowers/borrowers.service';
 
 @Module({
   imports: [PrismaModule],
   controllers: [ReportsController],
   providers: [
     ReportsService,
-    BooksRepository,
-    ExemplarsRepository,
-    TransactionsRepository,
-    BorrowersRepository,
+    BooksService,
+    ExemplarsService,
+    TransactionsService,
+    BorrowersService,
   ],
 })
 export class ReportsModule {}

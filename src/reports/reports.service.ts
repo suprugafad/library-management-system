@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { BooksRepository } from '../books/books.repository';
-import { ExemplarsRepository } from '../exemplars/exemplar.repository';
-import { TransactionsRepository } from '../transactions/transactions.repository';
-import { BorrowersRepository } from '../borrowers/borrowers.repository';
 import { CreateBookReportDto } from './dto/create-book-report.dto';
 import { Exemplar } from '@prisma/client';
 import { CreateBorrowerReportDto } from './dto/create-borrower-report.dto';
 import { CreateBorrowedExemplarReportDto } from './dto/create-borrowed-exemplar-report.dto';
+import { BooksService } from 'src/books/books.service';
+import { ExemplarsService } from 'src/exemplars/exemplars.service';
+import { TransactionsService } from 'src/transactions/transactions.service';
+import { BorrowersService } from 'src/borrowers/borrowers.service';
 
 @Injectable()
 export class ReportsService {
   constructor(
-    private readonly booksRepository: BooksRepository,
-    private readonly exemplarsRepository: ExemplarsRepository,
-    private readonly transactionsRepository: TransactionsRepository,
-    private readonly borrowersRepository: BorrowersRepository,
+    private readonly booksService: BooksService,
+    private readonly exemplarService: ExemplarsService,
+    private readonly transactionsService: TransactionsService,
+    private readonly borrowersService: BorrowersService,
   ) {}
 
   async generateBookReport(): Promise<CreateBookReportDto[]> {
@@ -36,14 +36,14 @@ export class ReportsService {
   private async generateExemplarsReport(
     exemplarFilter: (exemplar: Exemplar) => boolean,
   ): Promise<CreateBookReportDto[]> {
-    const books = await this.booksRepository.getAll({
+    const books = await this.booksService.getAll({
       skip: 0,
       take: undefined,
     });
 
     return Promise.all(
       books.map(async (book) => {
-        const exemplars = await this.exemplarsRepository.getAll({
+        const exemplars = await this.exemplarService.getAll({
           skip: 0,
           take: undefined,
           bookId: book.id,
@@ -63,14 +63,14 @@ export class ReportsService {
   }
 
   async generateBorrowerReport(): Promise<CreateBorrowerReportDto[]> {
-    const borrowers = await this.borrowersRepository.getAll({
+    const borrowers = await this.borrowersService.getAll({
       skip: 0,
       take: undefined,
     });
 
     return Promise.all(
       borrowers.map(async (borrower) => {
-        const transactions = await this.transactionsRepository.getAll({
+        const transactions = await this.transactionsService.getAll({
           skip: 0,
           take: undefined,
           borrowerId: borrower.id,
@@ -91,7 +91,7 @@ export class ReportsService {
     CreateBorrowedExemplarReportDto[]
   > {
     const now = new Date();
-    const allTransactions = await this.transactionsRepository.getAll({
+    const allTransactions = await this.transactionsService.getAll({
       skip: 0,
       take: undefined,
     });
@@ -102,10 +102,10 @@ export class ReportsService {
 
     return Promise.all(
       overdueTransactions.map(async (transaction) => {
-        const exemplar = await this.exemplarsRepository.getById(
+        const exemplar = await this.exemplarService.getOne(
           transaction.exemplarId,
         );
-        const borrower = await this.borrowersRepository.getById(
+        const borrower = await this.borrowersService.getOne(
           transaction.borrowerId,
         );
 

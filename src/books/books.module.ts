@@ -8,5 +8,6 @@ import { PrismaModule } from 'src/database/prisma.module';
   imports: [PrismaModule],
   controllers: [BooksController],
   providers: [BooksService, BooksRepository],
+  exports: [BooksService],
 })
 export class BooksModule {}
