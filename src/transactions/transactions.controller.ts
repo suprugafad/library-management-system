@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
@@ -23,7 +24,7 @@ export class TransactionsController {
   }
 
   @Get()
-  findAll(@Param() transactionsQueryParams: TransactionsQueryParamsDto) {
+  findAll(@Query() transactionsQueryParams: TransactionsQueryParamsDto) {
     return this.transactionsService.getAll(transactionsQueryParams);
   }
 
