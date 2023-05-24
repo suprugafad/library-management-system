@@ -7,171 +7,648 @@
 	},
 	"item": [
 		{
-			"name": "get all books",
-			"event": [
+			"name": "Books",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/books?publicationYear=1712",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"books"
-					],
-					"query": [
+					"name": "get all books",
+					"event": [
 						{
-							"key": "publicationYear",
-							"value": "1712"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "publicationYear",
+									"value": "1800",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "some title",
+									"disabled": true
+								},
+								{
+									"key": "author",
+									"value": "Keaton Reinger",
+									"disabled": true
+								},
+								{
+									"key": "isbn",
+									"value": "123412341234",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"bookId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
 						},
 						{
-							"key": "title",
-							"value": "some title",
-							"disabled": true
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// pm.collectionVariables.set (\"randomISBN\", _.random (1000000000,));",
+									"pm.collectionVariables.set (\"randomYear\", _.random (1600,2023));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isbn\": \"927{{$timestamp}}\",\n    \"title\": \"{{$randomPhrase}}\",\n    \"author\": \"{{$randomFirstName}} {{$randomLastName}}\",\n    \"publicationYear\": {{randomYear}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books/{{bookId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books",
+								"{{bookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books/{{bookId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books",
+								"{{bookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"publicationYear\": 2000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/books/{{bookId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books",
+								"{{bookId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exemplar",
+			"item": [
+				{
+					"name": "get all exemplars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exemplars",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"exemplarId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
 						},
 						{
-							"key": "author",
-							"value": "Keaton Reinger",
-							"disabled": true
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// pm.collectionVariables.set (\"randomISBN\", _.random (1000000000,));",
+									"pm.collectionVariables.set (\"randomYear\", _.random (1600,2023));"
+								],
+								"type": "text/javascript"
+							}
 						}
-					]
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bookId\": {{bookId}},\n    \"status\": \"Available\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/exemplars",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exemplars/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exemplars/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"Borrowed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/exemplars/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exemplars",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "create",
-			"event": [
+			"name": "Borrowers",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const { id } = JSON.parse(responseBody);",
-							"",
-							"if (id) {",
-							"  pm.collectionVariables.set(\"bookId\", id);",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"// pm.collectionVariables.set (\"randomISBN\", _.random (1000000000,));",
-							"pm.collectionVariables.set (\"randomYear\", _.random (1600,2023));"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"isbn\": \"927{{$timestamp}}\",\n    \"title\": \"{{$randomPhrase}}\",\n    \"author\": \"{{$randomFirstName}} {{$randomLastName}}\",\n    \"publicationYear\": \"{{randomYear}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/books",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"books"
-					],
-					"query": [
+					"name": "Get all borrowers",
+					"event": [
 						{
-							"key": "",
-							"value": null,
-							"disabled": true
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get by id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/books/{{bookId}}",
-					"host": [
-						"{{base_url}}"
 					],
-					"path": [
-						"books",
-						"{{bookId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "delete",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/books/{{bookId}}",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"books",
-						"{{bookId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "update",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"publicationYear\": \"2023\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/borrowers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"borrowers"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/books/{{bookId}}",
-					"host": [
-						"{{base_url}}"
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"borrowerId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"path": [
-						"books",
-						"{{bookId}}"
-					]
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{$randomLastName}}\",\n    \"email\": \"{{$randomEmail}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/borrowers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"borrowers"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/borrowers/{{borrowerId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"borrowers",
+								"{{borrowerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/borrowers/{{borrowerId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"borrowers",
+								"{{borrowerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{$randomLastName}}\",\n    \"email\": \"{{$randomEmail}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/borrower/{{borrowerId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"borrower",
+								"{{borrowerId}}"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Get All transactions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"transactionId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"dueToDate\", new Date().set);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"borrowerId\": {{borrowerId}},\n    \"exemplarId\": {{exemplarId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/transactions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/{{transactionId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"{{transactionId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/{{transactionId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"{{transactionId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"returnedAt\": \"2023-07-09\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/transactions/{{transactionId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"{{transactionId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -210,6 +687,22 @@
 		},
 		{
 			"key": "randomYear",
+			"value": ""
+		},
+		{
+			"key": "borrowerId",
+			"value": ""
+		},
+		{
+			"key": "exemplarId",
+			"value": ""
+		},
+		{
+			"key": "dueToDate",
+			"value": ""
+		},
+		{
+			"key": "transactionId",
 			"value": ""
 		}
 	]
