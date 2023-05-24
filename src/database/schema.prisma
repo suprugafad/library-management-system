@@ -22,15 +22,15 @@ model Borrower {
   firstName   String        @db.VarChar(255)
   lastName    String        @db.VarChar(255)
   email       String        @unique @db.VarChar(255)
-  transaction Transaction[]
+  transactions Transaction[]
 }
 
 model Exemplar {
   id Int           @id @default(autoincrement())
   bookId      Int
   status      Status
-  Book        Book          @relation(fields: [bookId], references: [id])
-  transaction Transaction[]
+  book        Book          @relation(fields: [bookId], references: [id])
+  transactions Transaction[]
 }
 
 model Transaction {
