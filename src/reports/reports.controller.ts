@@ -1,8 +1,8 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get } from '@nestjs/common';
 import { ReportsService } from './reports.service';
-import { CreateBookReportDto } from "./dto/create-book-report.dto";
-import { CreateBorrowerReportDto } from "./dto/create-borrower-report.dto";
-import { CreateBorrowedExemplarReportDto } from "./dto/create-borrowed-exemplar-report.dto";
+import { CreateBookReportDto } from './dto/create-book-report.dto';
+import { CreateBorrowerReportDto } from './dto/create-borrower-report.dto';
+import { CreateBorrowedExemplarReportDto } from './dto/create-borrowed-exemplar-report.dto';
 
 @Controller('reports')
 export class ReportsController {

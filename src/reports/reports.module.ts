@@ -19,4 +19,3 @@ import { BorrowersRepository } from '../borrowers/borrowers.repository';
   ],
 })
 export class ReportsModule {}
-

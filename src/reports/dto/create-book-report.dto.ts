@@ -1,4 +1,4 @@
-import { CreateExemplarDto } from "../../exemplars/dto/create-exemplar.dto";
+import { CreateExemplarDto } from '../../exemplars/dto/create-exemplar.dto';
 
 export class CreateBookReportDto {
   id: number;
