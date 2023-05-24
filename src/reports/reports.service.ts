@@ -21,6 +21,8 @@ export class ReportsService {
     private readonly borrowersService: BorrowersService,
   ) {}
 
+  // TODO: REMOVE UNUSED CODE
+
   async generateBookReport() {
     return this.booksReportService.generateBooksReport();
     // return this.generateExemplarsReport(() => true);
@@ -48,7 +50,7 @@ export class ReportsService {
   private async generateExemplarsReport(
     exemplarFilter: (exemplar: ExemplarModel) => boolean,
   ): Promise<CreateBookReportDto[]> {
-    const books = await this.getAllBooks();
+    const { data: books } = await this.getAllBooks();
 
     const populateBookWithExemplars = async (book: BookModel) => {
       const allExemplars = await this.exemplarService.findMany({
@@ -64,14 +66,14 @@ export class ReportsService {
   }
 
   async generateBorrowerReport(): Promise<CreateBorrowerReportDto[]> {
-    const borrowers = await this.borrowersService.getAll({
+    const { data: borrowers } = await this.borrowersService.getAll({
       skip: 0,
       take: undefined,
     });
 
     return Promise.all(
       borrowers.map(async (borrower) => {
-        const transactions = await this.transactionsService.getAll({
+        const { data: transactions } = await this.transactionsService.getAll({
           skip: 0,
           take: undefined,
           borrowerId: borrower.id,
@@ -92,12 +94,12 @@ export class ReportsService {
     CreateBorrowedExemplarReportDto[]
   > {
     const now = new Date();
-    const allTransactions = await this.transactionsService.getAll({
+    const { data: transactions } = await this.transactionsService.getAll({
       skip: 0,
       take: undefined,
     });
 
-    const overdueTransactions = allTransactions.filter((transaction) => {
+    const overdueTransactions = transactions.filter((transaction) => {
       return transaction.returnedAt === null && transaction.dueToDate <= now;
     });
 

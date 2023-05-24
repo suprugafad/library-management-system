@@ -1,7 +1,10 @@
+import { GenericPagination } from 'src/common/generic-pagination.model';
 import { PaginationQueryParamsDto } from 'src/common/pagination-query-params.dto';
 
 export abstract class GenericRepository<T> {
-  abstract getAll(queryParams: PaginationQueryParamsDto & any): Promise<T[]>;
+  abstract getAll(
+    queryParams: PaginationQueryParamsDto & any,
+  ): Promise<GenericPagination<T>>;
 
   abstract getById(id: number): Promise<T>;
 

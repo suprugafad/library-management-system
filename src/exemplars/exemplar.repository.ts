@@ -6,6 +6,7 @@ import { ExemplarsQueryParamsDto } from './dto/exemplars-query-params.dto';
 import { CreateExemplarDto } from './dto/create-exemplar.dto';
 import { UpdateExemplarDto } from './dto/update-exemplar.dto';
 import { ExemplarFindManyParams } from './interface/exemplar-find-many-params.interface';
+import { GenericPagination } from 'src/common/generic-pagination.model';
 
 @Injectable()
 export class ExemplarsRepository implements GenericRepository<ExemplarModel> {
@@ -15,12 +16,15 @@ export class ExemplarsRepository implements GenericRepository<ExemplarModel> {
     return this.prisma.exemplar.findUniqueOrThrow({ where: { id } });
   }
 
-  getAll({
+  async getAll({
     skip,
     take,
     ...where
-  }: ExemplarsQueryParamsDto): Promise<ExemplarModel[]> {
-    return this.prisma.exemplar.findMany({ skip, take, where });
+  }: ExemplarsQueryParamsDto): Promise<GenericPagination<ExemplarModel>> {
+    const total = await this.prisma.exemplar.count({ where });
+    const data = await this.prisma.exemplar.findMany({ skip, take, where });
+
+    return { total, data };
   }
 
   create(data: CreateExemplarDto): Promise<ExemplarModel> {

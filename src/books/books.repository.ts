@@ -6,6 +6,7 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import { CreateBookDto } from './dto/create-book.dto';
 import { BooksQueryParamsDto } from './dto/books-query-params.dto';
 import { BooksFindManyParams } from './interface/books-find-many-params.interface';
+import { GenericPagination } from 'src/common/generic-pagination.model';
 
 @Injectable()
 export class BooksRepository implements GenericRepository<BookModel> {
@@ -15,8 +16,15 @@ export class BooksRepository implements GenericRepository<BookModel> {
     return this.prisma.book.findUniqueOrThrow({ where: { id } });
   }
 
-  getAll({ skip, take, ...where }: BooksQueryParamsDto): Promise<BookModel[]> {
-    return this.prisma.book.findMany({ skip, take, where });
+  async getAll({
+    skip,
+    take,
+    ...where
+  }: BooksQueryParamsDto): Promise<GenericPagination<BookModel>> {
+    const total = await this.prisma.book.count({ where });
+    const data = await this.prisma.book.findMany({ skip, take, where });
+
+    return { total, data };
   }
 
   async create(data: CreateBookDto): Promise<BookModel> {
