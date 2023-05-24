@@ -1,76 +1,79 @@
 import { Injectable } from '@nestjs/common';
-import { BooksRepository } from '../books/books.repository';
-import { ExemplarsRepository } from '../exemplars/exemplar.repository';
-import { TransactionsRepository } from '../transactions/transactions.repository';
-import { BorrowersRepository } from '../borrowers/borrowers.repository';
 import { CreateBookReportDto } from './dto/create-book-report.dto';
-import { Exemplar } from '@prisma/client';
 import { CreateBorrowerReportDto } from './dto/create-borrower-report.dto';
 import { CreateBorrowedExemplarReportDto } from './dto/create-borrowed-exemplar-report.dto';
+import { BooksService } from 'src/books/books.service';
+import { ExemplarsService } from 'src/exemplars/exemplars.service';
+import { TransactionsService } from 'src/transactions/transactions.service';
+import { BorrowersService } from 'src/borrowers/borrowers.service';
+import { ExemplarModel } from 'src/exemplars/exemplar.model';
+import { BookModel } from 'src/books/book.model';
+import { ExemplarStatus } from 'src/exemplars/enum/exemplar-status.enum';
+import { BooksReportService } from './books-report.service';
 
 @Injectable()
 export class ReportsService {
   constructor(
-    private readonly booksRepository: BooksRepository,
-    private readonly exemplarsRepository: ExemplarsRepository,
-    private readonly transactionsRepository: TransactionsRepository,
-    private readonly borrowersRepository: BorrowersRepository,
+    private readonly booksReportService: BooksReportService,
+    private readonly booksService: BooksService,
+    private readonly exemplarService: ExemplarsService,
+    private readonly transactionsService: TransactionsService,
+    private readonly borrowersService: BorrowersService,
   ) {}
 
-  async generateBookReport(): Promise<CreateBookReportDto[]> {
-    return this.generateExemplarsReport(() => true);
+  // TODO: REMOVE UNUSED CODE
+
+  async generateBookReport() {
+    return this.booksReportService.generateBooksReport();
+    // return this.generateExemplarsReport(() => true);
   }
 
   async generateBorrowedExemplarsReport(): Promise<CreateBookReportDto[]> {
     return this.generateExemplarsReport(
-      (exemplar) => exemplar.status === 'Borrowed',
+      (exemplar) => exemplar.status === ExemplarStatus.Borrowed,
     );
   }
 
   async generateAvailableExemplarsReport(): Promise<CreateBookReportDto[]> {
     return this.generateExemplarsReport(
-      (exemplar) => exemplar.status === 'Available',
+      (exemplar) => exemplar.status === ExemplarStatus.Available,
     );
+  }
+
+  private getAllBooks() {
+    return this.booksService.getAll({
+      skip: 0,
+      take: null,
+    });
   }
 
   private async generateExemplarsReport(
-    exemplarFilter: (exemplar: Exemplar) => boolean,
+    exemplarFilter: (exemplar: ExemplarModel) => boolean,
   ): Promise<CreateBookReportDto[]> {
-    const books = await this.booksRepository.getAll({
-      skip: 0,
-      take: undefined,
-    });
+    const { data: books } = await this.getAllBooks();
 
-    return Promise.all(
-      books.map(async (book) => {
-        const exemplars = await this.exemplarsRepository.getAll({
-          skip: 0,
-          take: undefined,
-          bookId: book.id,
-        });
-        const filteredExemplars = exemplars.filter(exemplarFilter);
+    const populateBookWithExemplars = async (book: BookModel) => {
+      const allExemplars = await this.exemplarService.findMany({
+        bookId: book.id,
+      });
 
-        return {
-          id: book.id,
-          isbn: book.isbn,
-          title: book.title,
-          author: book.author,
-          publicationYear: book.publicationYear,
-          exemplars: filteredExemplars,
-        };
-      }),
-    );
+      const exemplars = allExemplars.filter(exemplarFilter);
+
+      return { ...book, exemplars };
+    };
+
+    return Promise.all(books.map(populateBookWithExemplars));
   }
 
   async generateBorrowerReport(): Promise<CreateBorrowerReportDto[]> {
-    const borrowers = await this.borrowersRepository.getAll({
+    const { data: borrowers } = await this.borrowersService.getAll({
       skip: 0,
       take: undefined,
     });
 
     return Promise.all(
       borrowers.map(async (borrower) => {
-        const transactions = await this.transactionsRepository.getAll({
+        const { data: transactions } = await this.transactionsService.getAll({
           skip: 0,
           take: undefined,
           borrowerId: borrower.id,
@@ -91,31 +94,24 @@ export class ReportsService {
     CreateBorrowedExemplarReportDto[]
   > {
     const now = new Date();
-    const allTransactions = await this.transactionsRepository.getAll({
+    const { data: transactions } = await this.transactionsService.getAll({
       skip: 0,
       take: undefined,
     });
 
-    const overdueTransactions = allTransactions.filter((transaction) => {
+    const overdueTransactions = transactions.filter((transaction) => {
       return transaction.returnedAt === null && transaction.dueToDate <= now;
     });
 
     return Promise.all(
-      overdueTransactions.map(async (transaction) => {
-        const exemplar = await this.exemplarsRepository.getById(
-          transaction.exemplarId,
-        );
-        const borrower = await this.borrowersRepository.getById(
-          transaction.borrowerId,
-        );
+      overdueTransactions.map(
+        async ({ exemplarId, borrowerId, borrowedAt, dueToDate }) => {
+          const exemplar = await this.exemplarService.getOne(exemplarId);
+          const borrower = await this.borrowersService.getOne(borrowerId);
 
-        return {
-          exemplar: exemplar,
-          borrower: borrower,
-          borrowedAt: transaction.borrowedAt,
-          dueToDate: transaction.dueToDate,
-        };
-      }),
+          return { exemplar, borrower, borrowedAt, dueToDate };
+        },
+      ),
     );
   }
 }

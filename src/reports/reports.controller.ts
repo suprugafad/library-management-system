@@ -9,7 +9,7 @@ export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
   @Get('books')
-  getBookReport(): Promise<CreateBookReportDto[]> {
+  getBookReport() {
     return this.reportsService.generateBookReport();
   }
 
