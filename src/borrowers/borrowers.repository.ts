@@ -6,6 +6,7 @@ import { BorrowersQueryParamsDto } from './dto/borrowers-query-params.dto';
 import { CreateBorrowerDto } from './dto/create-borrower.dto';
 import { UpdateBorrowerDto } from './dto/update-borrower.dto';
 import { GenericPagination } from 'src/common/generic-pagination.model';
+import { BorrowersFindManyParams } from './interface/borrowers-find-many-params.interface';
 
 @Injectable()
 export class BorrowersRepository implements GenericRepository<BorrowerModel> {
@@ -36,5 +37,9 @@ export class BorrowersRepository implements GenericRepository<BorrowerModel> {
 
   async remove(id: number) {
     await this.prisma.borrower.delete({ where: { id } });
+  }
+
+  findMany({ select }: BorrowersFindManyParams) {
+    return this.prisma.borrower.findMany({ select });
   }
 }

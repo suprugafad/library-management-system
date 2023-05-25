@@ -4,6 +4,7 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionsRepository } from './transactions.repository';
 import { TransactionsQueryParamsDto } from './dto/transactions-query-params.dto';
 import { DUE_TO_TERM_IN_DAYS } from 'src/config/constants';
+import { TransactionsFindManyParams } from './interace/transactions-find-many-params.interface';
 
 @Injectable()
 export class TransactionsService {
@@ -38,5 +39,9 @@ export class TransactionsService {
 
   remove(id: number) {
     return this.transactionsRepository.remove(id);
+  }
+
+  findMany(params: TransactionsFindManyParams) {
+    return this.transactionsRepository.findMany(params);
   }
 }

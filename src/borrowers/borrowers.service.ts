@@ -3,6 +3,7 @@ import { BorrowersRepository } from './borrowers.repository';
 import { UpdateBorrowerDto } from './dto/update-borrower.dto';
 import { CreateBorrowerDto } from './dto/create-borrower.dto';
 import { BorrowersQueryParamsDto } from './dto/borrowers-query-params.dto';
+import { BorrowersFindManyParams } from './interface/borrowers-find-many-params.interface';
 
 @Injectable()
 export class BorrowersService {
@@ -26,5 +27,9 @@ export class BorrowersService {
 
   remove(id: number) {
     return this.borrowersRepository.remove(id);
+  }
+
+  findMany(params: BorrowersFindManyParams) {
+    return this.borrowersRepository.findMany(params);
   }
 }
