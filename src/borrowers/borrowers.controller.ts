@@ -21,8 +21,10 @@ export class BorrowersController {
   constructor(private readonly borrowersService: BorrowersService) {}
 
   @Post()
-  create(@Body() createBorrowerDto: CreateBorrowerDto) {
-    return this.borrowersService.create(createBorrowerDto);
+  async create(@Body() createBorrowerDto: CreateBorrowerDto) {
+    const borrower = await this.borrowersService.create(createBorrowerDto);
+
+    return { data: [borrower] };
   }
 
   @Get()
@@ -31,21 +33,24 @@ export class BorrowersController {
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseIntPipe()) id: number) {
-    return this.borrowersService.getOne(id);
+  async findOne(@Param('id', new ParseIntPipe()) id: number) {
+    const borrower = await this.borrowersService.getOne(id);
+    return { data: [borrower] };
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id', new ParseIntPipe()) id: number,
     @Body() updateBorrowerDto: UpdateBorrowerDto,
   ) {
-    return this.borrowersService.update(id, updateBorrowerDto);
+    const borrower = await this.borrowersService.update(id, updateBorrowerDto);
+
+    return { data: [borrower] };
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id', new ParseIntPipe()) id: number) {
-    return this.borrowersService.remove(id);
+  async remove(@Param('id', new ParseIntPipe()) id: number) {
+    await this.borrowersService.remove(id);
   }
 }
