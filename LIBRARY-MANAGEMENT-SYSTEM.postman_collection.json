@@ -28,7 +28,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books",
+							"raw": "{{base_url}}/books?author=Kennedi Carter",
 							"host": [
 								"{{base_url}}"
 							],
@@ -48,8 +48,7 @@
 								},
 								{
 									"key": "author",
-									"value": "Keaton Reinger",
-									"disabled": true
+									"value": "Kennedi Carter"
 								},
 								{
 									"key": "isbn",
@@ -68,10 +67,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const { id } = JSON.parse(responseBody);",
+									"const { data: bookArray } = JSON.parse(responseBody);",
 									"",
-									"if (id) {",
-									"  pm.collectionVariables.set(\"bookId\", id);",
+									"if (bookArray.length) {",
+									"  const [book] = bookArray;",
+									"",
+									"  pm.collectionVariables.set(\"bookId\", book.id);",
 									"}"
 								],
 								"type": "text/javascript"
@@ -212,6 +213,13 @@
 							],
 							"path": [
 								"exemplars"
+							],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "7",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -224,10 +232,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const { id } = JSON.parse(responseBody);",
+									"const { data: exemplarArray } = JSON.parse(responseBody);",
 									"",
-									"if (id) {",
-									"  pm.collectionVariables.set(\"exemplarId\", id);",
+									"if (exemplarArray.length) {",
+									"  const [exemplar] = exemplarArray;",
+									"  pm.collectionVariables.set(\"exemplarId\", exemplar.id);",
 									"}"
 								],
 								"type": "text/javascript"
@@ -380,10 +389,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const { id } = JSON.parse(responseBody);",
+									"const { data: borrowersArray } = JSON.parse(responseBody);",
 									"",
-									"if (id) {",
-									"  pm.collectionVariables.set(\"borrowerId\", id);",
+									"if (borrowersArray.length) {",
+									"  const [borrower] = borrowersArray;",
+									"  pm.collectionVariables.set(\"borrowerId\", borrower.id);",
 									"}"
 								],
 								"type": "text/javascript"
@@ -481,12 +491,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/borrower/{{borrowerId}}",
+							"raw": "{{base_url}}/borrowers/{{borrowerId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"borrower",
+								"borrowers",
 								"{{borrowerId}}"
 							]
 						}
@@ -535,10 +545,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const { id } = JSON.parse(responseBody);",
+									"const { data: transactionsArray } = JSON.parse(responseBody);",
 									"",
-									"if (id) {",
-									"  pm.collectionVariables.set(\"transactionId\", id);",
+									"if (transactionsArray.length) {",
+									"  const [transaction] = transactionsArray;",
+									"  pm.collectionVariables.set(\"transactionId\", transaction.id);",
 									"}"
 								],
 								"type": "text/javascript"
@@ -643,6 +654,47 @@
 							"path": [
 								"transactions",
 								"{{transactionId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "books report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reports/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reports",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrowed",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reports/borrowers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reports",
+								"borrowers"
 							]
 						}
 					},
