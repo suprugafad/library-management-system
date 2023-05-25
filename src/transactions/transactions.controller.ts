@@ -19,8 +19,12 @@ export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionsService.create(createTransactionDto);
+  async create(@Body() createTransactionDto: CreateTransactionDto) {
+    const transaction = await this.transactionsService.create(
+      createTransactionDto,
+    );
+
+    return { data: [transaction] };
   }
 
   @Get()
@@ -29,20 +33,27 @@ export class TransactionsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseIntPipe()) id: number) {
-    return this.transactionsService.getOne(id);
+  async findOne(@Param('id', new ParseIntPipe()) id: number) {
+    const transaction = await this.transactionsService.getOne(id);
+
+    return { data: [transaction] };
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id', new ParseIntPipe()) id: number,
     @Body() updateTransactionDto: UpdateTransactionDto,
   ) {
-    return this.transactionsService.update(id, updateTransactionDto);
+    const transaction = await this.transactionsService.update(
+      id,
+      updateTransactionDto,
+    );
+
+    return { data: [transaction] };
   }
 
   @Delete(':id')
-  remove(@Param('id', new ParseIntPipe()) id: number) {
-    return this.transactionsService.remove(id);
+  async remove(@Param('id', new ParseIntPipe()) id: number) {
+    await this.transactionsService.remove(id);
   }
 }

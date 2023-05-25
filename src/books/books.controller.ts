@@ -21,8 +21,10 @@ export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
-  create(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.create(createBookDto);
+  async create(@Body() createBookDto: CreateBookDto) {
+    const book = await this.booksService.create(createBookDto);
+
+    return { data: [book] };
   }
 
   @Get()
@@ -31,21 +33,25 @@ export class BooksController {
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseIntPipe()) id: number) {
-    return this.booksService.getOne(id);
+  async findOne(@Param('id', new ParseIntPipe()) id: number) {
+    const book = await this.booksService.getOne(id);
+
+    return { data: [book] };
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id', new ParseIntPipe()) id: number,
     @Body() updateBookDto: UpdateBookDto,
   ) {
-    return this.booksService.update(id, updateBookDto);
+    const book = await this.booksService.update(id, updateBookDto);
+
+    return { data: [book] };
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id', new ParseIntPipe()) id: number) {
-    return this.booksService.remove(id);
+  async remove(@Param('id', new ParseIntPipe()) id: number) {
+    await this.booksService.remove(id);
   }
 }
