@@ -15,27 +15,27 @@ export class ReportsService {
     private readonly booksOverdueReportService: BooksOverdueReportService,
   ) {}
 
-  async generateBooksReport(): Promise<BooksReportModel[]> {
+  generateBooksReport(): Promise<BooksReportModel[]> {
     return this.booksReportService.generateBooksReport();
   }
 
-  async generateBorrowedExemplarsReport() {
+  generateBorrowedExemplarsReport() {
     return this.bookStatusReportService.generateBookStatusReport(
       ExemplarStatus.Borrowed,
     );
   }
 
-  async generateAvailableExemplarsReport() {
+  generateAvailableExemplarsReport() {
     return this.bookStatusReportService.generateBookStatusReport(
       ExemplarStatus.Available,
     );
   }
 
-  async generateBorrowersReport() {
+  generateBorrowersReport() {
     return this.borrowersReportService.generateBorrowersReport();
   }
 
-  async generateOverdueReport() {
+  generateOverdueReport() {
     return this.booksOverdueReportService.generateOverdueBooksReport();
   }
 }

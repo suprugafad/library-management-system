@@ -9,7 +9,16 @@ export class BooksReportService {
   constructor(private readonly booksService: BooksService) {}
 
   async generateBooksReport(): Promise<BooksReportModel[]> {
-    const books = (await this.booksService.findMany({
+    const books = await this.getAllBooksWithExemplars();
+
+    return books.map(({ exemplars, ...restData }) => ({
+      ...restData,
+      totalExemplars: exemplars.length,
+    }));
+  }
+
+  private async getAllBooksWithExemplars() {
+    return (await this.booksService.findMany({
       select: {
         id: true,
         isbn: true,
@@ -23,10 +32,5 @@ export class BooksReportService {
         },
       },
     })) as Array<BookModel & { exemplars: Pick<ExemplarModel, 'id'>[] }>;
-
-    return books.map(({ exemplars, ...restData }) => ({
-      ...restData,
-      totalExemplars: exemplars.length,
-    }));
   }
 }

@@ -1,53 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionsService } from '../../transactions/transactions.service';
-import { BorrowersService } from '../../borrowers/borrowers.service';
-import { ExemplarsService } from '../../exemplars/exemplars.service';
+import { BooksOverdueReportModel } from '../models/books-overdue.model';
 import { ExemplarModel } from '../../exemplars/exemplar.model';
 import { BorrowerModel } from '../../borrowers/borrower.model';
 
+interface PrismaTransaction {
+  borrower?: BorrowerModel;
+  exemplar?: ExemplarModel;
+  borrowedAt?: Date;
+  dueToDate?: Date;
+}
+
 @Injectable()
 export class BooksOverdueReportService {
-  constructor(
-    private readonly transactionsService: TransactionsService,
-    private readonly borrowersService: BorrowersService,
-    private readonly exemplarsService: ExemplarsService,
-  ) {}
-  async generateOverdueBooksReport() {
-    const now = new Date();
+  constructor(private readonly transactionsService: TransactionsService) {}
 
-    const overdueTransactions = await this.transactionsService.findMany({
+  async generateOverdueBooksReport(): Promise<BooksOverdueReportModel[]> {
+    const allOpenTransactions = await this.getAllUnreturnedExemplars();
+
+    return allOpenTransactions.filter((transaction) => {
+      const now = new Date();
+      const dueToDate = new Date(transaction.dueToDate);
+
+      return dueToDate < now;
+    });
+  }
+
+  private async getAllUnreturnedExemplars(): Promise<PrismaTransaction[]> {
+    return this.transactionsService.findMany({
       where: {
-        dueToDate: {
-          lt: now,
-        },
         returnedAt: null,
       },
       select: {
+        borrower: true,
+        exemplar: true,
         borrowedAt: true,
         dueToDate: true,
-        borrowerId: true,
-        exemplarId: true,
+      },
+      include: {
+        borrower: true,
+        exemplar: true,
       },
     });
-
-    return Promise.all(
-      overdueTransactions.map(
-        async ({ borrowerId, exemplarId, borrowedAt, dueToDate }) => {
-          const borrower: BorrowerModel = await this.borrowersService.getOne(
-            borrowerId,
-          );
-          const exemplar: ExemplarModel = await this.exemplarsService.getOne(
-            exemplarId,
-          );
-
-          return {
-            borrower,
-            exemplar,
-            borrowedAt,
-            dueToDate,
-          };
-        },
-      ),
-    );
   }
 }
