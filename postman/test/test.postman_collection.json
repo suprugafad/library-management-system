@@ -42,12 +42,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/books/ngfhngf",
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books",
+										"{{table}}",
 										"ngfhngf"
 									]
 								}
@@ -141,12 +141,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}/books",
+									"raw": "{{base_url}}/{{table}}",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books"
+										"{{table}}"
 									],
 									"query": [
 										{
@@ -199,12 +199,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}/books/1",
+									"raw": "{{base_url}}/{{table}}/1",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books",
+										"{{table}}",
 										"1"
 									],
 									"query": [
@@ -257,12 +257,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}/books/ngfhngf",
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books",
+										"{{table}}",
 										"ngfhngf"
 									]
 								}
@@ -299,12 +299,12 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/books/ngfhngf",
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books",
+										"{{table}}",
 										"ngfhngf"
 									]
 								}
@@ -337,13 +337,13 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/books/9999",
+									"raw": "{{base_url}}/{{table}}/99999",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books",
-										"9999"
+										"{{table}}",
+										"99999"
 									]
 								}
 							},
@@ -370,13 +370,13 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/books/9999",
+									"raw": "{{base_url}}/{{table}}/99999",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books",
-										"9999"
+										"{{table}}",
+										"99999"
 									]
 								}
 							},
@@ -403,13 +403,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/books/9999",
+									"raw": "{{base_url}}/{{table}}/99999",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books",
-										"9999"
+										"{{table}}",
+										"99999"
 									]
 								}
 							},
@@ -418,7 +418,7 @@
 					]
 				},
 				{
-					"name": "get all books - empty",
+					"name": "get all - empty",
 					"event": [
 						{
 							"listen": "test",
@@ -426,12 +426,14 @@
 								"exec": [
 									"const body = JSON.parse(responseBody);",
 									"",
+									"const books = body.data;",
+									"",
 									"pm.test(\"should have status code 200\", function () {",
 									"    pm.response.to.have.status(200, \"expected code 200\");",
 									"});",
 									"",
 									"pm.test(\"should have no books yet\", () => {",
-									"    pm.expect(body).to.have.length(0, \"expected length 0\");",
+									"    pm.expect(books).to.have.length(0, \"expected length 0\");",
 									"})",
 									""
 								],
@@ -469,12 +471,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -509,13 +511,17 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody);",
+									"const body = JSON.parse(responseBody).data;",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"if (body.id) {",
 									"  pm.collectionVariables.set(\"bookId\", body.id);",
 									"  pm.collectionVariables.set(\"lastId\", body.id);",
 									"}",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
 									"",
 									"pm.test(\"should have been created with the same properties\", () => {",
 									"    for (const key in body) {",
@@ -551,12 +557,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/books",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -580,7 +586,7 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"const body = JSON.parse(responseBody);\r",
+									"const body = JSON.parse(responseBody).data;\r",
 									"const bookId = pm.collectionVariables.get(\"bookId\");\r",
 									"\r",
 									"pm.test(\"should receive a book with expected id\", () => {\r",
@@ -601,12 +607,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books/{{bookId}}",
+							"raw": "{{base_url}}/{{table}}/{{bookId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books",
+								"{{table}}",
 								"{{bookId}}"
 							]
 						}
@@ -624,9 +630,9 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"const body = JSON.parse(responseBody);",
+									"const books = JSON.parse(responseBody).data;",
 									"const bookId = pm.collectionVariables.get(\"bookId\");",
-									"const book = body[0];",
+									"const book = books[0];",
 									"",
 									"pm.test(\"should receive a book with expected id\", () => {",
 									"    ",
@@ -647,12 +653,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books?publicationYear={{randomYear}}",
+							"raw": "{{base_url}}/{{table}}?publicationYear={{randomYear}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -675,7 +681,7 @@
 					"response": []
 				},
 				{
-					"name": "get all books - first",
+					"name": "get all - first",
 					"event": [
 						{
 							"listen": "test",
@@ -683,16 +689,18 @@
 								"exec": [
 									"const body = JSON.parse(responseBody);",
 									"",
+									"const books = body.data;",
+									"",
 									"pm.test(\"should have status code 200\", function () {",
 									"    pm.response.to.have.status(200, \"expected code 200\");",
 									"});",
 									"",
 									"pm.test(\"should have only 1 book\", () => {",
-									"    pm.expect(body).to.have.length(1, \"expected length 1\");",
+									"    pm.expect(books).to.have.length(1, \"expected length 1\");",
 									"})",
 									"",
 									"pm.test(\"should have 1 book with expected id\", () => {",
-									"    const book = body[0];",
+									"    const book = books[0];",
 									"    pm.expect(book.id).to.eql(pm.collectionVariables.get(\"bookId\"));",
 									"})"
 								],
@@ -704,12 +712,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -753,7 +761,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const resBody = JSON.parse(responseBody);\r",
+									"const resBody = JSON.parse(responseBody).data;\r",
 									"const reqBody = JSON.parse(pm.request.body.raw);\r",
 									"const id = pm.collectionVariables.get(\"bookId\");\r",
 									"\r",
@@ -791,12 +799,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/books/{{bookId}}",
+							"raw": "{{base_url}}/{{table}}/{{bookId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books",
+								"{{table}}",
 								"{{bookId}}"
 							]
 						}
@@ -814,7 +822,7 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"const body = JSON.parse(responseBody);\r",
+									"const body = JSON.parse(responseBody).data;\r",
 									"const bookId = pm.collectionVariables.get(\"bookId\");\r",
 									"\r",
 									"pm.test(\"should receive a book with expected id\", () => {\r",
@@ -835,12 +843,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books/{{bookId}}",
+							"raw": "{{base_url}}/{{table}}/{{bookId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books",
+								"{{table}}",
 								"{{bookId}}"
 							]
 						}
@@ -866,12 +874,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books/{{bookId}}",
+							"raw": "{{base_url}}/{{table}}/{{bookId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books",
+								"{{table}}",
 								"{{bookId}}"
 							]
 						}
@@ -897,12 +905,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books/{{bookId}}",
+							"raw": "{{base_url}}/{{table}}/{{bookId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books",
+								"{{table}}",
 								"{{bookId}}"
 							]
 						}
@@ -910,7 +918,7 @@
 					"response": []
 				},
 				{
-					"name": "get all books - empty Copy",
+					"name": "get all - empty Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -918,12 +926,14 @@
 								"exec": [
 									"const body = JSON.parse(responseBody);",
 									"",
+									"const books = body.data;",
+									"",
 									"pm.test(\"should have status code 200\", function () {",
 									"    pm.response.to.have.status(200, \"expected code 200\");",
 									"});",
 									"",
 									"pm.test(\"should have no books yet\", () => {",
-									"    pm.expect(body).to.have.length(0, \"expected length 0\");",
+									"    pm.expect(books).to.have.length(0, \"expected length 0\");",
 									"})",
 									""
 								],
@@ -935,12 +945,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -975,8 +985,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody);",
+									"const body = JSON.parse(responseBody).data;",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
 									"",
 									"pm.test(\"should have been created with the same properties\", () => {",
 									"    for (const key in reqBody) {",
@@ -991,7 +1005,6 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"// pm.collectionVariables.set (\"randomISBN\", _.random (1000000000,));",
 									"pm.collectionVariables.set (\"randomYear\", _.random (1600,2023));"
 								],
 								"type": "text/javascript"
@@ -1011,12 +1024,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/books",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -1036,8 +1049,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody);",
+									"const body = JSON.parse(responseBody).data;",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
 									"",
 									"pm.test(\"should have been created with the same properties\", () => {",
 									"    for (const key in reqBody) {",
@@ -1052,9 +1069,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"// pm.collectionVariables.set (\"randomISBN\", _.random (1000000000,));",
-									"pm.collectionVariables.set (\"randomYear\", _.random (1600,2023));",
-									""
+									"pm.collectionVariables.set (\"randomYear\", _.random (1600,2023));"
 								],
 								"type": "text/javascript"
 							}
@@ -1073,12 +1088,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/books",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -1098,8 +1113,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody);",
+									"const body = JSON.parse(responseBody).data;",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
 									"",
 									"pm.test(\"should have been created with the same properties\", () => {",
 									"    for (const key in reqBody) {",
@@ -1114,7 +1133,6 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"// pm.collectionVariables.set (\"randomISBN\", _.random (1000000000,));",
 									"pm.collectionVariables.set (\"randomYear\", _.random (1600,2023));"
 								],
 								"type": "text/javascript"
@@ -1134,12 +1152,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/books",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -1153,20 +1171,22 @@
 					"response": []
 				},
 				{
-					"name": "get all books - many",
+					"name": "get all  - many",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody);",
+									"const body = JSON.parse(responseBody).data;",
+									"",
+									"const books = body.data;",
 									"",
 									"pm.test(\"should have status code 200\", function () {",
 									"    pm.response.to.have.status(200, \"expected code 200\");",
 									"});",
 									"",
 									"pm.test(\"should have 3 books\", () => {",
-									"    pm.expect(body).to.have.length(3, \"expected length 3\");",
+									"    pm.expect(books).to.have.length(3, \"expected length 3\");",
 									"})",
 									""
 								],
@@ -1178,12 +1198,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -1222,7 +1242,7 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"const books = JSON.parse(responseBody);",
+									"const books = JSON.parse(responseBody).data;",
 									"const bookId = pm.collectionVariables.get(\"bookId\");",
 									"",
 									"pm.test(\"should have length 2\", () => {",
@@ -1244,12 +1264,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/books?title=same title",
+							"raw": "{{base_url}}/{{table}}?title=same title",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"books"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -1271,53 +1291,464 @@
 					},
 					"response": []
 				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"table\", \"books\")"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
-			"name": "Exemplar",
+			"name": "Borrowers",
 			"item": [
 				{
-					"name": "get all exemplars",
-					"event": [
+					"name": "Invalid Cases",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/exemplars",
-							"host": [
-								"{{base_url}}"
+							"name": "get by id - invalid param",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
 							],
-							"path": [
-								"exemplars"
-							]
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"ngfhngf"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by query - invalid query",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/books?firstName=a really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 chars&lastName&email=not an email",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"books"
+									],
+									"query": [
+										{
+											"key": "firstName",
+											"value": "a really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 chars"
+										},
+										{
+											"key": "lastName",
+											"value": null
+										},
+										{
+											"key": "email",
+											"value": "not an email"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create - invalid body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"\",\n    \"email\": \"not an email\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update - invalid body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"\",\n    \"email\": \"not an email\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"1"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update - invalid param",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"{{$randomEmail}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"ngfhngf"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete - invalid param",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"ngfhngf"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "create",
+					"name": "Not Found Cases",
+					"item": [
+						{
+							"name": "delete - Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/99999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"99999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update - Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}/99999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"99999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by id - Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/99999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"99999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get all - empty",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const { id } = JSON.parse(responseBody);",
+									"const body = JSON.parse(responseBody);",
 									"",
-									"if (id) {",
-									"  pm.collectionVariables.set(\"exemplarId\", id);",
-									"}"
+									"const borrowers = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have no borrowers yet\", () => {",
+									"    pm.expect(borrowers).to.have.length(0, \"expected length 0\");",
+									"})",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1326,37 +1757,59 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"// pm.collectionVariables.set (\"randomISBN\", _.random (1000000000,));",
-									"pm.collectionVariables.set (\"randomYear\", _.random (1600,2023));"
+									"const BASE_URL = pm.collectionVariables.get(\"base_url\");\r",
+									"const deleteAll = async (path) => {\r",
+									"    const url = `${BASE_URL}${path}`\r",
+									"    pm.sendRequest(url, (error, response) => {\r",
+									"    if (error) return console.log(error)\r",
+									"    const body = response.json();\r",
+									"    body.forEach(async item => \r",
+									"        pm.sendRequest({\r",
+									"        url: `${url}/${item.id}`,\r",
+									"        method: 'DELETE',\r",
+									"        headers: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"        }}, (error) => {\r",
+									"            if (error) return console.log(error)\r",
+									"            console.log(\"deleted \" + item.id)\r",
+									"        }))})};\r",
+									"\r",
+									"deleteAll(`/${pm.collectionVariables.get(\"table\")}`);"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"bookId\": {{bookId}},\n    \"status\": \"Available\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{base_url}}/exemplars",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"exemplars"
+								"{{table}}"
 							],
 							"query": [
 								{
-									"key": "",
-									"value": null,
+									"key": "publicationYear",
+									"value": "1800",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "some title",
+									"disabled": true
+								},
+								{
+									"key": "author",
+									"value": "Keaton Reinger",
+									"disabled": true
+								},
+								{
+									"key": "isbn",
+									"value": "123412341234",
 									"disabled": true
 								}
 							]
@@ -1365,115 +1818,28 @@
 					"response": []
 				},
 				{
-					"name": "get by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/exemplars/{{exemplarId}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"exemplars",
-								"{{exemplarId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/exemplars/{{exemplarId}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"exemplars",
-								"{{exemplarId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"status\": \"Borrowed\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/exemplars/{{exemplarId}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"exemplars",
-								"{{exemplarId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Borrowers",
-			"item": [
-				{
-					"name": "Get all borrowers",
+					"name": "create - first",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/borrowers",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"borrowers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const { id } = JSON.parse(responseBody);",
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
-									"if (id) {",
-									"  pm.collectionVariables.set(\"borrowerId\", id);",
-									"}"
+									"pm.collectionVariables.set(\"borrowerId\", body.id);",
+									"pm.collectionVariables.set(\"lastEmail\", body.email);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in body) {",
+									"        if (key === \"id\") continue;",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"})"
 								],
 								"type": "text/javascript"
 							}
@@ -1501,18 +1867,102 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/borrowers",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"borrowers"
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const body = JSON.parse(responseBody).data;\r",
+									"const bookId = pm.collectionVariables.get(\"bookId\");\r",
+									"const email = pm.collectionVariables.get(\"lastEmail\")\r",
+									"\r",
+									"pm.test(\"should receive a book with expected id\", () => {\r",
+									"    pm.expect(body).to.have.property(\"id\", bookId);\r",
+									"}) ;\r",
+									"\r",
+									"pm.test(\"should receive a book correct email\", () => {\r",
+									"    pm.expect(body).to.have.property(\"email\", email);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{borrowerId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{borrowerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by query - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const body = JSON.parse(responseBody).data;",
+									"const bookId = pm.collectionVariables.get(\"bookId\");",
+									"const email = pm.collectionVariables.get(\"lastEmail\")",
+									"",
+									"pm.test(\"should receive a book with expected id\", () => {",
+									"    pm.expect(body).to.have.property(\"id\", bookId);",
+									"}) ;",
+									"",
+									"pm.test(\"should receive a book correct email\", () => {",
+									"    pm.expect(body).to.have.property(\"email\", email);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}?email={{lastEmail}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
 							],
 							"query": [
 								{
-									"key": "",
-									"value": null,
-									"disabled": true
+									"key": "email",
+									"value": "{{lastEmail}}"
 								}
 							]
 						}
@@ -1520,17 +1970,155 @@
 					"response": []
 				},
 				{
-					"name": "get by id",
+					"name": "get all - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const borrowers = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have only 1 borrower\", () => {",
+									"    pm.expect(borrowers).to.have.length(1, \"expected length 1\");",
+									"})",
+									"",
+									"pm.test(\"should have 1 borrower with expected id\", () => {",
+									"    const borrower = borrowers[0];",
+									"    pm.expect(borrower.id).to.eql(pm.collectionVariables.get(\"borrowerId\"));",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/borrowers/{{borrowerId}}",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"borrowers",
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update - first",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const resBody = JSON.parse(responseBody).data;\r",
+									"const reqBody = JSON.parse(pm.request.body.raw);\r",
+									"const id = pm.collectionVariables.get(\"borrowerId\");\r",
+									"\r",
+									"pm.test(\"should be ok\", () => {\r",
+									"    pm.response.to.be.ok;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"should have expected id\", () => {\r",
+									"    const resId = resBody.id;\r",
+									"    pm.expect(+resId).to.equal(+id);\r",
+									"})\r",
+									"\r",
+									"const lastEmail = pm.collectionVariables.get(\"lastEmail\");\r",
+									"\r",
+									"pm.test(\"should have changed as expected\", () => {\r",
+									"    const resBodyWithId = {...resBody, id};\r",
+									"    pm.expect(resBodyWithId).not.to.equal(reqBody);\r",
+									"    pm.expect(resBody.email).not.to.eql(lastEmail);\r",
+									"    pm.expect(resBody.email).to.eql(\"nuevomail@gmail.com\");\r",
+									"})\r",
+									"\r",
+									"pm.collectionVariables.set(\"lastEmail\", resBody.email);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"nuevomail@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{bookId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{bookId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id - updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const body = JSON.parse(responseBody).data;\r",
+									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");\r",
+									"\r",
+									"pm.test(\"should receive a borrower with expected id\", () => {\r",
+									"    pm.expect(body).to.have.property(\"id\", borrowerId);\r",
+									"}) ;\r",
+									"\r",
+									"const lastEmail = pm.collectionVariables.get(\"lastEmail\");\r",
+									"\r",
+									"pm.test(\"should receive a borrower correct year\", () => {\r",
+									"    pm.expect(body).to.have.property(\"email\", lastEmail);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{borrowerId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
 								"{{borrowerId}}"
 							]
 						}
@@ -1538,17 +2126,30 @@
 					"response": []
 				},
 				{
-					"name": "delete",
+					"name": "delete - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should be ok\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/borrowers/{{borrowerId}}",
+							"raw": "{{base_url}}/{{table}}/{{borrowerId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"borrowers",
+								"{{table}}",
 								"{{borrowerId}}"
 							]
 						}
@@ -1556,9 +2157,110 @@
 					"response": []
 				},
 				{
-					"name": "update",
+					"name": "get by id - deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should not be ok\", function () {\r",
+									"    pm.response.to.be.error;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
-						"method": "PATCH",
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{borrowerId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{borrowerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all - empty Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const borrowers = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have no borrowers yet\", () => {",
+									"    pm.expect(borrowers).to.have.length(0, \"expected length 0\");",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create -random",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in reqBody) {",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -1570,98 +2272,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/borrower/{{borrowerId}}",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"borrower",
-								"{{borrowerId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Transactions",
-			"item": [
-				{
-					"name": "Get All transactions",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/transactions",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"transactions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const { id } = JSON.parse(responseBody);",
-									"",
-									"if (id) {",
-									"  pm.collectionVariables.set(\"transactionId\", id);",
-									"}"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"pm.collectionVariables.set(\"dueToDate\", new Date().set);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"borrowerId\": {{borrowerId}},\n    \"exemplarId\": {{exemplarId}}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/transactions",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"transactions"
+								"{{table}}"
 							],
 							"query": [
 								{
@@ -1675,49 +2291,44 @@
 					"response": []
 				},
 				{
-					"name": "get by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/transactions/{{transactionId}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"transactions",
-								"{{transactionId}}"
-							]
+					"name": "create - same title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in reqBody) {",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
+					],
 					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/transactions/{{transactionId}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"transactions",
-								"{{transactionId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update",
-					"request": {
-						"method": "PATCH",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"returnedAt\": \"2023-07-09\"\n}",
+							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{$randomLastName}}\",\n    \"email\": \"{{$randomEmail}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1725,17 +2336,2765 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/transactions/{{transactionId}}",
+							"raw": "{{base_url}}/{{table}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"transactions",
-								"{{transactionId}}"
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
 							]
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "create - same title Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in reqBody) {",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{$randomLastName}}\",\n    \"email\": \"{{$randomEmail}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all  - many",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const borrowers = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have 3 borrowers\", () => {",
+									"    pm.expect(borrowers).to.have.length(3, \"expected length 3\");",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by query - same title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const borrowers = JSON.parse(responseBody).data;",
+									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");",
+									"",
+									"pm.test(\"should have length 2\", () => {",
+									"    pm.expect(borrowers).to.have.length(2);",
+									"}) ;",
+									"",
+									"pm.test(\"should receive a borrower correct year\", () => {",
+									"    borrowers.forEach(borrower => {",
+									"        pm.expect(borrower).to.have.property(\"title\", \"same title\");",
+									"    });",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"table\", \"borrowers\")"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Exemplars",
+			"item": [
+				{
+					"name": "Invalid Cases",
+					"item": [
+						{
+							"name": "get by id - invalid param",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"ngfhngf"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by query - invalid query",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/books?bookId=not a number&status=not an status",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"books"
+									],
+									"query": [
+										{
+											"key": "bookId",
+											"value": "not a number"
+										},
+										{
+											"key": "status",
+											"value": "not an status"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create - invalid body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"bookId\": \"not an id\",\n    \"status\": \"not a status\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update - invalid body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"bookId\": \"not an id\",\n    \"status\": \"not a status\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"1"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update - invalid param",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"Available\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"ngfhngf"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete - invalid param",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"ngfhngf"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Not Found Cases",
+					"item": [
+						{
+							"name": "delete - Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/99999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"99999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create - no book",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"status\", [\"Available\", \"Borrowerd\"][Math.floor(_.random() * 2)])"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"bookId\": 9999999,\n    \"status\": \"{{status}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update - Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}/99999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"99999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by id - Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/99999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"99999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get all - empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const exemplars = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have no exemplars yet\", () => {",
+									"    pm.expect(exemplars).to.have.length(0, \"expected length 0\");",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const BASE_URL = pm.collectionVariables.get(\"base_url\");\r",
+									"const deleteAll = async (path) => {\r",
+									"    const url = `${BASE_URL}${path}`\r",
+									"    pm.sendRequest(url, (error, response) => {\r",
+									"    if (error) return console.log(error)\r",
+									"    const body = response.json();\r",
+									"    body.forEach(async item => \r",
+									"        pm.sendRequest({\r",
+									"        url: `${url}/${item.id}`,\r",
+									"        method: 'DELETE',\r",
+									"        headers: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"        }}, (error) => {\r",
+									"            if (error) return console.log(error)\r",
+									"            console.log(\"deleted \" + item.id)\r",
+									"        }))})};\r",
+									"\r",
+									"deleteAll(`/${pm.collectionVariables.get(\"table\")}`);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.collectionVariables.set(\"exemplarId\", body.id);",
+									"pm.collectionVariables.set(\"status\", body.status);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in body) {",
+									"        if (key === \"id\") continue;",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"status\", [\"Available\", \"Borrowerd\"][Math.floor(_.random() * 2)])"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bookId\": {{bookId}},\n    \"status\": \"{{status}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const body = JSON.parse(responseBody).data;\r",
+									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");\r",
+									"const status = pm.collectionVariables.get(\"status\")\r",
+									"\r",
+									"pm.test(\"should receive a exemplar with expected id\", () => {\r",
+									"    pm.expect(body).to.have.property(\"id\", exemplarId);\r",
+									"}) ;\r",
+									"\r",
+									"pm.test(\"should receive a exemplar correct status\", () => {\r",
+									"    pm.expect(body).to.have.property(\"status\", status);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by query - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const body = JSON.parse(responseBody).data;",
+									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");",
+									"const status = pm.collectionVariables.get(\"status\")",
+									"",
+									"pm.test(\"should receive a exemplar with expected id\", () => {",
+									"    pm.expect(body).to.have.property(\"id\", exemplarId);",
+									"}) ;",
+									"",
+									"pm.test(\"should receive a exemplar correct status\", () => {",
+									"    pm.expect(body).to.have.property(\"status\", status);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}?status={{status}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "{{status}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const exemplars = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have only 1 exemplar\", () => {",
+									"    pm.expect(exemplars).to.have.length(1, \"expected length 1\");",
+									"})",
+									"",
+									"pm.test(\"should have 1 exemplar with expected id\", () => {",
+									"    const exemplar = exemplars[0];",
+									"    pm.expect(exemplar.id).to.eql(pm.collectionVariables.get(\"exemplarId\"));",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update - first",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentStatus = pm.collectionVariables.get(\"status\");\r",
+									"\r",
+									"const statuses = [\"Available, Borrowed\"];\r",
+									"\r",
+									"const index = statuses.indexOf(currentStatus);\r",
+									"\r",
+									"pm.collectionVariables.set(\"status\", statuses[(index + 1) % statuses.length])"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const resBody = JSON.parse(responseBody).data;\r",
+									"const reqBody = JSON.parse(pm.request.body.raw);\r",
+									"const id = pm.collectionVariables.get(\"exemplarId\");\r",
+									"\r",
+									"pm.test(\"should be ok\", () => {\r",
+									"    pm.response.to.be.ok;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"should have expected id\", () => {\r",
+									"    const resId = resBody.id;\r",
+									"    pm.expect(+resId).to.equal(+id);\r",
+									"})\r",
+									"\r",
+									"const status = pm.collectionVariables.get(\"status\");\r",
+									"\r",
+									"pm.test(\"should have changed as expected\", () => {\r",
+									"    const resBodyWithId = {...resBody, id};\r",
+									"    pm.expect(resBodyWithId).not.to.equal(reqBody);\r",
+									"    pm.expect(resBody.status).to.eql(reqBody.status);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"nuevomail@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id - updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const body = JSON.parse(responseBody).data;\r",
+									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");\r",
+									"\r",
+									"pm.test(\"should receive a exemplar with expected id\", () => {\r",
+									"    pm.expect(body).to.have.property(\"id\", exemplarId);\r",
+									"}) ;\r",
+									"\r",
+									"const status = pm.collectionVariables.get(\"status\");\r",
+									"\r",
+									"pm.test(\"should receive a exemplar correct status\", () => {\r",
+									"    pm.expect(body).to.have.property(\"status\", status);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should be ok\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id - deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should not be ok\", function () {\r",
+									"    pm.response.to.be.error;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all - empty Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const exemplars = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have no exemplars yet\", () => {",
+									"    pm.expect(exemplars).to.have.length(0, \"expected length 0\");",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create -random",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in reqBody) {",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bookId\": {{bookId}},\n    \"status\": \"Available\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create - same status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in reqBody) {",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bookId\": {{bookId}},\n    \"status\": \"Borrowed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create - same status Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in reqBody) {",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"bookId\": {{bookId}},\n    \"status\": \"Borrowed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all  - many",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const exemplars = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have 3 exemplars\", () => {",
+									"    pm.expect(exemplars).to.have.length(3, \"expected length 3\");",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by query - same title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const exemplars = JSON.parse(responseBody).data;",
+									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");",
+									"",
+									"pm.test(\"should have length 2\", () => {",
+									"    pm.expect(exemplars).to.have.length(2);",
+									"}) ;",
+									"",
+									"pm.test(\"should receive a exemplar correct year\", () => {",
+									"    exemplars.forEach(exemplar => {",
+									"        pm.expect(exemplar).to.have.property(\"status\", \"Borrowed\");",
+									"    });",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}?status=Borrowed",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Borrowed"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"table\", \"exemplars\")"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Invalid Cases",
+					"item": [
+						{
+							"name": "get by id - invalid param",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"ngfhngf"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by query - invalid query",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}?borrowedAt=not a date&returnedAt=123123&dueToDate=13-13-13",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}"
+									],
+									"query": [
+										{
+											"key": "borrowedAt",
+											"value": "not a date"
+										},
+										{
+											"key": "returnedAt",
+											"value": "123123"
+										},
+										{
+											"key": "dueToDate",
+											"value": "13-13-13"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create - invalid body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"borrowerId\": \"not an id\",\n    \"exemplarId\": \"not an id either\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update - invalid body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"borrowerId\": \"not an id\",\n    \"exemplarId\": \"not an id either\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"1"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update - invalid param",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"Available\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"ngfhngf"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete - invalid param",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/ngfhngf",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"ngfhngf"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Not Found Cases",
+					"item": [
+						{
+							"name": "delete - Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/99999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"99999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create - no exemplar",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"exemplarId\": 9999999,\n    \"borrowerId\": {{borrowerId}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create - no borrower",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"should be error\", () => {",
+											"    pm.response.to.be.error;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"exemplarId\": {{exemplarId}},\n    \"borrowerId\": 99999\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update - Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/{{table}}/99999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"99999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by id - Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const body = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.test(\"should be error\", () => {\r",
+											"    pm.response.to.be.error;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/99999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"99999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get all - empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const exemplars = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have no exemplars yet\", () => {",
+									"    pm.expect(exemplars).to.have.length(0, \"expected length 0\");",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const BASE_URL = pm.collectionVariables.get(\"base_url\");\r",
+									"const deleteAll = async (path) => {\r",
+									"    const url = `${BASE_URL}${path}`\r",
+									"    pm.sendRequest(url, (error, response) => {\r",
+									"    if (error) return console.log(error)\r",
+									"    const body = response.json();\r",
+									"    body.forEach(async item => \r",
+									"        pm.sendRequest({\r",
+									"        url: `${url}/${item.id}`,\r",
+									"        method: 'DELETE',\r",
+									"        headers: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"        }}, (error) => {\r",
+									"            if (error) return console.log(error)\r",
+									"            console.log(\"deleted \" + item.id)\r",
+									"        }))})};\r",
+									"\r",
+									"deleteAll(`/${pm.collectionVariables.get(\"table\")}`);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "publicationYear",
+									"value": "1800",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "some title",
+									"disabled": true
+								},
+								{
+									"key": "author",
+									"value": "Keaton Reinger",
+									"disabled": true
+								},
+								{
+									"key": "isbn",
+									"value": "123412341234",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.collectionVariables.set(\"transactionId\", body.id);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in reqBody) {",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"    pm.expect(body).to.have.property(\"borrowedAt\");",
+									"    pm.expect(body).to.have.property(\"dueToDate\");",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"exemplarId\": {{exemplarId}},\n    \"borrowerId\": {{borrowerId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const body = JSON.parse(responseBody).data[0];\r",
+									"const transactionId = pm.collectionVariables.get(\"transactionId\");\r",
+									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");\r",
+									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");\r",
+									"\r",
+									"pm.test(\"should receive a transaction with expected id\", () => {\r",
+									"    pm.expect(body).to.have.property(\"id\", transactionId);\r",
+									"}) ;\r",
+									"\r",
+									"pm.test(\"should receive a exemplar correct body\", () => {\r",
+									"    pm.expect(body).to.have.property(\"exemplarId\", exemplarId);\r",
+									"    pm.expect(body).to.have.property(\"borrowerId\", borrowerId);\r",
+									"    pm.expect(body).to.have.property(\"borrowedAt\");\r",
+									"    pm.expect(body).to.have.property(\"dueToDate\");\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by query - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const body = JSON.parse(responseBody).data[0];",
+									"const transactionId = pm.collectionVariables.get(\"transactionId\");",
+									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");",
+									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");",
+									"",
+									"pm.test(\"should receive a transaction with expected id\", () => {",
+									"    pm.expect(body).to.have.property(\"id\", transactionId);",
+									"}) ;",
+									"",
+									"pm.test(\"should receive a exemplar correct body\", () => {",
+									"    pm.expect(body).to.have.property(\"exemplarId\", exemplarId);",
+									"    pm.expect(body).to.have.property(\"borrowerId\", borrowerId);",
+									"    pm.expect(body).to.have.property(\"borrowedAt\");",
+									"    pm.expect(body).to.have.property(\"dueToDate\");",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}?exemplarId={{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "exemplarId",
+									"value": "{{exemplarId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const transactions = body.data;",
+									"const transactionId = pm.collectionVariables.get(\"transactionId\");",
+									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");",
+									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have only 1 transaction\", () => {",
+									"    pm.expect(transactions).to.have.length(1, \"expected length 1\");",
+									"})",
+									"",
+									"pm.test(\"should have 1 transaction with expected id\", () => {",
+									"    const transaction = transactions[0];",
+									"    pm.expect(transaction).to.have.property(\"id\", transactionId);",
+									"    pm.expect(transaction).to.have.property(\"exemplarId\", exemplarId);",
+									"    pm.expect(transaction).to.have.property(\"borrowerId\", borrowerId);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update - first",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"returnedAt\", new Date().toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const resBody = JSON.parse(responseBody).data;\r",
+									"const reqBody = JSON.parse(pm.request.body.raw);\r",
+									"const id = pm.collectionVariables.get(\"transactionId\");\r",
+									"\r",
+									"pm.test(\"should be ok\", () => {\r",
+									"    pm.response.to.be.ok;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"should have expected id\", () => {\r",
+									"    const resId = resBody.id;\r",
+									"    pm.expect(+resId).to.equal(+id);\r",
+									"})\r",
+									"\r",
+									"const returnedAt = pm.collectionVariables.get(\"returnedAt\");\r",
+									"\r",
+									"pm.test(\"should have changed as expected\", () => {\r",
+									"    const resBodyWithId = {...resBody, id};\r",
+									"    pm.expect(resBodyWithId).not.to.equal(reqBody);\r",
+									"    pm.expect(resBody).to.have.property(\"returnedAt\", reqBody.returnedAt);\r",
+									"    pm.expect(resBody).to.have.property(\"returnedAt\", returnedAt);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"returnedAt\": \"{{returnedAt}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id - updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const body = JSON.parse(responseBody).data;\r",
+									"const transactionId = pm.collectionVariables.get(\"transactionId\");\r",
+									"\r",
+									"pm.test(\"should receive a transaction with expected id\", () => {\r",
+									"    pm.expect(body).to.have.property(\"id\", transactionId);\r",
+									"}) ;\r",
+									"\r",
+									"const returnedAt = pm.collectionVariables.get(\"returnedAt\");\r",
+									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");\r",
+									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");\r",
+									"\r",
+									"pm.test(\"should receive a exemplar correct body\", () => {\r",
+									"    pm.expect(body).to.have.property(\"exemplarId\", exemplarId);\r",
+									"    pm.expect(body).to.have.property(\"borrowerId\", borrowerId);\r",
+									"    pm.expect(body).to.have.property(\"borrowedAt\");\r",
+									"    pm.expect(body).to.have.property(\"dueToDate\");\r",
+									"    pm.expect(body).to.have.property(\"returnedAt\", returnedAt);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete - first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should be ok\", () => {\r",
+									"    pm.response.to.have.status(204);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id - deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should not be ok\", function () {\r",
+									"    pm.response.to.be.error;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}",
+								"{{exemplarId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all - empty Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const transactions = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have no transactions\", () => {",
+									"    pm.expect(transactions).to.have.length(0, \"expected length 0\");",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create - random",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.collectionVariables.set(\"transactionId\", body.id);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in reqBody) {",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"    pm.expect(body).to.have.property(\"borrowedAt\");",
+									"    pm.expect(body).to.have.property(\"dueToDate\");",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"exemplarId\": {{exemplarId}},\n    \"borrowerId\": {{borrowerId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create - same status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.collectionVariables.set(\"transactionId\", body.id);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in reqBody) {",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"    pm.expect(body).to.have.property(\"borrowedAt\");",
+									"    pm.expect(body).to.have.property(\"dueToDate\");",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");\r",
+									"\r",
+									"pm.collectionVariables.set(\"prevExemplarId\", --exemplarId)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"exemplarId\": {{prevExemplarId}},\n    \"borrowerId\": {{borrowerId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create - same status Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody).data;",
+									"const reqBody = JSON.parse(pm.request.body.raw);",
+									"",
+									"pm.collectionVariables.set(\"transactionId\", body.id);",
+									"",
+									"pm.test(\"should have status code 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"})",
+									"",
+									"pm.test(\"should have been created with the same properties\", () => {",
+									"    for (const key in reqBody) {",
+									"        pm.expect(body).to.have.property(key, reqBody[key]);",
+									"    }",
+									"    pm.expect(body).to.have.property(\"borrowedAt\");",
+									"    pm.expect(body).to.have.property(\"dueToDate\");",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"exemplarId\": {{prevExemplarId}},\n    \"borrowerId\": {{borrowerId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all  - many",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);",
+									"",
+									"const transactions = body.data;",
+									"",
+									"pm.test(\"should have status code 200\", function () {",
+									"    pm.response.to.have.status(200, \"expected code 200\");",
+									"});",
+									"",
+									"pm.test(\"should have 3 transactions\", () => {",
+									"    pm.expect(transactions).to.have.length(3, \"expected length 3\");",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by query - same title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const transactions = JSON.parse(responseBody).data;",
+									"const transactionId = pm.collectionVariables.get(\"transactionId\");",
+									"",
+									"pm.test(\"should have length 2\", () => {",
+									"    pm.expect(transactions).to.have.length(2);",
+									"}) ;",
+									"",
+									"const exemplarId = pm.collectionVariables.get(\"prevExemplarId\");",
+									"",
+									"pm.test(\"should receive a transaction correct year\", () => {",
+									"    transactions.forEach(transaction => {",
+									"        pm.expect(transaction).to.have.property(\"exemplarId\", exemplarId);",
+									"    });",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/{{table}}?exemplarId={{prevExemplarId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "exemplarId",
+									"value": "{{prevExemplarId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"table\", \"transactions\")"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
@@ -1746,8 +5105,6 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"",
-					"",
 					""
 				]
 			}
@@ -1798,6 +5155,31 @@
 		},
 		{
 			"key": "lastId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "table",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "lastEmail",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "status",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "returnedAt",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "prevExemplarId",
 			"value": "",
 			"type": "string"
 		}
