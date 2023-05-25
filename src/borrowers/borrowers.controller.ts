@@ -15,7 +15,9 @@ import { BorrowersService } from './borrowers.service';
 import { UpdateBorrowerDto } from './dto/update-borrower.dto';
 import { CreateBorrowerDto } from './dto/create-borrower.dto';
 import { BorrowersQueryParamsDto } from './dto/borrowers-query-params.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('borrowers')
 @Controller('borrowers')
 export class BorrowersController {
   constructor(private readonly borrowersService: BorrowersService) {}

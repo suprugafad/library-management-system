@@ -15,7 +15,9 @@ import { ExemplarsService } from './exemplars.service';
 import { CreateExemplarDto } from './dto/create-exemplar.dto';
 import { UpdateExemplarDto } from './dto/update-exemplar.dto';
 import { ExemplarsQueryParamsDto } from './dto/exemplars-query-params.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('exemplars')
 @Controller('exemplars')
 export class ExemplarsController {
   constructor(private readonly exemplarsService: ExemplarsService) {}
