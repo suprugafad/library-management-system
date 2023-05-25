@@ -1,4 +1,4 @@
-import { Type, applyDecorators } from '@nestjs/common';
+import { applyDecorators } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -11,7 +11,6 @@ import {
 import { BadRequestDto } from 'src/common/dto/bad-request.dto';
 import { InternalServerErrorDto } from 'src/common/dto/internal-server-error.dto';
 import { NotFoundDto } from 'src/common/dto/not-found.dto';
-import { ApiPaginatedResponse } from './api-paginated-response.decorator';
 import { bindApiDecorator } from './util/bind-api-decorator.util';
 
 const AppApiBadRequestResponse = bindApiDecorator(ApiBadRequestResponse, {
@@ -36,13 +35,11 @@ export function AppApiOkResponse(options: ApiResponseOptions) {
   );
 }
 
-export function AppApiPaginatedResponse<TModel extends Type<any>>(
-  model: TModel,
-) {
+export function AppApiPaginatedResponse(options: ApiResponseOptions) {
   return applyDecorators(
     AppApiBadRequestResponse(),
     AppApiInternalServerErrorResponse(),
-    ApiPaginatedResponse(model),
+    ApiOkResponse(options),
   );
 }
 
