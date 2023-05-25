@@ -14,7 +14,7 @@ model Book {
   title           String     @db.VarChar(255)
   author          String     @db.VarChar(255)
   publicationYear Int @db.SmallInt
-  Exemplar        Exemplar[]
+  exemplars        Exemplar[]
 }
 
 model Borrower {
@@ -22,15 +22,15 @@ model Borrower {
   firstName   String        @db.VarChar(255)
   lastName    String        @db.VarChar(255)
   email       String        @unique @db.VarChar(255)
-  Transaction Transaction[]
+  transactions Transaction[]
 }
 
 model Exemplar {
   id Int           @id @default(autoincrement())
   bookId      Int
   status      Status
-  Book        Book          @relation(fields: [bookId], references: [id])
-  Transaction Transaction[]
+  book        Book          @relation(fields: [bookId], references: [id])
+  transactions Transaction[]
 }
 
 model Transaction {
@@ -40,8 +40,8 @@ model Transaction {
   borrowedAt    DateTime  @default(now())
   returnedAt    DateTime?
   dueToDate     DateTime
-  Borrower      Borrower  @relation(fields: [borrowerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  Exemplar      Exemplar  @relation(fields: [exemplarId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  borrower      Borrower  @relation(fields: [borrowerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  exemplar      Exemplar  @relation(fields: [exemplarId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 enum Status {

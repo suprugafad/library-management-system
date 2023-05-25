@@ -5,8 +5,9 @@ import { ConfigModule } from '@nestjs/config';
 import { configModuleOptions } from './config/config-module-options.config';
 import { BooksModule } from './books/books.module';
 import { TransactionsModule } from './transactions/transactions.module';
-import { BorrowersModule } from './borrowers/borrowers.module';
+import { BorrowersModule } from "./borrowers/borrowers.module";
 import { ExemplarsModule } from './exemplars/exemplars.module';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
   imports: [
@@ -15,8 +16,8 @@ import { ExemplarsModule } from './exemplars/exemplars.module';
     TransactionsModule,
     ExemplarsModule,
     BorrowersModule,
-  ],
-  controllers: [AppController],
+    ReportsModule
+  ],  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
