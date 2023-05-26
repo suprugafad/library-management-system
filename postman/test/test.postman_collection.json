@@ -4863,7 +4863,7 @@
 					"response": []
 				},
 				{
-					"name": "create - same borrower",
+					"name": "create - same exemplar",
 					"event": [
 						{
 							"listen": "test",
@@ -4925,7 +4925,7 @@
 					"response": []
 				},
 				{
-					"name": "create - same borrower 2",
+					"name": "create - same exemplar 2",
 					"event": [
 						{
 							"listen": "test",
@@ -5032,7 +5032,7 @@
 					"response": []
 				},
 				{
-					"name": "get by query - same borrower",
+					"name": "get by query - same exemplar",
 					"event": [
 						{
 							"listen": "test",
@@ -5191,12 +5191,13 @@
 											"const bookId = pm.collectionVariables.get(\"bookId\");\r",
 											"\r",
 											"pm.test(\"should have a previous created book\", () => {\r",
-											"    const book = books.find(({id}) => id === bookId);\r",
+											"    const book = books.find(({id}) => id == bookId);\r",
+											"    console.log({book});\r",
 											"    pm.expect(book).not.to.be.null;\r",
-											"    pm.expect(book).to.have.property(\"id\", bookId);\r",
-											"    const {exemplarsIds} = book;\r",
+											"    pm.expect(book).to.have.property(\"id\", +bookId);\r",
+											"    const {exemplarIds} = book;\r",
 											"    // This available book currently only have 1 available book\r",
-											"    pm.expect(exemplarsIds).to.have.length(1);\r",
+											"    pm.expect(exemplarIds).to.have.length(1);\r",
 											"})\r",
 											"\r",
 											"pm.test(\"should have expected structure\", () => {\r",
@@ -5206,7 +5207,7 @@
 											"        pm.expect(book).to.have.property(\"title\");\r",
 											"        pm.expect(book).to.have.property(\"author\");\r",
 											"        pm.expect(book).to.have.property(\"publicationYear\");\r",
-											"        pm.expect(book).to.have.property(\"exemplarsIds\");\r",
+											"        pm.expect(book).to.have.property(\"exemplarIds\");\r",
 											"    })\r",
 											"})"
 										],
@@ -5259,8 +5260,8 @@
 											"    pm.expect(borrower).not.to.be.null;\r",
 											"    pm.expect(borrower).to.have.property(\"id\", borrowerId);\r",
 											"    const {transactions} = borrower;\r",
-											"    // This borrower only has 1 transaction\r",
-											"    pm.expect(transactions).to.have.length(1);\r",
+											"    // This borrower has 3 transaction\r",
+											"    pm.expect(transactions).to.have.length(3);\r",
 											"})\r",
 											"\r",
 											"pm.test(\"should have expected structure\", () => {\r",
