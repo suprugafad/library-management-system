@@ -12,12 +12,10 @@ export class BooksOverdueReportService {
     const allOpenTransactions =
       await this.reportsRepository.getUnreturnedExemplars();
 
-    const overdueBooks = allOpenTransactions.filter((transaction) => {
-      const now = new Date();
-      const dueToDate = new Date(transaction.dueToDate);
-      return dueToDate < now;
-    });
+    const data = allOpenTransactions.filter(
+      ({ dueToDate }) => dueToDate < new Date(),
+    );
 
-    return { data: overdueBooks };
+    return { data };
   }
 }
