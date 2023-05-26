@@ -5332,13 +5332,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/{{table}}/borrowers",
+									"raw": "{{base_url}}/{{table}}/overdue",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"{{table}}",
-										"borrowers"
+										"overdue"
 									]
 								}
 							},
