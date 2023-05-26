@@ -43,6 +43,14 @@ export function AppApiPaginatedResponse(options: ApiResponseOptions) {
   );
 }
 
+export function GetReportResponse(options: ApiResponseOptions) {
+  return applyDecorators(
+    AppApiBadRequestResponse(),
+    AppApiInternalServerErrorResponse(),
+    ApiOkResponse(options),
+  );
+}
+
 export function AppApiCreatedResponse(options: ApiResponseOptions) {
   return applyDecorators(
     AppApiBadRequestResponse(),
