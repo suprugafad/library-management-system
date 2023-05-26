@@ -75,12 +75,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/books?year=this is an invalid year&isbn=123",
+									"raw": "{{base_url}}/{{table}}?year=this is an invalid year&isbn=123",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books"
+										"{{table}}"
 									],
 									"query": [
 										{
@@ -1367,12 +1367,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/books?firstName=a really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 chars&lastName&email=not an email",
+									"raw": "{{base_url}}/{{table}}?firstName=a really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 chars&lastName&email=not an email",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books"
+										"{{table}}"
 									],
 									"query": [
 										{
@@ -2588,12 +2588,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/books?bookId=not a number&status=not an status",
+									"raw": "{{base_url}}/{{table}}?bookId=not a number&status=not an status",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
-										"books"
+										"{{table}}"
 									],
 									"query": [
 										{
@@ -5184,20 +5184,20 @@
 											"\r",
 											"const books = JSON.parse(responseBody).data;\r",
 											"\r",
-											"pm.test(\"should have 3 books in total\", () => {\r",
-											"    pm.expect(books).to.have.length(3);\r",
+											"pm.test(\"should have 1 book in total\", () => {\r",
+											"    pm.expect(books).to.have.length(1);\r",
 											"})\r",
 											"\r",
 											"const bookId = pm.collectionVariables.get(\"bookId\");\r",
 											"\r",
 											"pm.test(\"should have a previous created book\", () => {\r",
 											"    const book = books.find(({id}) => id == bookId);\r",
-											"    console.log({book});\r",
+											"    console.log(book);\r",
 											"    pm.expect(book).not.to.be.null;\r",
 											"    pm.expect(book).to.have.property(\"id\", +bookId);\r",
-											"    const {exemplarIds} = book;\r",
+											"    const {exemplarsIds} = book;\r",
 											"    // This available book currently only have 1 available book\r",
-											"    pm.expect(exemplarIds).to.have.length(1);\r",
+											"    pm.expect(exemplarsIds).to.have.length(1);\r",
 											"})\r",
 											"\r",
 											"pm.test(\"should have expected structure\", () => {\r",
@@ -5207,7 +5207,7 @@
 											"        pm.expect(book).to.have.property(\"title\");\r",
 											"        pm.expect(book).to.have.property(\"author\");\r",
 											"        pm.expect(book).to.have.property(\"publicationYear\");\r",
-											"        pm.expect(book).to.have.property(\"exemplarIds\");\r",
+											"        pm.expect(book).to.have.property(\"exemplarsIds\");\r",
 											"    })\r",
 											"})"
 										],
@@ -5393,7 +5393,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://localhost:4000",
+			"value": "http://localhost:4000/api/v1",
 			"type": "string"
 		},
 		{
