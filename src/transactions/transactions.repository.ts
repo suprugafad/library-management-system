@@ -14,7 +14,7 @@ export class TransactionsRepository
   constructor(private readonly prisma: PrismaService) {}
 
   getById(id: number): Promise<TransactionModel> {
-    return this.prisma.transaction.findUnique({ where: { id } });
+    return this.prisma.transaction.findUniqueOrThrow({ where: { id } });
   }
 
   async getAll({

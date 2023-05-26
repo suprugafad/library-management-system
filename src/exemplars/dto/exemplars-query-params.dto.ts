@@ -1,18 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exemplar } from '@prisma/client';
 import { Transform } from 'class-transformer';
-import { IsNumber, IsOptional, Min } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, Min } from 'class-validator';
 import { PaginationQueryParamsDto } from 'src/common/pagination-query-params.dto';
+import { ExemplarModel } from '../exemplar.model';
+import { ExemplarStatus } from '../enum/exemplar-status.enum';
 
 export class ExemplarsQueryParamsDto
   extends PaginationQueryParamsDto
-  implements Partial<Pick<Exemplar, 'bookId'>>
+  implements Partial<Pick<ExemplarModel, 'bookId'>>
 {
   @ApiProperty({ example: 1, required: false })
-  //TODO: check is @IsInt better?
   @Min(1)
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
   @IsOptional()
   bookId?: number;
+
+  @IsEnum(ExemplarStatus)
+  @IsOptional()
+  status: ExemplarModel['status'];
 }

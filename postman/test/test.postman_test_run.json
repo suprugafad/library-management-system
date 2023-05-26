@@ -1,0 +1,3737 @@
+{
+	"id": "41d08fec-ccde-4ea4-9ffc-dc4148c85666",
+	"name": "Test-LIBRARY-MANAGEMENT-SYSTEM",
+	"timestamp": "2023-05-26T03:44:06.219Z",
+	"collection_id": "23503477-f34a1a22-da56-4613-8fe9-e535470c80b0",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 190,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-05-26T03:43:46.709Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "1f9f886c-6bfa-45b2-8a54-7cd5954e7941",
+			"name": "get by id - invalid param",
+			"url": "http://localhost:4000/books/ngfhngf",
+			"time": 62,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				62
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "7d55eca1-1970-4372-b32c-59b630f5b2a6",
+			"name": "get by query - invalid query",
+			"url": "http://localhost:4000/books?year=this is an invalid year&isbn=123",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "980bee21-0eb4-46d1-bf3e-cbb00eccd44b",
+			"name": "create - invalid body",
+			"url": "http://localhost:4000/books",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "dd7b5cfe-7f6b-4c68-b9d2-24bf3da262f1",
+			"name": "update - invalid body",
+			"url": "http://localhost:4000/books/1",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "917e69b7-bd57-4882-9896-76795495bb80",
+			"name": "update - invalid param",
+			"url": "http://localhost:4000/books/ngfhngf",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "24a89e5b-3962-4421-9b82-64d771177823",
+			"name": "delete - invalid param",
+			"url": "http://localhost:4000/books/ngfhngf",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "922c81b5-ebd2-41d1-90e4-b5dd5529001e",
+			"name": "delete - Not Found",
+			"url": "http://localhost:4000/books/99999",
+			"time": 23,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				23
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "659e19bd-13ab-4958-9bc3-0c5719da8f2c",
+			"name": "update - Not Found",
+			"url": "http://localhost:4000/books/99999",
+			"time": 77,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				77
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "f587fe33-ca80-404c-8ff3-dcf1cd133c78",
+			"name": "get by id - Not Found",
+			"url": "http://localhost:4000/books/99999",
+			"time": 50,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				50
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "8389404c-86cc-4cd5-9be7-ee3a77e0a22c",
+			"name": "get all - empty",
+			"url": "http://localhost:4000/books",
+			"time": 15,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have no books yet": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have no books yet": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have no books yet": true
+				}
+			]
+		},
+		{
+			"id": "868270f7-574f-4e13-8fb4-ab3392e82404",
+			"name": "create - first",
+			"url": "http://localhost:4000/books",
+			"time": 43,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				43
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "de650302-9b02-4226-b65d-724f8b08ec26",
+			"name": "get by id - first",
+			"url": "http://localhost:4000/books/88",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a book with expected id": true,
+				"should receive a book correct year": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a book with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a book correct year": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a book with expected id": true,
+					"should receive a book correct year": true
+				}
+			]
+		},
+		{
+			"id": "53eca9a4-5ad9-4be3-94e5-a9b2236b4667",
+			"name": "get by query - first",
+			"url": "http://localhost:4000/books?publicationYear=1605",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a book with expected id": true,
+				"should receive a book correct year": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a book with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a book correct year": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a book with expected id": true,
+					"should receive a book correct year": true
+				}
+			]
+		},
+		{
+			"id": "c2614892-cd3a-49ce-bab8-3cd663463c6a",
+			"name": "get all - first",
+			"url": "http://localhost:4000/books",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have only 1 book": true,
+				"should have 1 book with expected id": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have only 1 book": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 1 book with expected id": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have only 1 book": true,
+					"should have 1 book with expected id": true
+				}
+			]
+		},
+		{
+			"id": "d12800c3-80e5-4554-88fd-88a281b3ffe5",
+			"name": "update - first",
+			"url": "http://localhost:4000/books/88",
+			"time": 19,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should be ok": true,
+				"should have expected id": true,
+				"should have changed as expected": true
+			},
+			"testPassFailCounts": {
+				"should be ok": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have changed as expected": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"should be ok": true,
+					"should have expected id": true,
+					"should have changed as expected": true
+				}
+			]
+		},
+		{
+			"id": "0c6d43b2-5963-4dbd-8cdf-562e8d3f77c7",
+			"name": "get by id - updated",
+			"url": "http://localhost:4000/books/88",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a book with expected id": true,
+				"should receive a book correct year": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a book with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a book correct year": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a book with expected id": true,
+					"should receive a book correct year": true
+				}
+			]
+		},
+		{
+			"id": "4e5e06a8-d20b-43c2-b2fa-82913bf2f9c7",
+			"name": "delete - first",
+			"url": "http://localhost:4000/books/88",
+			"time": 65,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"should be ok": true
+			},
+			"testPassFailCounts": {
+				"should be ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				65
+			],
+			"allTests": [
+				{
+					"should be ok": true
+				}
+			]
+		},
+		{
+			"id": "fcdc272a-c14e-49a7-bf2a-d5f7782918fa",
+			"name": "get by id - deleted",
+			"url": "http://localhost:4000/books/88",
+			"time": 45,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should not be ok": true
+			},
+			"testPassFailCounts": {
+				"should not be ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				45
+			],
+			"allTests": [
+				{
+					"should not be ok": true
+				}
+			]
+		},
+		{
+			"id": "7ce767b7-6c9b-4c59-a2dc-7f75a692ca6c",
+			"name": "get all - empty Copy",
+			"url": "http://localhost:4000/books",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have no books yet": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have no books yet": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have no books yet": true
+				}
+			]
+		},
+		{
+			"id": "a9339c44-4bac-4e6b-ae9d-39e713d753db",
+			"name": "create -random",
+			"url": "http://localhost:4000/books",
+			"time": 17,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "2baa9c1e-c301-4e7e-9a1c-c37ce2122ca7",
+			"name": "create - same title",
+			"url": "http://localhost:4000/books",
+			"time": 29,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				29
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "bb9bdaf9-7999-448c-906d-dab893c02236",
+			"name": "create - same title 2",
+			"url": "http://localhost:4000/books",
+			"time": 33,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				33
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "ed050f32-a3d3-4422-859a-af7d409700a8",
+			"name": "get all  - many",
+			"url": "http://localhost:4000/books",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have 3 books": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 3 books": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have 3 books": true
+				}
+			]
+		},
+		{
+			"id": "9e2a8eb3-8b1f-4ed6-84da-005ad6e682d4",
+			"name": "get by query - same title",
+			"url": "http://localhost:4000/books?title=same title",
+			"time": 24,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should have length 2": true,
+				"should receive a book correct year": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have length 2": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a book correct year": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should have length 2": true,
+					"should receive a book correct year": true
+				}
+			]
+		},
+		{
+			"id": "b6713546-1d1e-4699-b44f-da20ff60e128",
+			"name": "get by id - invalid param",
+			"url": "http://localhost:4000/borrowers/ngfhngf",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "a9819349-97ab-4449-aa64-9c0f5d1cfeb4",
+			"name": "get by query - invalid query",
+			"url": "http://localhost:4000/books?firstName=a really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 charsa really long first name that is not allow because it is up to 255 chars&lastName&email=not an email",
+			"time": 24,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "e129f2f2-1d8b-44a1-b3b8-f801d564b3ab",
+			"name": "create - invalid body",
+			"url": "http://localhost:4000/borrowers",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "3ebef5b8-6968-44a9-a997-6cdf97c73a26",
+			"name": "update - invalid body",
+			"url": "http://localhost:4000/borrowers/1",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "dd4c36bb-03d0-4600-803d-fe82e17550b3",
+			"name": "update - invalid param",
+			"url": "http://localhost:4000/borrowers/ngfhngf",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "2c62405d-2e56-4cc4-b0dc-4297ad661b62",
+			"name": "delete - invalid param",
+			"url": "http://localhost:4000/borrowers/ngfhngf",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "cfc59eff-842b-400f-9d16-0b232f21a4b5",
+			"name": "delete - Not Found",
+			"url": "http://localhost:4000/borrowers/99999",
+			"time": 36,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				36
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "38e8f32a-5f26-4f82-bece-6aa71b4db0c9",
+			"name": "update - Not Found",
+			"url": "http://localhost:4000/borrowers/99999",
+			"time": 24,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "618791a3-140a-49ae-8086-eb656c789701",
+			"name": "get by id - Not Found",
+			"url": "http://localhost:4000/borrowers/99999",
+			"time": 36,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				36
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "25a6b11f-aeea-49a9-a19f-06123250b1cb",
+			"name": "get all - empty",
+			"url": "http://localhost:4000/borrowers",
+			"time": 30,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have no borrowers yet": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have no borrowers yet": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				30
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have no borrowers yet": true
+				}
+			]
+		},
+		{
+			"id": "9e850e6e-6ede-408a-881f-31c2c3de3879",
+			"name": "create - first",
+			"url": "http://localhost:4000/borrowers",
+			"time": 18,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				18
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "610aa781-c27f-4bd0-9f14-e1750e5e252d",
+			"name": "get by id - first",
+			"url": "http://localhost:4000/borrowers/88",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a borrower with expected id": true,
+				"should receive a borrower correct email": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a borrower with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a borrower correct email": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a borrower with expected id": true,
+					"should receive a borrower correct email": true
+				}
+			]
+		},
+		{
+			"id": "ca642dfb-f941-4239-9e06-86c4d5fc6a9c",
+			"name": "get by query - first",
+			"url": "http://localhost:4000/borrowers?email=Mireya_Langworth65@yahoo.com",
+			"time": 21,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a borrower with expected id": true,
+				"should receive a borrower correct email": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a borrower with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a borrower correct email": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				21
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a borrower with expected id": true,
+					"should receive a borrower correct email": true
+				}
+			]
+		},
+		{
+			"id": "29d3e595-cfc9-447d-9d65-0051e93ee415",
+			"name": "get all - first",
+			"url": "http://localhost:4000/borrowers",
+			"time": 29,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have only 1 borrower": true,
+				"should have 1 borrower with expected id": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have only 1 borrower": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 1 borrower with expected id": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				29
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have only 1 borrower": true,
+					"should have 1 borrower with expected id": true
+				}
+			]
+		},
+		{
+			"id": "29c93e72-b5f6-40bd-a510-3cff723fd084",
+			"name": "update - first",
+			"url": "http://localhost:4000/borrowers/88",
+			"time": 31,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should be ok": true,
+				"should have expected id": true,
+				"should have changed as expected": true
+			},
+			"testPassFailCounts": {
+				"should be ok": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have changed as expected": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				31
+			],
+			"allTests": [
+				{
+					"should be ok": true,
+					"should have expected id": true,
+					"should have changed as expected": true
+				}
+			]
+		},
+		{
+			"id": "5fd73a0d-b03d-4086-8839-a9c3c28aec94",
+			"name": "get by id - updated",
+			"url": "http://localhost:4000/borrowers/88",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a borrower with expected id": true,
+				"should receive a borrower correct year": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a borrower with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a borrower correct year": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a borrower with expected id": true,
+					"should receive a borrower correct year": true
+				}
+			]
+		},
+		{
+			"id": "4de8c20c-463f-40d1-843c-f9142b1d0faf",
+			"name": "delete - first",
+			"url": "http://localhost:4000/borrowers/88",
+			"time": 19,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"should be ok": true
+			},
+			"testPassFailCounts": {
+				"should be ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"should be ok": true
+				}
+			]
+		},
+		{
+			"id": "21ddf346-c01f-4064-912a-03d15b73b89b",
+			"name": "get by id - deleted",
+			"url": "http://localhost:4000/borrowers/88",
+			"time": 30,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should not be ok": true
+			},
+			"testPassFailCounts": {
+				"should not be ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				30
+			],
+			"allTests": [
+				{
+					"should not be ok": true
+				}
+			]
+		},
+		{
+			"id": "62dd4bd5-0bba-406c-82cf-efb965ecf03c",
+			"name": "get all - empty Copy",
+			"url": "http://localhost:4000/borrowers",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have no borrowers yet": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have no borrowers yet": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have no borrowers yet": true
+				}
+			]
+		},
+		{
+			"id": "78091b72-3793-462e-bbea-d6540e943eb8",
+			"name": "create -random",
+			"url": "http://localhost:4000/borrowers",
+			"time": 29,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				29
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "1493b8a8-0d05-4323-8e57-1f3c52e2eaa0",
+			"name": "create - same last name",
+			"url": "http://localhost:4000/borrowers",
+			"time": 24,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "50722f0c-4556-4dac-aa2c-388bd0d951fe",
+			"name": "create - same last name 2",
+			"url": "http://localhost:4000/borrowers",
+			"time": 23,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				23
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "a6bb1a50-43c7-402e-b031-2379cee66685",
+			"name": "get all  - many",
+			"url": "http://localhost:4000/borrowers",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have 3 borrowers": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 3 borrowers": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have 3 borrowers": true
+				}
+			]
+		},
+		{
+			"id": "0e5d01e0-2c31-43eb-94a8-4f744392c86e",
+			"name": "get by query - same title",
+			"url": "http://localhost:4000/borrowers?lastName=SameLastName",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should have length 2": true,
+				"should receive a borrower correct lastName": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have length 2": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a borrower correct lastName": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should have length 2": true,
+					"should receive a borrower correct lastName": true
+				}
+			]
+		},
+		{
+			"id": "b371d4bc-1fa0-4f60-b1a2-8225a6200a15",
+			"name": "get by id - invalid param",
+			"url": "http://localhost:4000/exemplars/ngfhngf",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "7166cdab-ff93-4ebd-9278-b974af4b7750",
+			"name": "get by query - invalid query",
+			"url": "http://localhost:4000/books?bookId=not a number&status=not an status",
+			"time": 22,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				22
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "63cf51fc-efa7-48df-9ab0-2385c2c64cb5",
+			"name": "create - invalid body",
+			"url": "http://localhost:4000/exemplars",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "5005cecc-ac8d-4991-8c1d-56461f2898dc",
+			"name": "update - invalid body",
+			"url": "http://localhost:4000/exemplars/1",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "4121150c-3be9-42f7-9466-779bd7ead40d",
+			"name": "update - invalid param",
+			"url": "http://localhost:4000/exemplars/ngfhngf",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "b0848cea-d57f-4bac-98c9-7848cd2b13a6",
+			"name": "delete - invalid param",
+			"url": "http://localhost:4000/exemplars/ngfhngf",
+			"time": 8,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "40b5ac83-aec8-4b69-aaf1-0fef85a81c1f",
+			"name": "delete - Not Found",
+			"url": "http://localhost:4000/exemplars/99999",
+			"time": 61,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				61
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "1e154889-6d6d-42bc-a21d-e67c10dcc788",
+			"name": "create - no book",
+			"url": "http://localhost:4000/exemplars",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "c7a7b94e-7049-4ed4-8285-8ec73eb68fe9",
+			"name": "update - Not Found",
+			"url": "http://localhost:4000/exemplars/99999",
+			"time": 34,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				34
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "522f5f81-95a6-4418-b872-1801372d5b66",
+			"name": "get by id - Not Found",
+			"url": "http://localhost:4000/exemplars/99999",
+			"time": 24,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "ba01d4e3-e1f0-4b12-a827-e23a647cba8b",
+			"name": "get all - empty",
+			"url": "http://localhost:4000/exemplars",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have no exemplars yet": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have no exemplars yet": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have no exemplars yet": true
+				}
+			]
+		},
+		{
+			"id": "bff11168-5b11-46da-912e-7793ed9f2f70",
+			"name": "create - first",
+			"url": "http://localhost:4000/exemplars",
+			"time": 22,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				22
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "0233b2af-b49a-4b0c-aa59-09392027b991",
+			"name": "get by id - first",
+			"url": "http://localhost:4000/exemplars/97",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a exemplar with expected id": true,
+				"should receive a exemplar correct status": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a exemplar with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a exemplar correct status": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a exemplar with expected id": true,
+					"should receive a exemplar correct status": true
+				}
+			]
+		},
+		{
+			"id": "70fe4b9c-ced6-49d1-85d6-ed53a1c70457",
+			"name": "get by query - first",
+			"url": "http://localhost:4000/exemplars?status=Borrowed",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a exemplar with expected id": true,
+				"should receive a exemplar correct status": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a exemplar with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a exemplar correct status": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a exemplar with expected id": true,
+					"should receive a exemplar correct status": true
+				}
+			]
+		},
+		{
+			"id": "4b9bf724-fde3-48e1-8e16-9419c5c0a1d1",
+			"name": "get all - first",
+			"url": "http://localhost:4000/exemplars",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have only 1 exemplar": true,
+				"should have 1 exemplar with expected id": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have only 1 exemplar": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 1 exemplar with expected id": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have only 1 exemplar": true,
+					"should have 1 exemplar with expected id": true
+				}
+			]
+		},
+		{
+			"id": "ba17c3ef-5249-4297-b788-57ee9e008854",
+			"name": "update - first",
+			"url": "http://localhost:4000/exemplars/97",
+			"time": 27,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should be ok": true,
+				"should have expected id": true,
+				"should have changed as expected": true
+			},
+			"testPassFailCounts": {
+				"should be ok": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have changed as expected": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				27
+			],
+			"allTests": [
+				{
+					"should be ok": true,
+					"should have expected id": true,
+					"should have changed as expected": true
+				}
+			]
+		},
+		{
+			"id": "ad68df39-8d8d-4c25-bc7e-e06d4c055b9f",
+			"name": "get by id - updated",
+			"url": "http://localhost:4000/exemplars/97",
+			"time": 22,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a exemplar with expected id": true,
+				"should receive a exemplar correct status": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a exemplar with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a exemplar correct status": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				22
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a exemplar with expected id": true,
+					"should receive a exemplar correct status": true
+				}
+			]
+		},
+		{
+			"id": "d782cb41-3881-4cde-8e06-b54da7c4de1d",
+			"name": "delete - first",
+			"url": "http://localhost:4000/exemplars/97",
+			"time": 20,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"should be ok": true
+			},
+			"testPassFailCounts": {
+				"should be ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				20
+			],
+			"allTests": [
+				{
+					"should be ok": true
+				}
+			]
+		},
+		{
+			"id": "581b5c27-d3ec-40c4-9b21-4a383aa6a625",
+			"name": "get by id - deleted",
+			"url": "http://localhost:4000/exemplars/97",
+			"time": 36,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should not be ok": true
+			},
+			"testPassFailCounts": {
+				"should not be ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				36
+			],
+			"allTests": [
+				{
+					"should not be ok": true
+				}
+			]
+		},
+		{
+			"id": "53c7011f-ae09-4795-9f71-e16c270cd281",
+			"name": "get all - empty Copy",
+			"url": "http://localhost:4000/exemplars",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have no exemplars yet": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have no exemplars yet": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have no exemplars yet": true
+				}
+			]
+		},
+		{
+			"id": "a34b16d7-f18e-4756-8bf7-84768ab7a154",
+			"name": "create -random",
+			"url": "http://localhost:4000/exemplars",
+			"time": 40,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				40
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "effa3f57-f762-4a6b-a834-733275e324bd",
+			"name": "create - same status",
+			"url": "http://localhost:4000/exemplars",
+			"time": 24,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "4d0ce2a9-12f2-4dfe-b963-dc86860e441b",
+			"name": "create - same status 2",
+			"url": "http://localhost:4000/exemplars",
+			"time": 57,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				57
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "c0af022c-c162-444b-ac42-8afb212f3413",
+			"name": "get all  - many",
+			"url": "http://localhost:4000/exemplars",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have 3 exemplars": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 3 exemplars": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have 3 exemplars": true
+				}
+			]
+		},
+		{
+			"id": "147578e6-49a3-436d-8f48-4961a0ba4629",
+			"name": "get by query - same title",
+			"url": "http://localhost:4000/exemplars?status=Borrowed",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should have length 2": true,
+				"should receive a exemplar correct year": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have length 2": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a exemplar correct year": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should have length 2": true,
+					"should receive a exemplar correct year": true
+				}
+			]
+		},
+		{
+			"id": "65f825f1-f244-4aab-87b3-997f1e772c69",
+			"name": "get by id - invalid param",
+			"url": "http://localhost:4000/transactions/ngfhngf",
+			"time": 13,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "936aa752-a6cc-4568-a55f-9e34d3c73047",
+			"name": "get by query - invalid query",
+			"url": "http://localhost:4000/transactions?borrowedAt=not a date&returnedAt=123123&dueToDate=13-13-13",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "806a5e26-03b5-4ea9-906d-59b8d35058de",
+			"name": "create - invalid body",
+			"url": "http://localhost:4000/transactions",
+			"time": 10,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "cea0f89f-bf42-407a-b285-b1cd473276b5",
+			"name": "update - invalid body",
+			"url": "http://localhost:4000/transactions/1",
+			"time": 19,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "aabf6a7e-b947-41bb-8606-c6de238c7adc",
+			"name": "update - invalid param",
+			"url": "http://localhost:4000/transactions/ngfhngf",
+			"time": 7,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "31721350-c43d-42ca-a9f7-41d262cd3457",
+			"name": "delete - invalid param",
+			"url": "http://localhost:4000/transactions/ngfhngf",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "598dcb34-8296-47fb-863e-3289a12fd4a8",
+			"name": "delete - Not Found",
+			"url": "http://localhost:4000/transactions/99999",
+			"time": 21,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				21
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "bc92d87a-f4f4-4595-8cfe-81024f9884bd",
+			"name": "create - no exemplar",
+			"url": "http://localhost:4000/transactions",
+			"time": 40,
+			"responseCode": {
+				"code": 409,
+				"name": "Conflict"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				40
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "931721ce-6393-4a33-b895-8ad4118528ff",
+			"name": "create - no borrower",
+			"url": "http://localhost:4000/transactions",
+			"time": 28,
+			"responseCode": {
+				"code": 409,
+				"name": "Conflict"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				28
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "8b2a36f0-37e1-4a22-8a71-5ab1e6c03456",
+			"name": "update - Not Found",
+			"url": "http://localhost:4000/transactions/99999",
+			"time": 37,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				37
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "768a5782-0783-4872-aeee-a07c950697a2",
+			"name": "get by id - Not Found",
+			"url": "http://localhost:4000/transactions/99999",
+			"time": 31,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should be error": true
+			},
+			"testPassFailCounts": {
+				"should be error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				31
+			],
+			"allTests": [
+				{
+					"should be error": true
+				}
+			]
+		},
+		{
+			"id": "13999696-4010-497b-b7d6-c8d04da23681",
+			"name": "get all - empty",
+			"url": "http://localhost:4000/transactions",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have no exemplars yet": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have no exemplars yet": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have no exemplars yet": true
+				}
+			]
+		},
+		{
+			"id": "c133c886-123e-46f5-88a5-c5a58a9ab5c4",
+			"name": "create - first",
+			"url": "http://localhost:4000/transactions",
+			"time": 25,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				25
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "01e3b043-d18a-4e52-aa0e-8e2751bdd34c",
+			"name": "get by id - first",
+			"url": "http://localhost:4000/transactions/114",
+			"time": 10,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a transaction with expected id": true,
+				"should receive a exemplar correct body": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a transaction with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a exemplar correct body": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a transaction with expected id": true,
+					"should receive a exemplar correct body": true
+				}
+			]
+		},
+		{
+			"id": "3f6d34c6-2350-4b1d-a976-d7484ba2f21e",
+			"name": "get by query - first",
+			"url": "http://localhost:4000/transactions?exemplarId=100",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a transaction with expected id": true,
+				"should receive a exemplar correct body": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a transaction with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a exemplar correct body": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a transaction with expected id": true,
+					"should receive a exemplar correct body": true
+				}
+			]
+		},
+		{
+			"id": "5da5c1fa-2681-4e89-b874-a02b0c47dc3e",
+			"name": "get all - first",
+			"url": "http://localhost:4000/transactions",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have only 1 transaction": true,
+				"should have 1 transaction with expected id": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have only 1 transaction": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 1 transaction with expected id": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have only 1 transaction": true,
+					"should have 1 transaction with expected id": true
+				}
+			]
+		},
+		{
+			"id": "971aeaac-6267-403e-899a-5e87ca09e283",
+			"name": "update - first",
+			"url": "http://localhost:4000/transactions/114",
+			"time": 30,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should be ok": true,
+				"should have expected id": true,
+				"should have changed as expected": true
+			},
+			"testPassFailCounts": {
+				"should be ok": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have changed as expected": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				30
+			],
+			"allTests": [
+				{
+					"should be ok": true,
+					"should have expected id": true,
+					"should have changed as expected": true
+				}
+			]
+		},
+		{
+			"id": "e93fe4f9-4d20-40f7-9734-686a067dc5e2",
+			"name": "get by id - updated",
+			"url": "http://localhost:4000/transactions/114",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should receive a transaction with expected id": true,
+				"should receive a exemplar correct body": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a transaction with expected id": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a exemplar correct body": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should receive a transaction with expected id": true,
+					"should receive a exemplar correct body": true
+				}
+			]
+		},
+		{
+			"id": "21e94813-b32e-4f9f-90ab-c250b86ddb8a",
+			"name": "delete - first",
+			"url": "http://localhost:4000/transactions/114",
+			"time": 25,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"should be ok": true
+			},
+			"testPassFailCounts": {
+				"should be ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				25
+			],
+			"allTests": [
+				{
+					"should be ok": true
+				}
+			]
+		},
+		{
+			"id": "e9230b43-2efd-41b8-bdf3-c15a9f9fcb65",
+			"name": "get by id - deleted",
+			"url": "http://localhost:4000/transactions/114",
+			"time": 26,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"should not be ok": true
+			},
+			"testPassFailCounts": {
+				"should not be ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				26
+			],
+			"allTests": [
+				{
+					"should not be ok": true
+				}
+			]
+		},
+		{
+			"id": "faafc77f-cdfc-48e4-83d9-58a101c284ce",
+			"name": "get all - empty Copy",
+			"url": "http://localhost:4000/transactions",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have no transactions": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have no transactions": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have no transactions": true
+				}
+			]
+		},
+		{
+			"id": "9699b580-85ab-43f3-8bf2-02ea4daa90e2",
+			"name": "create - random",
+			"url": "http://localhost:4000/transactions",
+			"time": 20,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				20
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "1f70429e-ae8a-40b0-8d0a-1b65b24982bd",
+			"name": "create - same exemplar",
+			"url": "http://localhost:4000/transactions",
+			"time": 16,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "f99e5120-03fd-4e86-9b32-3f1dc0d04274",
+			"name": "create - same exemplar 2",
+			"url": "http://localhost:4000/transactions",
+			"time": 21,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"should have status code 201": true,
+				"should have been created with the same properties": true
+			},
+			"testPassFailCounts": {
+				"should have status code 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have been created with the same properties": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				21
+			],
+			"allTests": [
+				{
+					"should have status code 201": true,
+					"should have been created with the same properties": true
+				}
+			]
+		},
+		{
+			"id": "bd9be026-cc60-405f-b14a-cef9dced6469",
+			"name": "get all  - many",
+			"url": "http://localhost:4000/transactions",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have status code 200": true,
+				"should have 3 transactions": true
+			},
+			"testPassFailCounts": {
+				"should have status code 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 3 transactions": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have status code 200": true,
+					"should have 3 transactions": true
+				}
+			]
+		},
+		{
+			"id": "91aff283-47c8-4d56-8cae-f45cf7531167",
+			"name": "get by query - same exemplar",
+			"url": "http://localhost:4000/transactions?exemplarId=99",
+			"time": 17,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"should have length 2": true,
+				"should receive a transaction correct exemplar id": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have length 2": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should receive a transaction correct exemplar id": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"should have length 2": true,
+					"should receive a transaction correct exemplar id": true
+				}
+			]
+		},
+		{
+			"id": "1c047ff6-7160-46ab-a886-5ee7cd9a6e51",
+			"name": "get all - book reports",
+			"url": "http://localhost:4000/reports/books",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have a status code of 200": true,
+				"should have 3 books in body": true,
+				"should have a previous created book": true,
+				"should have expected structure": true
+			},
+			"testPassFailCounts": {
+				"should have a status code of 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 3 books in body": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have a previous created book": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have expected structure": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have a status code of 200": true,
+					"should have 3 books in body": true,
+					"should have a previous created book": true,
+					"should have expected structure": true
+				}
+			]
+		},
+		{
+			"id": "2c2d678f-6762-4575-a3b6-c1a10cdaf34b",
+			"name": "get all - available reports",
+			"url": "http://localhost:4000/reports/available",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have a status code of 200": true,
+				"should have 3 books in total": true,
+				"should have a previous created book": true,
+				"should have expected structure": true
+			},
+			"testPassFailCounts": {
+				"should have a status code of 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 3 books in total": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have a previous created book": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have expected structure": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"should have a status code of 200": true,
+					"should have 3 books in total": true,
+					"should have a previous created book": true,
+					"should have expected structure": true
+				}
+			]
+		},
+		{
+			"id": "360c7572-6052-4a91-ac87-15f69f715350",
+			"name": "get all - borrower reports",
+			"url": "http://localhost:4000/reports/borrowers",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have a status code of 200": true,
+				"should have 3 borrowers": true,
+				"should have a previous created borrower": true,
+				"should have expected structure": true
+			},
+			"testPassFailCounts": {
+				"should have a status code of 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have 3 borrowers": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have a previous created borrower": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have expected structure": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"should have a status code of 200": true,
+					"should have 3 borrowers": true,
+					"should have a previous created borrower": true,
+					"should have expected structure": true
+				}
+			]
+		},
+		{
+			"id": "5cedc3b3-7459-4079-9e1c-633a099b764c",
+			"name": "get all - overdue reports",
+			"url": "http://localhost:4000/reports/overdue",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"should have a status code of 200": true,
+				"should have expected quantity of overdues": true,
+				"should have expected structure": true
+			},
+			"testPassFailCounts": {
+				"should have a status code of 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have expected quantity of overdues": {
+					"pass": 1,
+					"fail": 0
+				},
+				"should have expected structure": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"should have a status code of 200": true,
+					"should have expected quantity of overdues": true,
+					"should have expected structure": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 2112,
+	"collection": {
+		"requests": [
+			{
+				"id": "1f9f886c-6bfa-45b2-8a54-7cd5954e7941",
+				"method": "GET"
+			},
+			{
+				"id": "7d55eca1-1970-4372-b32c-59b630f5b2a6",
+				"method": "GET"
+			},
+			{
+				"id": "980bee21-0eb4-46d1-bf3e-cbb00eccd44b",
+				"method": "POST"
+			},
+			{
+				"id": "dd7b5cfe-7f6b-4c68-b9d2-24bf3da262f1",
+				"method": "PATCH"
+			},
+			{
+				"id": "917e69b7-bd57-4882-9896-76795495bb80",
+				"method": "PATCH"
+			},
+			{
+				"id": "24a89e5b-3962-4421-9b82-64d771177823",
+				"method": "DELETE"
+			},
+			{
+				"id": "922c81b5-ebd2-41d1-90e4-b5dd5529001e",
+				"method": "DELETE"
+			},
+			{
+				"id": "659e19bd-13ab-4958-9bc3-0c5719da8f2c",
+				"method": "PATCH"
+			},
+			{
+				"id": "f587fe33-ca80-404c-8ff3-dcf1cd133c78",
+				"method": "GET"
+			},
+			{
+				"id": "8389404c-86cc-4cd5-9be7-ee3a77e0a22c",
+				"method": "GET"
+			},
+			{
+				"id": "868270f7-574f-4e13-8fb4-ab3392e82404",
+				"method": "POST"
+			},
+			{
+				"id": "de650302-9b02-4226-b65d-724f8b08ec26",
+				"method": "GET"
+			},
+			{
+				"id": "53eca9a4-5ad9-4be3-94e5-a9b2236b4667",
+				"method": "GET"
+			},
+			{
+				"id": "c2614892-cd3a-49ce-bab8-3cd663463c6a",
+				"method": "GET"
+			},
+			{
+				"id": "d12800c3-80e5-4554-88fd-88a281b3ffe5",
+				"method": "PATCH"
+			},
+			{
+				"id": "0c6d43b2-5963-4dbd-8cdf-562e8d3f77c7",
+				"method": "GET"
+			},
+			{
+				"id": "4e5e06a8-d20b-43c2-b2fa-82913bf2f9c7",
+				"method": "DELETE"
+			},
+			{
+				"id": "fcdc272a-c14e-49a7-bf2a-d5f7782918fa",
+				"method": "GET"
+			},
+			{
+				"id": "7ce767b7-6c9b-4c59-a2dc-7f75a692ca6c",
+				"method": "GET"
+			},
+			{
+				"id": "a9339c44-4bac-4e6b-ae9d-39e713d753db",
+				"method": "POST"
+			},
+			{
+				"id": "2baa9c1e-c301-4e7e-9a1c-c37ce2122ca7",
+				"method": "POST"
+			},
+			{
+				"id": "bb9bdaf9-7999-448c-906d-dab893c02236",
+				"method": "POST"
+			},
+			{
+				"id": "ed050f32-a3d3-4422-859a-af7d409700a8",
+				"method": "GET"
+			},
+			{
+				"id": "9e2a8eb3-8b1f-4ed6-84da-005ad6e682d4",
+				"method": "GET"
+			},
+			{
+				"id": "b6713546-1d1e-4699-b44f-da20ff60e128",
+				"method": "GET"
+			},
+			{
+				"id": "a9819349-97ab-4449-aa64-9c0f5d1cfeb4",
+				"method": "GET"
+			},
+			{
+				"id": "e129f2f2-1d8b-44a1-b3b8-f801d564b3ab",
+				"method": "POST"
+			},
+			{
+				"id": "3ebef5b8-6968-44a9-a997-6cdf97c73a26",
+				"method": "PATCH"
+			},
+			{
+				"id": "dd4c36bb-03d0-4600-803d-fe82e17550b3",
+				"method": "PATCH"
+			},
+			{
+				"id": "2c62405d-2e56-4cc4-b0dc-4297ad661b62",
+				"method": "DELETE"
+			},
+			{
+				"id": "cfc59eff-842b-400f-9d16-0b232f21a4b5",
+				"method": "DELETE"
+			},
+			{
+				"id": "38e8f32a-5f26-4f82-bece-6aa71b4db0c9",
+				"method": "PATCH"
+			},
+			{
+				"id": "618791a3-140a-49ae-8086-eb656c789701",
+				"method": "GET"
+			},
+			{
+				"id": "25a6b11f-aeea-49a9-a19f-06123250b1cb",
+				"method": "GET"
+			},
+			{
+				"id": "9e850e6e-6ede-408a-881f-31c2c3de3879",
+				"method": "POST"
+			},
+			{
+				"id": "610aa781-c27f-4bd0-9f14-e1750e5e252d",
+				"method": "GET"
+			},
+			{
+				"id": "ca642dfb-f941-4239-9e06-86c4d5fc6a9c",
+				"method": "GET"
+			},
+			{
+				"id": "29d3e595-cfc9-447d-9d65-0051e93ee415",
+				"method": "GET"
+			},
+			{
+				"id": "29c93e72-b5f6-40bd-a510-3cff723fd084",
+				"method": "PATCH"
+			},
+			{
+				"id": "5fd73a0d-b03d-4086-8839-a9c3c28aec94",
+				"method": "GET"
+			},
+			{
+				"id": "4de8c20c-463f-40d1-843c-f9142b1d0faf",
+				"method": "DELETE"
+			},
+			{
+				"id": "21ddf346-c01f-4064-912a-03d15b73b89b",
+				"method": "GET"
+			},
+			{
+				"id": "62dd4bd5-0bba-406c-82cf-efb965ecf03c",
+				"method": "GET"
+			},
+			{
+				"id": "78091b72-3793-462e-bbea-d6540e943eb8",
+				"method": "POST"
+			},
+			{
+				"id": "1493b8a8-0d05-4323-8e57-1f3c52e2eaa0",
+				"method": "POST"
+			},
+			{
+				"id": "50722f0c-4556-4dac-aa2c-388bd0d951fe",
+				"method": "POST"
+			},
+			{
+				"id": "a6bb1a50-43c7-402e-b031-2379cee66685",
+				"method": "GET"
+			},
+			{
+				"id": "0e5d01e0-2c31-43eb-94a8-4f744392c86e",
+				"method": "GET"
+			},
+			{
+				"id": "b371d4bc-1fa0-4f60-b1a2-8225a6200a15",
+				"method": "GET"
+			},
+			{
+				"id": "7166cdab-ff93-4ebd-9278-b974af4b7750",
+				"method": "GET"
+			},
+			{
+				"id": "63cf51fc-efa7-48df-9ab0-2385c2c64cb5",
+				"method": "POST"
+			},
+			{
+				"id": "5005cecc-ac8d-4991-8c1d-56461f2898dc",
+				"method": "PATCH"
+			},
+			{
+				"id": "4121150c-3be9-42f7-9466-779bd7ead40d",
+				"method": "PATCH"
+			},
+			{
+				"id": "b0848cea-d57f-4bac-98c9-7848cd2b13a6",
+				"method": "DELETE"
+			},
+			{
+				"id": "40b5ac83-aec8-4b69-aaf1-0fef85a81c1f",
+				"method": "DELETE"
+			},
+			{
+				"id": "1e154889-6d6d-42bc-a21d-e67c10dcc788",
+				"method": "POST"
+			},
+			{
+				"id": "c7a7b94e-7049-4ed4-8285-8ec73eb68fe9",
+				"method": "PATCH"
+			},
+			{
+				"id": "522f5f81-95a6-4418-b872-1801372d5b66",
+				"method": "GET"
+			},
+			{
+				"id": "ba01d4e3-e1f0-4b12-a827-e23a647cba8b",
+				"method": "GET"
+			},
+			{
+				"id": "bff11168-5b11-46da-912e-7793ed9f2f70",
+				"method": "POST"
+			},
+			{
+				"id": "0233b2af-b49a-4b0c-aa59-09392027b991",
+				"method": "GET"
+			},
+			{
+				"id": "70fe4b9c-ced6-49d1-85d6-ed53a1c70457",
+				"method": "GET"
+			},
+			{
+				"id": "4b9bf724-fde3-48e1-8e16-9419c5c0a1d1",
+				"method": "GET"
+			},
+			{
+				"id": "ba17c3ef-5249-4297-b788-57ee9e008854",
+				"method": "PATCH"
+			},
+			{
+				"id": "ad68df39-8d8d-4c25-bc7e-e06d4c055b9f",
+				"method": "GET"
+			},
+			{
+				"id": "d782cb41-3881-4cde-8e06-b54da7c4de1d",
+				"method": "DELETE"
+			},
+			{
+				"id": "581b5c27-d3ec-40c4-9b21-4a383aa6a625",
+				"method": "GET"
+			},
+			{
+				"id": "53c7011f-ae09-4795-9f71-e16c270cd281",
+				"method": "GET"
+			},
+			{
+				"id": "a34b16d7-f18e-4756-8bf7-84768ab7a154",
+				"method": "POST"
+			},
+			{
+				"id": "effa3f57-f762-4a6b-a834-733275e324bd",
+				"method": "POST"
+			},
+			{
+				"id": "4d0ce2a9-12f2-4dfe-b963-dc86860e441b",
+				"method": "POST"
+			},
+			{
+				"id": "c0af022c-c162-444b-ac42-8afb212f3413",
+				"method": "GET"
+			},
+			{
+				"id": "147578e6-49a3-436d-8f48-4961a0ba4629",
+				"method": "GET"
+			},
+			{
+				"id": "65f825f1-f244-4aab-87b3-997f1e772c69",
+				"method": "GET"
+			},
+			{
+				"id": "936aa752-a6cc-4568-a55f-9e34d3c73047",
+				"method": "GET"
+			},
+			{
+				"id": "806a5e26-03b5-4ea9-906d-59b8d35058de",
+				"method": "POST"
+			},
+			{
+				"id": "cea0f89f-bf42-407a-b285-b1cd473276b5",
+				"method": "PATCH"
+			},
+			{
+				"id": "aabf6a7e-b947-41bb-8606-c6de238c7adc",
+				"method": "PATCH"
+			},
+			{
+				"id": "31721350-c43d-42ca-a9f7-41d262cd3457",
+				"method": "DELETE"
+			},
+			{
+				"id": "598dcb34-8296-47fb-863e-3289a12fd4a8",
+				"method": "DELETE"
+			},
+			{
+				"id": "bc92d87a-f4f4-4595-8cfe-81024f9884bd",
+				"method": "POST"
+			},
+			{
+				"id": "931721ce-6393-4a33-b895-8ad4118528ff",
+				"method": "POST"
+			},
+			{
+				"id": "8b2a36f0-37e1-4a22-8a71-5ab1e6c03456",
+				"method": "PATCH"
+			},
+			{
+				"id": "768a5782-0783-4872-aeee-a07c950697a2",
+				"method": "GET"
+			},
+			{
+				"id": "13999696-4010-497b-b7d6-c8d04da23681",
+				"method": "GET"
+			},
+			{
+				"id": "c133c886-123e-46f5-88a5-c5a58a9ab5c4",
+				"method": "POST"
+			},
+			{
+				"id": "01e3b043-d18a-4e52-aa0e-8e2751bdd34c",
+				"method": "GET"
+			},
+			{
+				"id": "3f6d34c6-2350-4b1d-a976-d7484ba2f21e",
+				"method": "GET"
+			},
+			{
+				"id": "5da5c1fa-2681-4e89-b874-a02b0c47dc3e",
+				"method": "GET"
+			},
+			{
+				"id": "971aeaac-6267-403e-899a-5e87ca09e283",
+				"method": "PATCH"
+			},
+			{
+				"id": "e93fe4f9-4d20-40f7-9734-686a067dc5e2",
+				"method": "GET"
+			},
+			{
+				"id": "21e94813-b32e-4f9f-90ab-c250b86ddb8a",
+				"method": "DELETE"
+			},
+			{
+				"id": "e9230b43-2efd-41b8-bdf3-c15a9f9fcb65",
+				"method": "GET"
+			},
+			{
+				"id": "faafc77f-cdfc-48e4-83d9-58a101c284ce",
+				"method": "GET"
+			},
+			{
+				"id": "9699b580-85ab-43f3-8bf2-02ea4daa90e2",
+				"method": "POST"
+			},
+			{
+				"id": "1f70429e-ae8a-40b0-8d0a-1b65b24982bd",
+				"method": "POST"
+			},
+			{
+				"id": "f99e5120-03fd-4e86-9b32-3f1dc0d04274",
+				"method": "POST"
+			},
+			{
+				"id": "bd9be026-cc60-405f-b14a-cef9dced6469",
+				"method": "GET"
+			},
+			{
+				"id": "91aff283-47c8-4d56-8cae-f45cf7531167",
+				"method": "GET"
+			},
+			{
+				"id": "1c047ff6-7160-46ab-a886-5ee7cd9a6e51",
+				"method": "GET"
+			},
+			{
+				"id": "2c2d678f-6762-4575-a3b6-c1a10cdaf34b",
+				"method": "GET"
+			},
+			{
+				"id": "360c7572-6052-4a91-ac87-15f69f715350",
+				"method": "GET"
+			},
+			{
+				"id": "5cedc3b3-7459-4079-9e1c-633a099b764c",
+				"method": "GET"
+			}
+		]
+	}
+}

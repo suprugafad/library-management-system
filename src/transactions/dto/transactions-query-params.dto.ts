@@ -1,23 +1,38 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Min, IsInt, IsOptional } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { Min, IsInt, IsOptional, IsDate } from 'class-validator';
 import { PaginationQueryParamsDto } from 'src/common/pagination-query-params.dto';
 
 export class TransactionsQueryParamsDto extends PaginationQueryParamsDto {
   @ApiProperty({ example: 1, required: false })
   @Min(1)
   @IsInt()
+  @Transform(({ value }) => parseInt(value))
   @IsOptional()
   borrowerId?: number;
 
   @ApiProperty({ example: 1, required: false })
   @Min(1)
   @IsInt()
+  @Transform(({ value }) => parseInt(value))
   @IsOptional()
   exemplarId?: number;
 
-  // TODO: implement borrowedAt
+  @ApiProperty({ example: '2023-06-24T22:37:44.231Z', required: false })
+  @IsDate()
+  @Transform(({ value }) => new Date(value))
+  @IsOptional()
+  borrowedAt?: Date;
 
-  // TODO: implement returnedAt
+  @ApiProperty({ example: '2023-07-24T22:37:44.231Z', required: false })
+  @IsDate()
+  @Transform(({ value }) => new Date(value))
+  @IsOptional()
+  returnedAt?: Date;
 
-  // TODO: implement dueToAt
+  @ApiProperty({ example: '2023-07-24T22:37:44.231Z', required: false })
+  @IsDate()
+  @Transform(({ value }) => new Date(value))
+  @IsOptional()
+  dueToDate?: Date;
 }
