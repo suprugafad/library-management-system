@@ -5,6 +5,9 @@ import { BooksReportModel } from './models/books-report.model';
 import { BooksStatusReportService } from './services/books-status-report.service';
 import { BorrowersReportService } from './services/borrowers-report.service';
 import { BooksOverdueReportService } from './services/books-overdue-report.service';
+import { BooksOverdueReportModel } from './models/books-overdue.model';
+import { BorrowersReportModel } from './models/borrowers-report.model';
+import { BookStatusReportModel } from './models/books-status-report.model';
 
 @Injectable()
 export class ReportsService {
@@ -15,27 +18,31 @@ export class ReportsService {
     private readonly booksOverdueReportService: BooksOverdueReportService,
   ) {}
 
-  generateBooksReport(): Promise<BooksReportModel[]> {
+  generateBooksReport(): Promise<{ data: BooksReportModel[] }> {
     return this.booksReportService.generateBooksReport();
   }
 
-  generateBorrowedExemplarsReport() {
+  generateBorrowedExemplarsReport(): Promise<{
+    data: BookStatusReportModel[];
+  }> {
     return this.bookStatusReportService.generateBookStatusReport(
       ExemplarStatus.Borrowed,
     );
   }
 
-  generateAvailableExemplarsReport() {
+  generateAvailableExemplarsReport(): Promise<{
+    data: BookStatusReportModel[];
+  }> {
     return this.bookStatusReportService.generateBookStatusReport(
       ExemplarStatus.Available,
     );
   }
 
-  generateBorrowersReport() {
+  generateBorrowersReport(): Promise<{ data: BorrowersReportModel[] }> {
     return this.borrowersReportService.generateBorrowersReport();
   }
 
-  generateOverdueReport() {
+  generateOverdueReport(): Promise<{ data: BooksOverdueReportModel[] }> {
     return this.booksOverdueReportService.generateOverdueBooksReport();
   }
 }

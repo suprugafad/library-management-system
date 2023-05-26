@@ -1,46 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { TransactionsService } from '../../transactions/transactions.service';
 import { BooksOverdueReportModel } from '../models/books-overdue.model';
-import { ExemplarModel } from '../../exemplars/exemplar.model';
-import { BorrowerModel } from '../../borrowers/borrower.model';
-
-interface PrismaTransaction {
-  borrower?: BorrowerModel;
-  exemplar?: ExemplarModel;
-  borrowedAt?: Date;
-  dueToDate?: Date;
-}
+import { ReportsRepository } from '../reports.repository';
 
 @Injectable()
 export class BooksOverdueReportService {
-  constructor(private readonly transactionsService: TransactionsService) {}
+  constructor(private readonly reportsRepository: ReportsRepository) {}
 
-  async generateOverdueBooksReport(): Promise<BooksOverdueReportModel[]> {
-    const allOpenTransactions = await this.getAllUnreturnedExemplars();
+  async generateOverdueBooksReport(): Promise<{
+    data: BooksOverdueReportModel[];
+  }> {
+    const allOpenTransactions =
+      await this.reportsRepository.getUnreturnedExemplars();
 
-    return allOpenTransactions.filter((transaction) => {
+    const overdueBooks = allOpenTransactions.filter((transaction) => {
       const now = new Date();
       const dueToDate = new Date(transaction.dueToDate);
-
       return dueToDate < now;
     });
-  }
 
-  private async getAllUnreturnedExemplars(): Promise<PrismaTransaction[]> {
-    return this.transactionsService.findMany({
-      where: {
-        returnedAt: null,
-      },
-      select: {
-        borrower: true,
-        exemplar: true,
-        borrowedAt: true,
-        dueToDate: true,
-      },
-      include: {
-        borrower: true,
-        exemplar: true,
-      },
-    });
+    return { data: overdueBooks };
   }
 }

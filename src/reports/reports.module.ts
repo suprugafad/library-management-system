@@ -10,6 +10,7 @@ import { BooksReportService } from './services/books-report.service';
 import { BooksStatusReportService } from './services/books-status-report.service';
 import { BorrowersReportService } from './services/borrowers-report.service';
 import { BooksOverdueReportService } from './services/books-overdue-report.service';
+import { ReportsRepository } from './reports.repository';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { BooksOverdueReportService } from './services/books-overdue-report.servi
     BooksStatusReportService,
     BorrowersReportService,
     BooksOverdueReportService,
+    ReportsRepository,
   ],
 })
 export class ReportsModule {}
