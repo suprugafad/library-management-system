@@ -5,6 +5,7 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionsQueryParamsDto } from './dto/transactions-query-params.dto';
 import { GenericRepository } from 'src/database/generic-repository';
 import { GenericPagination } from 'src/common/generic-pagination.model';
+import { TransactionsFindManyParams } from './interace/transactions-find-many-params.interface';
 
 @Injectable()
 export class TransactionsRepository
@@ -39,5 +40,9 @@ export class TransactionsRepository
 
   async remove(id: number) {
     await this.prisma.transaction.delete({ where: { id } });
+  }
+
+  findMany({ select }: TransactionsFindManyParams) {
+    return this.prisma.transaction.findMany({ select });
   }
 }
