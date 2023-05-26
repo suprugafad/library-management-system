@@ -6,6 +6,15 @@ import { ExemplarModel } from '../exemplars/exemplar.model';
 import { BooksService } from '../books/books.service';
 import { BorrowersReportModel } from './models/borrowers-report.model';
 import { BorrowersService } from '../borrowers/borrowers.service';
+import { BooksFindManyParams } from 'src/books/interface/books-find-many-params.interface';
+
+const SELECT_ALL_BOOK_FIELDS: BooksFindManyParams['select'] = {
+  id: true,
+  isbn: true,
+  title: true,
+  author: true,
+  publicationYear: true,
+};
 
 @Injectable()
 export class ReportsRepository {
@@ -33,35 +42,29 @@ export class ReportsRepository {
     });
   }
 
-  async getAllBooksWithExemplarsId(): Promise<
+  getAllBooksWithExemplarsId(): Promise<
     Array<BookModel & { exemplars: Pick<ExemplarModel, 'id'>[] }>
   > {
-    return (await this.booksService.findMany({
+    return this.booksService.findMany({
       select: {
-        id: true,
-        isbn: true,
-        title: true,
-        author: true,
-        publicationYear: true,
+        ...SELECT_ALL_BOOK_FIELDS,
         exemplars: {
           select: {
             id: true,
           },
         },
       },
-    })) as Array<BookModel & { exemplars: Pick<ExemplarModel, 'id'>[] }>;
+    }) as Promise<
+      Array<BookModel & { exemplars: Pick<ExemplarModel, 'id'>[] }>
+    >;
   }
 
-  async getBooksWithExemplarsStatus(): Promise<
+  getBooksWithExemplarsStatus(): Promise<
     Array<BookModel & { exemplars: Pick<ExemplarModel, 'id'>[] }>
   > {
-    return (await this.booksService.findMany({
+    return this.booksService.findMany({
       select: {
-        id: true,
-        isbn: true,
-        title: true,
-        author: true,
-        publicationYear: true,
+        ...SELECT_ALL_BOOK_FIELDS,
         exemplars: {
           select: {
             id: true,
@@ -69,27 +72,20 @@ export class ReportsRepository {
           },
         },
       },
-    })) as Array<BookModel & { exemplars: Pick<ExemplarModel, 'id'>[] }>;
+    }) as Promise<
+      Array<BookModel & { exemplars: Pick<ExemplarModel, 'id'>[] }>
+    >;
   }
 
-  async generateBorrowers(): Promise<BorrowersReportModel[]> {
-    return (await this.borrowersService.findMany({
+  generateBorrowers(): Promise<BorrowersReportModel[]> {
+    return this.borrowersService.findMany({
       select: {
         id: true,
         firstName: true,
         lastName: true,
         email: true,
-        transactions: {
-          select: {
-            id: true,
-            borrowerId: true,
-            exemplarId: true,
-            borrowedAt: true,
-            returnedAt: true,
-            dueToDate: true,
-          },
-        },
+        transactions: true,
       },
-    })) as Array<BorrowersReportModel>;
+    }) as Promise<Array<BorrowersReportModel>>;
   }
 }
