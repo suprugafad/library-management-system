@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "f34a1a22-da56-4613-8fe9-e535470c80b0",
-		"name": "LIBRARY-MANAGEMENT-SYSTEM Test",
+		"name": "Test-LIBRARY-MANAGEMENT-SYSTEM",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23503477"
 	},
@@ -445,11 +445,14 @@
 							"script": {
 								"exec": [
 									"const BASE_URL = pm.collectionVariables.get(\"base_url\");\r",
-									"const deleteAll = async (path) => {\r",
+									"const deleteAll = async (path, after = () => {}) => {\r",
 									"    const url = `${BASE_URL}${path}`\r",
 									"    pm.sendRequest(url, (error, response) => {\r",
 									"    if (error) return console.log(error)\r",
-									"    const body = response.json();\r",
+									"    const body = response.json().data;\r",
+									"    const {length} = body;\r",
+									"    if (length === 0) return after();\r",
+									"    let count = 0;\r",
 									"    body.forEach(async item => \r",
 									"        pm.sendRequest({\r",
 									"        url: `${url}/${item.id}`,\r",
@@ -459,9 +462,11 @@
 									"        }}, (error) => {\r",
 									"            if (error) return console.log(error)\r",
 									"            console.log(\"deleted \" + item.id)\r",
+									"            count++;\r",
+									"            if (count === length) after();\r",
 									"        }))})};\r",
 									"\r",
-									"deleteAll(\"/books\")"
+									"deleteAll(\"/transactions\", () => deleteAll(\"/exemplars\", () => deleteAll(\"/\" + pm.collectionVariables.get(\"table\"))));"
 								],
 								"type": "text/javascript"
 							}
@@ -477,28 +482,6 @@
 							],
 							"path": [
 								"{{table}}"
-							],
-							"query": [
-								{
-									"key": "publicationYear",
-									"value": "1800",
-									"disabled": true
-								},
-								{
-									"key": "title",
-									"value": "some title",
-									"disabled": true
-								},
-								{
-									"key": "author",
-									"value": "Keaton Reinger",
-									"disabled": true
-								},
-								{
-									"key": "isbn",
-									"value": "123412341234",
-									"disabled": true
-								}
 							]
 						}
 					},
@@ -511,21 +494,19 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
-									"if (body.id) {",
-									"  pm.collectionVariables.set(\"bookId\", body.id);",
-									"  pm.collectionVariables.set(\"lastId\", body.id);",
-									"}",
+									"pm.collectionVariables.set(\"bookId\", body.id);",
+									"pm.collectionVariables.set(\"lastId\", body.id);",
+									"",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
 									"    pm.response.to.have.status(201);",
 									"})",
 									"",
 									"pm.test(\"should have been created with the same properties\", () => {",
-									"    for (const key in body) {",
-									"        if (key === \"id\") continue;",
+									"    for (const key in reqBody) {",
 									"        pm.expect(body).to.have.property(key, reqBody[key]);",
 									"    }",
 									"})"
@@ -586,7 +567,7 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"const body = JSON.parse(responseBody).data;\r",
+									"const body = JSON.parse(responseBody).data[0];\r",
 									"const bookId = pm.collectionVariables.get(\"bookId\");\r",
 									"\r",
 									"pm.test(\"should receive a book with expected id\", () => {\r",
@@ -761,7 +742,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const resBody = JSON.parse(responseBody).data;\r",
+									"const resBody = JSON.parse(responseBody).data[0];\r",
 									"const reqBody = JSON.parse(pm.request.body.raw);\r",
 									"const id = pm.collectionVariables.get(\"bookId\");\r",
 									"\r",
@@ -822,7 +803,7 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"const body = JSON.parse(responseBody).data;\r",
+									"const body = JSON.parse(responseBody).data[0];\r",
 									"const bookId = pm.collectionVariables.get(\"bookId\");\r",
 									"\r",
 									"pm.test(\"should receive a book with expected id\", () => {\r",
@@ -985,7 +966,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
@@ -1049,7 +1030,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
@@ -1107,13 +1088,13 @@
 					"response": []
 				},
 				{
-					"name": "create - same title Copy",
+					"name": "create - same title 2",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
@@ -1124,7 +1105,9 @@
 									"    for (const key in reqBody) {",
 									"        pm.expect(body).to.have.property(key, reqBody[key]);",
 									"    }",
-									"})"
+									"})",
+									"",
+									"pm.collectionVariables.set(\"bookId\", body.id);"
 								],
 								"type": "text/javascript"
 							}
@@ -1177,9 +1160,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody);",
 									"",
 									"const books = body.data;",
+									"const {total} = body;",
 									"",
 									"pm.test(\"should have status code 200\", function () {",
 									"    pm.response.to.have.status(200, \"expected code 200\");",
@@ -1187,6 +1171,7 @@
 									"",
 									"pm.test(\"should have 3 books\", () => {",
 									"    pm.expect(books).to.have.length(3, \"expected length 3\");",
+									"    pm.expect(total).to.eql(3);",
 									"})",
 									""
 								],
@@ -1758,11 +1743,14 @@
 							"script": {
 								"exec": [
 									"const BASE_URL = pm.collectionVariables.get(\"base_url\");\r",
-									"const deleteAll = async (path) => {\r",
+									"const deleteAll = async (path, after = () => {}) => {\r",
 									"    const url = `${BASE_URL}${path}`\r",
 									"    pm.sendRequest(url, (error, response) => {\r",
 									"    if (error) return console.log(error)\r",
-									"    const body = response.json();\r",
+									"    const body = response.json().data;\r",
+									"    const {length} = body;\r",
+									"    if (length === 0) return after();\r",
+									"    let count = 0;\r",
 									"    body.forEach(async item => \r",
 									"        pm.sendRequest({\r",
 									"        url: `${url}/${item.id}`,\r",
@@ -1772,9 +1760,11 @@
 									"        }}, (error) => {\r",
 									"            if (error) return console.log(error)\r",
 									"            console.log(\"deleted \" + item.id)\r",
+									"            count++;\r",
+									"            if (count === length) after();\r",
 									"        }))})};\r",
 									"\r",
-									"deleteAll(`/${pm.collectionVariables.get(\"table\")}`);"
+									"deleteAll(\"/transactions\", () =>  deleteAll(\"/\" + pm.collectionVariables.get(\"table\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -1824,7 +1814,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.collectionVariables.set(\"borrowerId\", body.id);",
@@ -1889,15 +1879,15 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"const body = JSON.parse(responseBody).data;\r",
-									"const bookId = pm.collectionVariables.get(\"bookId\");\r",
+									"const body = JSON.parse(responseBody).data[0];\r",
+									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");\r",
 									"const email = pm.collectionVariables.get(\"lastEmail\")\r",
 									"\r",
-									"pm.test(\"should receive a book with expected id\", () => {\r",
-									"    pm.expect(body).to.have.property(\"id\", bookId);\r",
+									"pm.test(\"should receive a borrower with expected id\", () => {\r",
+									"    pm.expect(body).to.have.property(\"id\", borrowerId);\r",
 									"}) ;\r",
 									"\r",
-									"pm.test(\"should receive a book correct email\", () => {\r",
+									"pm.test(\"should receive a borrower correct email\", () => {\r",
 									"    pm.expect(body).to.have.property(\"email\", email);\r",
 									"})"
 								],
@@ -1932,15 +1922,15 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"const body = JSON.parse(responseBody).data;",
-									"const bookId = pm.collectionVariables.get(\"bookId\");",
+									"const body = JSON.parse(responseBody).data[0];",
+									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");",
 									"const email = pm.collectionVariables.get(\"lastEmail\")",
 									"",
-									"pm.test(\"should receive a book with expected id\", () => {",
-									"    pm.expect(body).to.have.property(\"id\", bookId);",
+									"pm.test(\"should receive a borrower with expected id\", () => {",
+									"    pm.expect(body).to.have.property(\"id\", borrowerId);",
 									"}) ;",
 									"",
-									"pm.test(\"should receive a book correct email\", () => {",
+									"pm.test(\"should receive a borrower correct email\", () => {",
 									"    pm.expect(body).to.have.property(\"email\", email);",
 									"})"
 								],
@@ -2028,7 +2018,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const resBody = JSON.parse(responseBody).data;\r",
+									"const resBody = JSON.parse(responseBody).data[0];\r",
 									"const reqBody = JSON.parse(pm.request.body.raw);\r",
 									"const id = pm.collectionVariables.get(\"borrowerId\");\r",
 									"\r",
@@ -2044,10 +2034,8 @@
 									"const lastEmail = pm.collectionVariables.get(\"lastEmail\");\r",
 									"\r",
 									"pm.test(\"should have changed as expected\", () => {\r",
-									"    const resBodyWithId = {...resBody, id};\r",
-									"    pm.expect(resBodyWithId).not.to.equal(reqBody);\r",
-									"    pm.expect(resBody.email).not.to.eql(lastEmail);\r",
-									"    pm.expect(resBody.email).to.eql(\"nuevomail@gmail.com\");\r",
+									"    pm.expect(resBody).not.to.have.property(\"email\", lastEmail);\r",
+									"    pm.expect(resBody).to.have.property(\"email\",\"nuevomail@gmail.com\" );\r",
 									"})\r",
 									"\r",
 									"pm.collectionVariables.set(\"lastEmail\", resBody.email);"
@@ -2069,13 +2057,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/{{table}}/{{bookId}}",
+							"raw": "{{base_url}}/{{table}}/{{borrowerId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"{{table}}",
-								"{{bookId}}"
+								"{{borrowerId}}"
 							]
 						}
 					},
@@ -2092,7 +2080,7 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"const body = JSON.parse(responseBody).data;\r",
+									"const body = JSON.parse(responseBody).data[0];\r",
 									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");\r",
 									"\r",
 									"pm.test(\"should receive a borrower with expected id\", () => {\r",
@@ -2233,7 +2221,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
@@ -2291,13 +2279,13 @@
 					"response": []
 				},
 				{
-					"name": "create - same title",
+					"name": "create - same last name",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
@@ -2317,7 +2305,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									""
+									"pm.collectionVariables.set(\"lastName\", \"SameLastName\")"
 								],
 								"type": "text/javascript"
 							}
@@ -2328,7 +2316,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{$randomLastName}}\",\n    \"email\": \"{{$randomEmail}}\"\n}",
+							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{lastName}}\",\n    \"email\": \"{{$randomEmail}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2355,13 +2343,13 @@
 					"response": []
 				},
 				{
-					"name": "create - same title Copy",
+					"name": "create - same last name 2",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
@@ -2372,7 +2360,9 @@
 									"    for (const key in reqBody) {",
 									"        pm.expect(body).to.have.property(key, reqBody[key]);",
 									"    }",
-									"})"
+									"})",
+									"",
+									"pm.collectionVariables.set(\"borrowerId\", body.id);"
 								],
 								"type": "text/javascript"
 							}
@@ -2392,7 +2382,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{$randomLastName}}\",\n    \"email\": \"{{$randomEmail}}\"\n}",
+							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{lastName}}\",\n    \"email\": \"{{$randomEmail}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2470,14 +2460,15 @@
 									"",
 									"const borrowers = JSON.parse(responseBody).data;",
 									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");",
+									"const lastName = pm.collectionVariables.get(\"lastName\");",
 									"",
 									"pm.test(\"should have length 2\", () => {",
 									"    pm.expect(borrowers).to.have.length(2);",
 									"}) ;",
 									"",
-									"pm.test(\"should receive a borrower correct year\", () => {",
+									"pm.test(\"should receive a borrower correct lastName\", () => {",
 									"    borrowers.forEach(borrower => {",
-									"        pm.expect(borrower).to.have.property(\"title\", \"same title\");",
+									"        pm.expect(borrower).to.have.property(\"lastName\", lastName);",
 									"    });",
 									"})"
 								],
@@ -2489,12 +2480,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/{{table}}",
+							"raw": "{{base_url}}/{{table}}?lastName={{lastName}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"{{table}}"
+							],
+							"query": [
+								{
+									"key": "lastName",
+									"value": "{{lastName}}"
+								}
 							]
 						}
 					},
@@ -3013,11 +3010,14 @@
 							"script": {
 								"exec": [
 									"const BASE_URL = pm.collectionVariables.get(\"base_url\");\r",
-									"const deleteAll = async (path) => {\r",
+									"const deleteAll = async (path, after = () => {}) => {\r",
 									"    const url = `${BASE_URL}${path}`\r",
 									"    pm.sendRequest(url, (error, response) => {\r",
 									"    if (error) return console.log(error)\r",
-									"    const body = response.json();\r",
+									"    const body = response.json().data;\r",
+									"    const {length} = body;\r",
+									"    if (length === 0) return after();\r",
+									"    let count = 0;\r",
 									"    body.forEach(async item => \r",
 									"        pm.sendRequest({\r",
 									"        url: `${url}/${item.id}`,\r",
@@ -3027,9 +3027,11 @@
 									"        }}, (error) => {\r",
 									"            if (error) return console.log(error)\r",
 									"            console.log(\"deleted \" + item.id)\r",
+									"            count++;\r",
+									"            if (count === length) after();\r",
 									"        }))})};\r",
 									"\r",
-									"deleteAll(`/${pm.collectionVariables.get(\"table\")}`);"
+									"deleteAll(\"/transactions\", () =>  deleteAll(\"/\" + pm.collectionVariables.get(\"table\")));"
 								],
 								"type": "text/javascript"
 							}
@@ -3057,19 +3059,17 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.collectionVariables.set(\"exemplarId\", body.id);",
-									"pm.collectionVariables.set(\"status\", body.status);",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
 									"    pm.response.to.have.status(201);",
 									"})",
 									"",
 									"pm.test(\"should have been created with the same properties\", () => {",
-									"    for (const key in body) {",
-									"        if (key === \"id\") continue;",
+									"    for (const key in reqBody) {",
 									"        pm.expect(body).to.have.property(key, reqBody[key]);",
 									"    }",
 									"})"
@@ -3081,7 +3081,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"pm.collectionVariables.set(\"status\", [\"Available\", \"Borrowerd\"][Math.floor(_.random() * 2)])"
+									"pm.collectionVariables.set(\"status\", [\"Available\", \"Borrowed\"][_.random(0,1)])"
 								],
 								"type": "text/javascript"
 							}
@@ -3122,7 +3122,7 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"const body = JSON.parse(responseBody).data;\r",
+									"const body = JSON.parse(responseBody).data[0];\r",
 									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");\r",
 									"const status = pm.collectionVariables.get(\"status\")\r",
 									"\r",
@@ -3165,7 +3165,7 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");",
 									"const status = pm.collectionVariables.get(\"status\")",
 									"",
@@ -3254,7 +3254,7 @@
 								"exec": [
 									"const currentStatus = pm.collectionVariables.get(\"status\");\r",
 									"\r",
-									"const statuses = [\"Available, Borrowed\"];\r",
+									"const statuses = [\"Available\", \"Borrowed\"];\r",
 									"\r",
 									"const index = statuses.indexOf(currentStatus);\r",
 									"\r",
@@ -3267,7 +3267,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const resBody = JSON.parse(responseBody).data;\r",
+									"const resBody = JSON.parse(responseBody).data[0];\r",
 									"const reqBody = JSON.parse(pm.request.body.raw);\r",
 									"const id = pm.collectionVariables.get(\"exemplarId\");\r",
 									"\r",
@@ -3297,7 +3297,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"status\": \"nuevomail@gmail.com\"\n}",
+							"raw": "{\n    \"status\": \"{{status}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3328,7 +3328,7 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"const body = JSON.parse(responseBody).data;\r",
+									"const body = JSON.parse(responseBody).data[0];\r",
 									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");\r",
 									"\r",
 									"pm.test(\"should receive a exemplar with expected id\", () => {\r",
@@ -3469,7 +3469,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
@@ -3533,7 +3533,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
@@ -3591,13 +3591,13 @@
 					"response": []
 				},
 				{
-					"name": "create - same status Copy",
+					"name": "create - same status 2",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.test(\"should have status code 201\", () => {",
@@ -3608,7 +3608,9 @@
 									"    for (const key in reqBody) {",
 									"        pm.expect(body).to.have.property(key, reqBody[key]);",
 									"    }",
-									"})"
+									"})",
+									"",
+									"pm.collectionVariables.set(\"exemplarId\", body.id);"
 								],
 								"type": "text/javascript"
 							}
@@ -4302,11 +4304,14 @@
 							"script": {
 								"exec": [
 									"const BASE_URL = pm.collectionVariables.get(\"base_url\");\r",
-									"const deleteAll = async (path) => {\r",
+									"const deleteAll = async (path, after = () => {}) => {\r",
 									"    const url = `${BASE_URL}${path}`\r",
 									"    pm.sendRequest(url, (error, response) => {\r",
 									"    if (error) return console.log(error)\r",
-									"    const body = response.json();\r",
+									"    const body = response.json().data;\r",
+									"    const {length} = body;\r",
+									"    if (length === 0) return after();\r",
+									"    let count = 0;\r",
 									"    body.forEach(async item => \r",
 									"        pm.sendRequest({\r",
 									"        url: `${url}/${item.id}`,\r",
@@ -4316,9 +4321,11 @@
 									"        }}, (error) => {\r",
 									"            if (error) return console.log(error)\r",
 									"            console.log(\"deleted \" + item.id)\r",
+									"            count++;\r",
+									"            if (count === length) after();\r",
 									"        }))})};\r",
 									"\r",
-									"deleteAll(`/${pm.collectionVariables.get(\"table\")}`);"
+									"deleteAll(\"/\" + pm.collectionVariables.get(\"table\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -4368,7 +4375,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.collectionVariables.set(\"transactionId\", body.id);",
@@ -4457,13 +4464,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"raw": "{{base_url}}/{{table}}/{{transactionId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"{{table}}",
-								"{{exemplarId}}"
+								"{{transactionId}}"
 							]
 						}
 					},
@@ -4480,10 +4487,10 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"const body = JSON.parse(responseBody).data[0];",
 									"const transactionId = pm.collectionVariables.get(\"transactionId\");",
 									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");",
 									"const borrowerId = pm.collectionVariables.get(\"borrowerId\");",
+									"const body = JSON.parse(responseBody).data[0];",
 									"",
 									"pm.test(\"should receive a transaction with expected id\", () => {",
 									"    pm.expect(body).to.have.property(\"id\", transactionId);",
@@ -4585,7 +4592,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const resBody = JSON.parse(responseBody).data;\r",
+									"const resBody = JSON.parse(responseBody).data[0];\r",
 									"const reqBody = JSON.parse(pm.request.body.raw);\r",
 									"const id = pm.collectionVariables.get(\"transactionId\");\r",
 									"\r",
@@ -4624,13 +4631,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"raw": "{{base_url}}/{{table}}/{{transactionId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"{{table}}",
-								"{{exemplarId}}"
+								"{{transactionId}}"
 							]
 						}
 					},
@@ -4647,7 +4654,7 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
-									"const body = JSON.parse(responseBody).data;\r",
+									"const body = JSON.parse(responseBody).data[0];\r",
 									"const transactionId = pm.collectionVariables.get(\"transactionId\");\r",
 									"\r",
 									"pm.test(\"should receive a transaction with expected id\", () => {\r",
@@ -4674,13 +4681,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"raw": "{{base_url}}/{{table}}/{{transactionId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"{{table}}",
-								"{{exemplarId}}"
+								"{{transactionId}}"
 							]
 						}
 					},
@@ -4705,13 +4712,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"raw": "{{base_url}}/{{table}}/{{transactionId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"{{table}}",
-								"{{exemplarId}}"
+								"{{transactionId}}"
 							]
 						}
 					},
@@ -4736,13 +4743,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/{{table}}/{{exemplarId}}",
+							"raw": "{{base_url}}/{{table}}/{{transactionId}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"{{table}}",
-								"{{exemplarId}}"
+								"{{transactionId}}"
 							]
 						}
 					},
@@ -4794,7 +4801,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.collectionVariables.set(\"transactionId\", body.id);",
@@ -4856,13 +4863,13 @@
 					"response": []
 				},
 				{
-					"name": "create - same status",
+					"name": "create - same borrower",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.collectionVariables.set(\"transactionId\", body.id);",
@@ -4886,9 +4893,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"const exemplarId = pm.collectionVariables.get(\"exemplarId\");\r",
-									"\r",
-									"pm.collectionVariables.set(\"prevExemplarId\", --exemplarId)"
+									"let exemplarId = pm.collectionVariables.get(\"exemplarId\");\r",
+									"pm.collectionVariables.set(\"prevExemplarId\", --exemplarId);"
 								],
 								"type": "text/javascript"
 							}
@@ -4919,13 +4925,13 @@
 					"response": []
 				},
 				{
-					"name": "create - same status Copy",
+					"name": "create - same borrower 2",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const body = JSON.parse(responseBody).data;",
+									"const body = JSON.parse(responseBody).data[0];",
 									"const reqBody = JSON.parse(pm.request.body.raw);",
 									"",
 									"pm.collectionVariables.set(\"transactionId\", body.id);",
@@ -5026,7 +5032,7 @@
 					"response": []
 				},
 				{
-					"name": "get by query - same title",
+					"name": "get by query - same borrower",
 					"event": [
 						{
 							"listen": "test",
@@ -5037,7 +5043,6 @@
 									"});",
 									"",
 									"const transactions = JSON.parse(responseBody).data;",
-									"const transactionId = pm.collectionVariables.get(\"transactionId\");",
 									"",
 									"pm.test(\"should have length 2\", () => {",
 									"    pm.expect(transactions).to.have.length(2);",
@@ -5045,9 +5050,9 @@
 									"",
 									"const exemplarId = pm.collectionVariables.get(\"prevExemplarId\");",
 									"",
-									"pm.test(\"should receive a transaction correct year\", () => {",
+									"pm.test(\"should receive a transaction correct exemplar id\", () => {",
 									"    transactions.forEach(transaction => {",
-									"        pm.expect(transaction).to.have.property(\"exemplarId\", exemplarId);",
+									"        pm.expect(transaction).to.have.property(\"exemplarId\", +exemplarId);",
 									"    });",
 									"})"
 								],
@@ -5095,6 +5100,15 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Books",
+					"item": []
 				}
 			]
 		}
@@ -5180,6 +5194,11 @@
 		},
 		{
 			"key": "prevExemplarId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "lastName",
 			"value": "",
 			"type": "string"
 		}

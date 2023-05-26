@@ -1,4 +1,3 @@
-import { Exemplar } from '@prisma/client';
 import { Transform } from 'class-transformer';
 import { IsEnum, IsNumber, IsOptional, Min } from 'class-validator';
 import { PaginationQueryParamsDto } from 'src/common/pagination-query-params.dto';
@@ -7,7 +6,7 @@ import { ExemplarStatus } from '../enum/exemplar-status.enum';
 
 export class ExemplarsQueryParamsDto
   extends PaginationQueryParamsDto
-  implements Partial<Pick<Exemplar, 'bookId'>>
+  implements Partial<Pick<ExemplarModel, 'bookId'>>
 {
   @Min(1)
   @IsNumber()
