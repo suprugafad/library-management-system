@@ -1,5 +1,19 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { IsEmail, IsString, Length } from 'class-validator';
+import { BorrowerModel } from '../borrower.model';
+import { ApiProperty } from '@nestjs/swagger';
 
-import { CreateBorrowerDto } from './create-borrower.dto';
+export class UpdateBorrowerDto implements Omit<BorrowerModel, 'id'> {
+  @ApiProperty({ example: 'John', required: false })
+  @Length(1, 255)
+  @IsString()
+  firstName: string;
 
-export class UpdateBorrowerDto extends PartialType(CreateBorrowerDto) {}
+  @ApiProperty({ example: 'Doe', required: false })
+  @Length(1, 255)
+  @IsString()
+  lastName: string;
+
+  @ApiProperty({ example: 'john.doe@email.com', required: false })
+  @IsEmail()
+  email: string;
+}
