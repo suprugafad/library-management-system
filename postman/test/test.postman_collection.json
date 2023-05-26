@@ -5108,7 +5108,263 @@
 			"item": [
 				{
 					"name": "Books",
-					"item": []
+					"item": [
+						{
+							"name": "get all - book reports",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"should have a status code of 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"})\r",
+											"\r",
+											"const books = JSON.parse(responseBody).data;\r",
+											"\r",
+											"pm.test(\"should have 3 books in body\", () => {\r",
+											"    pm.expect(books).to.have.length(3);\r",
+											"})\r",
+											"\r",
+											"const bookId = pm.collectionVariables.get(\"bookId\");\r",
+											"\r",
+											"pm.test(\"should have a previous created book\", () => {\r",
+											"    const book = books.find(({id}) => id === bookId);\r",
+											"    pm.expect(book).not.to.be.null;\r",
+											"    pm.expect(book).to.have.property(\"id\", bookId);\r",
+											"    pm.expect(book).to.have.property(\"totalExemplars\", 3);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"should have expected structure\", () => {\r",
+											"    books.forEach(book => {\r",
+											"        pm.expect(book).to.have.property(\"id\");\r",
+											"        pm.expect(book).to.have.property(\"isbn\");\r",
+											"        pm.expect(book).to.have.property(\"title\");\r",
+											"        pm.expect(book).to.have.property(\"author\");\r",
+											"        pm.expect(book).to.have.property(\"publicationYear\");\r",
+											"        pm.expect(book).to.have.property(\"totalExemplars\");\r",
+											"    })\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/books",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"books"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Available",
+					"item": [
+						{
+							"name": "get all - available reports",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"should have a status code of 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"})\r",
+											"\r",
+											"const books = JSON.parse(responseBody).data;\r",
+											"\r",
+											"pm.test(\"should have 3 books in total\", () => {\r",
+											"    pm.expect(books).to.have.length(3);\r",
+											"})\r",
+											"\r",
+											"const bookId = pm.collectionVariables.get(\"bookId\");\r",
+											"\r",
+											"pm.test(\"should have a previous created book\", () => {\r",
+											"    const book = books.find(({id}) => id === bookId);\r",
+											"    pm.expect(book).not.to.be.null;\r",
+											"    pm.expect(book).to.have.property(\"id\", bookId);\r",
+											"    const {exemplarsIds} = book;\r",
+											"    // This available book currently only have 1 available book\r",
+											"    pm.expect(exemplarsIds).to.have.length(1);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"should have expected structure\", () => {\r",
+											"    books.forEach(book => {\r",
+											"        pm.expect(book).to.have.property(\"id\");\r",
+											"        pm.expect(book).to.have.property(\"isbn\");\r",
+											"        pm.expect(book).to.have.property(\"title\");\r",
+											"        pm.expect(book).to.have.property(\"author\");\r",
+											"        pm.expect(book).to.have.property(\"publicationYear\");\r",
+											"        pm.expect(book).to.have.property(\"exemplarsIds\");\r",
+											"    })\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/available",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"available"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Borrowers",
+					"item": [
+						{
+							"name": "get all - borrower reports",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"should have a status code of 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"})\r",
+											"\r",
+											"const borrowers = JSON.parse(responseBody).data;\r",
+											"\r",
+											"pm.test(\"should have 3 borrowers\", () => {\r",
+											"    pm.expect(borrowers).to.have.length(3);\r",
+											"})\r",
+											"\r",
+											"const borrowerId = pm.collectionVariables.get(\"borrowerId\"); \r",
+											"\r",
+											"pm.test(\"should have a previous created borrower\", () => {\r",
+											"    const borrower = borrowers.find(({id}) => id === borrowerId);\r",
+											"    pm.expect(borrower).not.to.be.null;\r",
+											"    pm.expect(borrower).to.have.property(\"id\", borrowerId);\r",
+											"    const {transactions} = borrower;\r",
+											"    // This borrower only has 1 transaction\r",
+											"    pm.expect(transactions).to.have.length(1);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"should have expected structure\", () => {\r",
+											"    borrowers.forEach(borrower => {\r",
+											"        pm.expect(borrower).to.have.property(\"id\");\r",
+											"        pm.expect(borrower).to.have.property(\"firstName\");\r",
+											"        pm.expect(borrower).to.have.property(\"lastName\");\r",
+											"        pm.expect(borrower).to.have.property(\"email\");\r",
+											"        pm.expect(borrower).to.have.property(\"transactions\");\r",
+											"    })\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/borrowers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"borrowers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Overdue",
+					"item": [
+						{
+							"name": "get all - overdue reports",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"should have a status code of 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"})\r",
+											"\r",
+											"const overdues = JSON.parse(responseBody).data;\r",
+											"\r",
+											"pm.test(\"should have expected quantity of overdues\", () => {\r",
+											"    pm.expect(overdues).to.have.length(0);\r",
+											"})\r",
+											"\r",
+											"pm.test(\"should have expected structure\", () => {\r",
+											"    overdues.forEach(overdue => {\r",
+											"        pm.expect(overdue).to.have.property(\"borrower\");\r",
+											"        pm.expect(overdue).to.have.property(\"exemplar\");\r",
+											"        pm.expect(overdue).to.have.property(\"borrowedAt\");\r",
+											"        pm.expect(overdue).to.have.property(\"dueToDate\");\r",
+											"    })\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/{{table}}/borrowers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"{{table}}",
+										"borrowers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"table\", \"reports\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
