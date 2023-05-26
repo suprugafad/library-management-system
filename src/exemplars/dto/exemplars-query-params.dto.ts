@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsEnum, IsNumber, IsOptional, Min } from 'class-validator';
 import { PaginationQueryParamsDto } from 'src/common/pagination-query-params.dto';
@@ -8,6 +9,7 @@ export class ExemplarsQueryParamsDto
   extends PaginationQueryParamsDto
   implements Partial<Pick<ExemplarModel, 'bookId'>>
 {
+  @ApiProperty({ example: 1, required: false })
   @Min(1)
   @IsNumber()
   @Transform(({ value }) => parseInt(value))

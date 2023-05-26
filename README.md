@@ -1,7 +1,7 @@
 # Library Management System
 Final project of SOLVD laba
 
-### Description:
+### Task:
 Develop a simple library management system that allows users to manage books, borrowers, and borrowing transactions. The system should provide functionalities such as adding books to the library, registering borrowers, borrowing books, returning books, and generating reports.
 
 ### Requirements:
@@ -27,14 +27,58 @@ Develop a simple library management system that allows users to manage books, bo
 
 ### Models
 
-<img width="540" alt="Screenshot 2023-05-17 at 11 36 17" src="https://github.com/suprugafad/library-management-system/assets/81330484/64cfb904-4bbe-46f0-802d-e9a6c29cc800">
-
-
+<img src="https://github.com/suprugafad/library-management-system/assets/71590061/46df412f-1553-4ca9-bcda-053d14021891">
 
 
 
 To update models upload file models.draw.io to https://app.diagrams.net/.
 Don't forget to commit updated file with models and new screenshot.
+
+### Installation
+Install dependencies with command
+
+```bash
+npm install
+```
+
+### Running the app
+To run application you should have installed docker on your machine
+
+
+Rename `.env.example` to `.env` and update variables as needed
+
+- run
+```bash
+docker compose up
+```
+
+- run in detached mode
+```bash
+docker compose up -d
+```
+
+- run and rebuild
+```bash
+docker compose up --build
+```
+
+Application will run on `http://localhost:4000/api/v1`
+
+## Swagger documentation
+While application running you can find swagger documentation at `http://localhost:4000/docs`
+
+## MIGRATIONS & PRISMA
+To generate Prisma types before first run or after update `prisma.schema` file run
+```bash
+npx prisma generate
+```
+
+To generate and run migration 
+```bash
+  npm run migrate
+```
+
+
 
 
 
@@ -66,42 +110,7 @@ Don't forget to commit updated file with models and new screenshot.
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
 
-```bash
-$ npm install
-```
-
-## Running the app
-
-Rename `.env.example` to `.env` and update variables as needed
-
-- run
-```bash
-docker compose up
-```
-
-- run in detached mode
-```bash
-docker compose up -d
-```
-
-- run and rebuild
-```bash
-docker compose up --build
-```
-## MIGRATIONS & PRISMA
-To generate Prisma types after update `prisma.schema` file run
-```bash
-npx prisma generate
-```
-
-To generate and run migration 
-```bash
-  npm run migrate
-```
-
-#### If you added new script to package.json don't forget to add description how to use it to here
 
 ## Support
 

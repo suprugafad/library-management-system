@@ -1,32 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { Status } from '@prisma/client';
-import { BookStatusReportModel } from '../models/books-status-report.model';
 import { ReportsRepository } from '../reports.repository';
+import { TExemplarStatus } from 'src/exemplars/interface/exemplar-status.interface';
+import { ExemplarModel } from 'src/exemplars/exemplar.model';
+import { BooksStatusReportItem } from '../dto/books-status-report-response.dto';
 
 @Injectable()
 export class BooksStatusReportService {
   constructor(private readonly reportsRepository: ReportsRepository) {}
 
-  async generateBookStatusReport(
-    status: Status,
-  ): Promise<{ data: BookStatusReportModel[] }> {
-    const books = await this.reportsRepository.getBooksWithExemplarsStatus();
-    const filterByStatus = this.getFilterFunction(status);
+  async generateBookStatusReport(status: TExemplarStatus) {
+    const booksWithExemplars =
+      await this.reportsRepository.getBooksWithExemplarsStatus();
 
-    const bookStatusReports = books.map(({ exemplars, ...restData }) => {
-      const exemplarsWithStatus = exemplars.filter(filterByStatus);
-      const exemplarIds = exemplarsWithStatus.map((ex) => ex.id);
+    const result = booksWithExemplars.reduce((acc, { exemplars, ...book }) => {
+      if (!exemplars.length) return acc;
 
-      return {
-        ...restData,
-        exemplarIds,
-      };
-    });
+      const exemplarsIds: number[] = exemplars
+        .filter(this.getFilterFunction(status))
+        .map(({ id }) => id);
 
-    return { data: bookStatusReports };
+      if (!exemplarsIds.length) return acc;
+
+      acc.push({ ...book, exemplarsIds });
+      return acc;
+    }, [] as BooksStatusReportItem[]);
+
+    return { data: [...result] };
   }
 
-  private getFilterFunction(status: Status) {
-    return (exemplar) => exemplar.status === status;
+  private getFilterFunction(status: TExemplarStatus) {
+    return (exemplar: ExemplarModel) => exemplar.status === status;
   }
 }
