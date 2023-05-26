@@ -1,35 +1,36 @@
 import { Controller, Get } from '@nestjs/common';
 import { ReportsService } from './reports.service';
-import { CreateBookReportDto } from './dto/create-book-report.dto';
-import { CreateBorrowerReportDto } from './dto/create-borrower-report.dto';
-import { CreateBorrowedExemplarReportDto } from './dto/create-borrowed-exemplar-report.dto';
+import { BooksReportModel } from './models/books-report.model';
+import { BooksOverdueReportModel } from './models/books-overdue.model';
+import { BorrowersReportModel } from './models/borrowers-report.model';
+import { BookStatusReportModel } from './models/books-status-report.model';
 
 @Controller('reports')
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
   @Get('books')
-  getBookReport() {
-    return this.reportsService.generateBookReport();
+  getBookReport(): Promise<{ data: BooksReportModel[] }> {
+    return this.reportsService.generateBooksReport();
   }
 
   @Get('borrowed')
-  getBorrowedExemplarsReport(): Promise<CreateBookReportDto[]> {
+  getBorrowedExemplarsReport(): Promise<{ data: BookStatusReportModel[] }> {
     return this.reportsService.generateBorrowedExemplarsReport();
   }
 
   @Get('available')
-  getAvailableExemplarsReport(): Promise<CreateBookReportDto[]> {
+  getAvailableExemplarsReport(): Promise<{ data: BookStatusReportModel[] }> {
     return this.reportsService.generateAvailableExemplarsReport();
   }
 
   @Get('borrowers')
-  getBorrowerReport(): Promise<CreateBorrowerReportDto[]> {
-    return this.reportsService.generateBorrowerReport();
+  getBorrowerReport(): Promise<{ data: BorrowersReportModel[] }> {
+    return this.reportsService.generateBorrowersReport();
   }
 
   @Get('overdue')
-  getOverdueBooksReport(): Promise<CreateBorrowedExemplarReportDto[]> {
-    return this.reportsService.generateOverdueBooksReport();
+  getOverdueBooksReport(): Promise<{ data: BooksOverdueReportModel[] }> {
+    return this.reportsService.generateOverdueReport();
   }
 }

@@ -6,7 +6,11 @@ import { BooksModule } from 'src/books/books.module';
 import { ExemplarsModule } from 'src/exemplars/exemplars.module';
 import { TransactionsModule } from 'src/transactions/transactions.module';
 import { BorrowersModule } from 'src/borrowers/borrowers.module';
-import { BooksReportService } from './books-report.service';
+import { BooksReportService } from './services/books-report.service';
+import { BooksStatusReportService } from './services/books-status-report.service';
+import { BorrowersReportService } from './services/borrowers-report.service';
+import { BooksOverdueReportService } from './services/books-overdue-report.service';
+import { ReportsRepository } from './reports.repository';
 
 @Module({
   imports: [
@@ -17,6 +21,13 @@ import { BooksReportService } from './books-report.service';
     BorrowersModule,
   ],
   controllers: [ReportsController],
-  providers: [ReportsService, BooksReportService],
+  providers: [
+    ReportsService,
+    BooksReportService,
+    BooksStatusReportService,
+    BorrowersReportService,
+    BooksOverdueReportService,
+    ReportsRepository,
+  ],
 })
 export class ReportsModule {}
