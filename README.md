@@ -27,9 +27,7 @@ Develop a simple library management system that allows users to manage books, bo
 
 ### Models
 
-<img src="https://github.com/suprugafad/library-management-system/assets/71590061/46df412f-1553-4ca9-bcda-053d14021891">
-
-
+<img width="625" alt="Models" src="https://github.com/suprugafad/library-management-system/assets/71590061/bad0dbd3-caa2-447c-a906-03ffaae3dde6">
 
 To update models upload file models.draw.io to https://app.diagrams.net/.
 Don't forget to commit updated file with models and new screenshot.
